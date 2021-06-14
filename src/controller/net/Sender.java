@@ -174,6 +174,7 @@ public class Sender extends Thread {
                         Log.error("Error while sending");
                         e.printStackTrace();
                     }
+                    data = null;
                 }
             } finally {
                 readLockData.unlock();
