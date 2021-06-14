@@ -69,6 +69,7 @@ public class GameControllerSimulator {
             + "\n  (-c | --config) <path/to/game.json>   sets a custom game.json to launch the game from (uses the resource folder by default)"
             + "\n  (-b | --broadcast) <ip>   IP address of the broadcasting server. local broadcast by default"
             + "\n  (-d | --halftimeduration) <time in seconds>   Sets the time in seconds of the half time length"
+            + "\n  (-r | --readytimeduration) <time in seconds>   Sets the time in seconds of the ready pahes at the start of a half time"
             + "\n";
     private static final String COMMAND_INTERFACE = "--interface";
     private static final String COMMAND_INTERFACE_SHORT = "-i";
@@ -88,6 +89,8 @@ public class GameControllerSimulator {
     private static final String COMMAND_BROADCAST_SHORT = "-b";
     private static final String COMMAND_HALFTIME_SHORT = "-d";
     private static final String COMMAND_HALFTIME = "--halftimeduration";
+    private static final String COMMAND_READYTIME_SHORT = "-r";
+    private static final String COMMAND_READYTIME = "--readytimeduration";
 
     /** Dynamically settable path to the config root folder */
     private static final String CONFIG_ROOT = System.getProperty("CONFIG_ROOT", "");
@@ -101,6 +104,7 @@ public class GameControllerSimulator {
     private static InetAddress BROADCAST_IP = null;
 
     private static int half_time_length = 0;
+    private static int ready_time_length = 0;
 
     /**
      * The program starts here.
@@ -159,7 +163,11 @@ public class GameControllerSimulator {
             } else if (args[i].equals(COMMAND_HALFTIME) || args[i].equals(COMMAND_HALFTIME_SHORT)) {
                 half_time_length = Integer.parseInt(args[++i]);
                 continue parsing;
+            } else if (args[i].equals(COMMAND_READYTIME) || args[i].equals(COMMAND_READYTIME_SHORT)) {
+                ready_time_length = Integer.parseInt(args[++i]);
+                continue parsing;
             }
+
             String leagues = "";
             for (Rules rules : Rules.LEAGUES) {
                 leagues += (leagues.equals("") ? "" : " | ") + rules.leagueDirectory;
@@ -300,6 +308,9 @@ public class GameControllerSimulator {
         }
         if (half_time_length > 0) {
             Rules.league.halfTime = half_time_length;
+        }
+        if (ready_time_length > 0) {
+            Rules.league.readyTime = ready_time_length;
         }
 
         if (match_type.equals("NORMAL")) {
