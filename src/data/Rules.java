@@ -16,6 +16,7 @@ public abstract class Rules
     /** Note all league´s rules here to have them available. */
     public static final Rules[] LEAGUES = {
         new HL(),
+        new HLTeen(),
         new HLAdult(),
         new HLSimulationKid(),
         new HLSimulationAdult(),
