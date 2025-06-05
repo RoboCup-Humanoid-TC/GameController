@@ -64,7 +64,7 @@ public class Robot extends AbstractComponent {
     private static final String UNKNOWN_ONLINE_STATUS = "wlan_status_grey.png";
     public static final Color COLOR_HIGHLIGHT = Color.YELLOW;
 
-    private static final int UNPEN_HIGHLIGHT_SECONDS = 10;
+    private static final int UNPEN_HIGHLIGHT_SECONDS = 5;
 
 
     public Robot(Side side, int id) {

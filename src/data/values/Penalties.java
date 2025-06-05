@@ -12,9 +12,9 @@ public enum Penalties implements DocumentingMarkdown {
     SUBSTITUTE(14, "substitute", -1), // TODO check if different for SPL than HL and what value is
     MANUAL(15, "manual", -1), // TODO check if different for SPL than HL and what value is
 
-    HL_BALL_MANIPULATION(30, "ball_manipulation", 30),
-    HL_PHYSICAL_CONTACT(31, "pushing", 30),
-    HL_PICKUP_OR_INCAPABLE(34, "pickup/incapable", 30),
+    HL_BALL_MANIPULATION(30, "ball_manipulation", 10),
+    HL_PHYSICAL_CONTACT(31, "pushing", 10),
+    HL_PICKUP_OR_INCAPABLE(34, "pickup/incapable", 10),
     HL_SERVICE(35, "service", 60);
 
     private byte byte_value;
