@@ -38,4 +38,4 @@ exec "\${basedir}/target/release/game_controller_app" "\$@"
 EOF
 chmod a+x "${archivedir}/game_controller"
 
-tar -cf "${archive}" -C "$(dirname "${archivedir}")" $(basename "${archivedir}")
+tar -cjf "${archive}" -C "$(dirname "${archivedir}")" $(basename "${archivedir}")
