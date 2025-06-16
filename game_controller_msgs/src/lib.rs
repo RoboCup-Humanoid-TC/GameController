@@ -9,7 +9,6 @@ mod control_message;
 mod monitor_request;
 mod hl_status_message;
 mod status_message;
-mod vrc_message;
 mod referee_message;
 
 use bindings::{
@@ -43,5 +42,4 @@ pub use control_message::ControlMessage;
 pub use monitor_request::MonitorRequest;
 pub use hl_status_message::HlStatusMessage;
 pub use status_message::StatusMessage;
-pub use vrc_message::VrcMessage;
 pub use referee_message::RefereeMessage;

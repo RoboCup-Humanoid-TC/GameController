@@ -7,7 +7,7 @@ use clap::{Parser, Subcommand};
 
 use game_controller_core::log::TimestampedLogEntry;
 
-use game_controller_logs::{data_minimization_challenge, statistics, visual_referee_challenge};
+use game_controller_logs::{data_minimization_challenge, statistics};
 
 /// This struct defines the parser for the command line arguments.
 #[derive(Parser)]
@@ -28,8 +28,6 @@ enum Commands {
     DataMinimizationChallenge,
     /// Extract statistics about general game events.
     Statistics,
-    /// Extract statistics for the visual referee challenge.
-    VisualRefereeChallenge,
 }
 
 /// This function applies a subcommand to one log file.
@@ -43,10 +41,6 @@ fn process_file(f: File, command: &Commands) -> Result<()> {
         }
         Commands::Statistics => {
             statistics::evaluate(entries).context("could not create statistics from log file")?;
-        }
-        Commands::VisualRefereeChallenge => {
-            visual_referee_challenge::evaluate(entries)
-                .context("could not evaluate visual referee challenge")?;
         }
     }
     Ok(())
