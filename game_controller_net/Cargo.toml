@@ -1,0 +1,15 @@
+[package]
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+name = "game_controller_net"
+repository = { workspace = true }
+version = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+bytes = { workspace = true }
+game_controller_core = { workspace = true }
+game_controller_msgs = { workspace = true }
+socket2 = { workspace = true }
+tokio = { workspace = true }

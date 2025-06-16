@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+version="$(sed -e "s/^v\(.*\)/\1/" <<<${1})"
+target=${2:-"$(rustc -vV | sed -n "s/^host: \(.*\)/\1/p")"}
+profile=release-dist
+
+if [ -z ${version} ]; then
+  >&2 echo "usage: ${0} <version> [<target>]"
+  exit 1
+fi
+
+basedir="$(cd "$(dirname "$(which "${0}")")" && pwd)/.."
+archivedir="${basedir}/dist/game_controller-${version}-${target}"
+archive="${basedir}/dist/game_controller-${version}-${target}.tar.bz2"
+
+rm -rf "${archivedir}"
+
+pushd "${basedir}/frontend"
+npm ci
+npm run build
+popd
+
+pushd "${basedir}"
+cargo build --target "${target}" --profile "${profile}" --package game_controller_app
+popd
+
+mkdir -p "${archivedir}/target/release"
+cp "${basedir}/LICENSE" "${archivedir}"
+cp "${basedir}/README.md" "${archivedir}"
+cp -r "${basedir}/config" "${archivedir}"
+cp "${basedir}/target/${target}/${profile}/game_controller_app" "${archivedir}/target/release"
+cat >"${archivedir}/game_controller" <<EOF
+#!/bin/bash
+basedir="\$(cd "\$(dirname "\$(which "\${0}")")" && pwd)"
+exec "\${basedir}/target/release/game_controller_app" "\$@"
+EOF
+chmod a+x "${archivedir}/game_controller"
+
+tar -cf "${archive}" -C "$(dirname "${archivedir}")" $(basename "${archivedir}")

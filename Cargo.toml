@@ -1,0 +1,47 @@
+[workspace]
+members = [
+  "game_controller_app",
+  "game_controller_core",
+  "game_controller_msgs",
+  "game_controller_logs",
+  "game_controller_net",
+  "game_controller_runtime",
+]
+resolver = "2"
+
+[workspace.dependencies]
+anyhow = { version = "1.0" }
+bindgen = { version = "0.64" }
+bytes = { version = "1.0" }
+clap = { version = "4.2", features = ["derive"] }
+enum-map = { version = "2.5", features = ["serde"] }
+game_controller_core = { path = "game_controller_core" }
+game_controller_msgs = { path = "game_controller_msgs" }
+game_controller_net = { path = "game_controller_net" }
+game_controller_runtime = { path = "game_controller_runtime" }
+network-interface = { version = "1" }
+serde = { version = "1.0", features = ["derive"] }
+serde_with = { version = "2.3", features = ["base64", "time_0_3"] }
+serde_repr = { version = "0.1" }
+serde_yaml = { version = "0.9" }
+socket2 = { version = "0.5", features = ["all"] }
+tauri = { version = "1.4", features = [] }
+tauri-build = { version = "1.4", features = [] }
+time = { version = "0.3", features = ["formatting", "local-offset", "macros", "serde"] }
+tokio = { version = "1.0", features = ["fs", "io-util", "macros", "net", "rt", "rt-multi-thread", "sync", "time"] }
+tokio-util = { version = "0.7" }
+trait_enum = { version = "0.5" }
+
+[workspace.package]
+authors = ["Arne Hasselbring <arha@uni-bremen.de>"]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/RoboCup-SPL/GameController3"
+version = "1.0.0-rc.2"
+
+[profile.release-dist]
+inherits = "release"
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = "symbols"

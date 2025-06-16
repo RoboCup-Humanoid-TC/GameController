@@ -1,0 +1,119 @@
+- name: Invisibles
+  number: 0
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Nu Bots
+  number: 1
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Bold Hearts
+  number: 2
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: CIT Brains
+  number: 3
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: RO:BIT
+  number: 4
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Barelang FC
+  number: 5
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Bit Bots
+  number: 6
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: RoboFEI
+  number: 7
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: WF Wolves
+  number: 8
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: ITAndroids
+  number: 9
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: UTRA Robosoccer
+  number: 10
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Rhoban
+  number: 11
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: TH-MOS
+  number: 12
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Eepis Robot Soccer
+  number: 13
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: MRL-HSL
+  number: 14
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: ZJUNLict
+  number: 15
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: HERoEHS
+  number: 25
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Nimbro
+  number: 26
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: RoMeLa UCLA
+  number: 27
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Sweaty
+  number: 28
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Tsinghua Hephaestus-1
+  number: 29
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Tsinghua Hephaestus-2
+  number: 30
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Attackers
+  number: 98
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+
+- name: Defenders
+  number: 99
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]

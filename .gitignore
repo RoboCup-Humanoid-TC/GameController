@@ -1,0 +1,4 @@
+.*.swp
+/logs
+/target
+/Cargo.lock

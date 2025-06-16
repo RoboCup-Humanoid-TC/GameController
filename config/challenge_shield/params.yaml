@@ -1,0 +1,149 @@
+name: "Challenge Shield"
+playersPerTeam: 5
+penalties:
+  noPenalty:
+    duration:
+      secs: 0
+      nanos: 0
+    incremental: false
+  substitute:
+    duration:
+      secs: 0
+      nanos: 0
+    incremental: false
+  pickedUp:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: false
+  illegalPositionInSet:
+    duration:
+      secs: 15
+      nanos: 0
+    incremental: false
+  illegalPosition:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: true
+  motionInSet:
+    duration:
+      secs: 15
+      nanos: 0
+    incremental: false
+  fallenInactive:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: false
+  localGameStuck:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: false
+  ballHolding:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: true
+  playerStance:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: true
+  playerPushing:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: true
+  playingWithArmsHands:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: true
+  leavingTheField:
+    duration:
+      secs: 45
+      nanos: 0
+    incremental: true
+penaltyDurationIncrement:
+  secs: 10
+  nanos: 0
+setPlays:
+  noSetPlay:
+    duration:
+      secs: 0
+      nanos: 0
+    readyDuration:
+      secs: 0
+      nanos: 0
+  kickOff:
+    duration:
+      secs: 10
+      nanos: 0
+    readyDuration:
+      secs: 45
+      nanos: 0
+  kickIn:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 0
+      nanos: 0
+  goalKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 0
+      nanos: 0
+  cornerKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 0
+      nanos: 0
+  pushingFreeKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 0
+      nanos: 0
+  penaltyKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0
+halfDuration:
+  secs: 600
+  nanos: 0
+halfTimeBreakDuration:
+  secs: 600
+  nanos: 0
+timeoutDuration:
+  secs: 300
+  nanos: 0
+timeoutsPerTeam: 1
+refereeTimeoutDuration:
+  secs: 600
+  nanos: 0
+messagesPerTeam: 1200
+messagesPerTeamPerExtraMinute: 60
+mercyRuleScoreDifference: 10
+penaltyShots: 3
+suddenDeathPenaltyShots: 3
+penaltyShotDuration:
+  secs: 30
+  nanos: 0
+delayAfterGoal:
+  secs: 15
+  nanos: 0
+delayAfterPlaying:
+  secs: 15
+  nanos: 0
+league: 0

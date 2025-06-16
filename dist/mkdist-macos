@@ -1,0 +1,105 @@
+#!/bin/bash
+
+set -e
+
+version="$(sed -e "s/^v\(.*\)/\1/" <<<${1})"
+target=${2}
+profile=release-dist
+
+if [ -z ${version} ]; then
+  >&2 echo "usage: ${0} <version> [<target>]"
+  exit 1
+fi
+
+basedir="$(cd "$(dirname "$(which "${0}")")" && pwd)/.."
+if [ -z ${target} ]; then
+  universal=true
+  templatedir="${basedir}/dist/GameController-${version}"
+  archpref="
+	<key>LSArchitecturePriority</key>
+	<array>
+		<string>arm64</string>
+		<string>x86_64</string>
+	</array>"
+else
+  universal=false
+  templatedir="${basedir}/dist/GameController-${version}-${target}"
+  archpref=
+fi
+appdir="${templatedir}/GameController.app"
+dmg="${templatedir}.dmg"
+
+rm -rf "${appdir}"
+rm -f "${dmg}"
+
+pushd "${basedir}/frontend"
+npm ci
+npm run build
+popd
+
+pushd "${basedir}"
+if ${universal}; then
+  cargo build --target aarch64-apple-darwin --profile "${profile}" --package game_controller_app
+  cargo build --target x86_64-apple-darwin --profile "${profile}" --package game_controller_app
+else
+  cargo build --target "${target}" --profile "${profile}" --package game_controller_app
+fi
+popd
+
+mkdir -p "${appdir}/Contents"
+
+cp "${basedir}/LICENSE" "${appdir}/Contents"
+cp "${basedir}/README.md" "${appdir}/Contents"
+cp -r "${basedir}/config" "${appdir}/Contents"
+ln -s /tmp "${appdir}/Contents/logs"
+mkdir -p "${appdir}/Contents/target/release"
+if ${universal}; then
+  lipo -create -output "${appdir}/Contents/target/release/game_controller_app" "${basedir}/target/aarch64-apple-darwin/${profile}/game_controller_app" "${basedir}/target/x86_64-apple-darwin/${profile}/game_controller_app"
+else
+  cp "${basedir}/target/${target}/${profile}/game_controller_app" "${appdir}/Contents/target/release"
+fi
+
+mkdir "${appdir}/Contents/MacOS"
+cat >"${appdir}/Contents/MacOS/GameController" <<EOF
+#!/bin/bash
+basedir="\$(cd "\$(dirname "\$(which "\${0}")")" && pwd)"
+mkdir -p ~/Library/Application\ Support/GameController/logs
+ln -sfh ~/Library/Application\ Support/GameController/logs "\${basedir}/../logs"
+exec "\${basedir}/../target/release/game_controller_app" "\$@"
+EOF
+chmod a+x "${appdir}/Contents/MacOS/GameController"
+
+mkdir -p "${appdir}/Contents/Resources"
+cp "${basedir}/game_controller_app/icons/icon.icns" "${appdir}/Contents/Resources/GameController.icns"
+
+cat >"${appdir}/Contents/Info.plist" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>GameController</string>
+	<key>CFBundleIconFile</key>
+	<string>GameController.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.RoboCup.GameController</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>RGC3</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>12.6</string>${archpref}
+	<key>NSHighResolutionCapable</key>
+	<string>True</string>
+	<key>NSPrincipleClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+EOF
+echo -n APPLRGC3 >"${appdir}/Contents/PkgInfo"
+
+hdiutil create "${dmg}" -srcfolder "${templatedir}" -format UDZO -volname "GameController-${version}"

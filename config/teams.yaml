@@ -1,0 +1,269 @@
+- name: Invisibles
+  number: 0
+  fieldPlayerColors: [red, blue, yellow, black, white, green, orange, purple, brown, gray]
+  goalkeeperColors: [blue, yellow, black, white, green, orange, purple, brown, gray, red]
+
+- name: UT Austin Villa
+  number: 1
+  fieldPlayerColors: [white, orange]
+  goalkeeperColors: [orange, white, blue, red]
+
+- name: Austrian Kangaroos
+  number: 2
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Bembelbots
+  number: 3
+  fieldPlayerColors: [gray, black, red]
+  goalkeeperColors: [red, gray, black]
+
+- name: Berlin United
+  number: 4
+  fieldPlayerColors: [blue, purple]
+  goalkeeperColors: [white, blue, purple]
+
+- name: B-Human
+  number: 5
+  fieldPlayerColors: [black, red]
+  goalkeeperColors: [purple, blue, black, red]
+
+- name: Cerberus
+  number: 6
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: DAInamite
+  number: 7
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [red, blue]
+
+- name: Dutch Nao Team
+  number: 8
+  fieldPlayerColors: [orange, blue]
+  goalkeeperColors: [blue, red, orange]
+
+- name: Edinferno
+  number: 9
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Kouretes
+  number: 10
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: MiPal
+  number: 11
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [red, blue]
+
+- name: Nao Devils
+  number: 12
+  fieldPlayerColors: [yellow, black]
+  goalkeeperColors: [red, yellow, black]
+
+- name: HTWK Robots
+  number: 13
+  fieldPlayerColors: [blue, yellow]
+  goalkeeperColors: [green, blue, yellow]
+
+- name: Northern Bites
+  number: 14
+  fieldPlayerColors: [black, white]
+  goalkeeperColors: [black, white]
+
+- name: NTU RoboPAL
+  number: 15
+  fieldPlayerColors: [red, yellow]
+  goalkeeperColors: [red, yellow]
+
+- name: RoboCanes
+  number: 16
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: RoboEireann
+  number: 17
+  fieldPlayerColors: [green, white]
+  goalkeeperColors: [white, green, red]
+
+- name: rUNSWift
+  number: 18
+  fieldPlayerColors: [yellow, blue]
+  goalkeeperColors: [green, red, yellow, blue]
+
+- name: SPQR Team
+  number: 19
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, red, blue]
+
+- name: TJArk
+  number: 20
+  fieldPlayerColors: [gray, red]
+  goalkeeperColors: [gray, red]
+
+- name: UChile Robotics Team
+  number: 21
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: UPennalizers
+  number: 22
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Crude Scientists
+  number: 23
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: HULKs
+  number: 24
+  fieldPlayerColors: [gray, red, green]
+  goalkeeperColors: [gray, red, green]
+
+- name: MRL-SPL
+  number: 26
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Philosopher
+  number: 27
+  fieldPlayerColors: [white, black]
+  goalkeeperColors: [white, black]
+
+- name: Rimal Team
+  number: 28
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: SpelBots
+  number: 29
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Team-NUST
+  number: 30
+  fieldPlayerColors: [blue, yellow]
+  goalkeeperColors: [blue, yellow]
+
+- name: UnBeatables
+  number: 31
+  fieldPlayerColors: [yellow, blue]
+  goalkeeperColors: [yellow, blue]
+
+- name: UTH-CAR
+  number: 32
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: NomadZ
+  number: 33
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [orange, black, red, blue]
+
+- name: SPURT
+  number: 34
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Blue Spider
+  number: 35
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Camellia Dragons
+  number: 36
+  fieldPlayerColors: [purple, yellow]
+  goalkeeperColors: [purple, yellow]
+
+- name: JoiTech-SPL
+  number: 37
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Linköping Humanoids
+  number: 38
+  fieldPlayerColors: [blue, orange]
+  goalkeeperColors: [blue, orange]
+
+- name: WrightOcean
+  number: 39
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Mars
+  number: 40
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Aztlan
+  number: 41
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: CMSingle
+  number: 42
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: TeamSP
+  number: 43
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Luxembourg United
+  number: 44
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Naova
+  number: 45
+  fieldPlayerColors: [black, red]
+  goalkeeperColors: [orange, black, red]
+
+- name: Recife Soccer
+  number: 46
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: Rinobot-Jaguar
+  number: 47
+  fieldPlayerColors: [black, red]
+  goalkeeperColors: [yellow, blue]
+
+- name: Starkit
+  number: 48
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [red, blue]
+
+- name: SABANA Herons
+  number: 49
+  fieldPlayerColors: [blue, red]
+  goalkeeperColors: [blue, red]
+
+- name: R-ZWEI KICKERS
+  number: 50
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, red, blue]
+
+- name: RedBackBots
+  number: 51
+  fieldPlayerColors: [black, red]
+  goalkeeperColors: [red, black, blue]
+
+- name: BadgerBots
+  number: 52
+  fieldPlayerColors: [white, red]
+  goalkeeperColors: [black, white, red]
+
+- name: B-Team
+  number: 70
+  fieldPlayerColors: [red, black]
+  goalkeeperColors: [blue, purple, red, black]
+
+- name: Defenders
+  number: 99
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [blue, red]

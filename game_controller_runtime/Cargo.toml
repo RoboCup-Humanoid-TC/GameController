@@ -1,0 +1,23 @@
+[package]
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+name = "game_controller_runtime"
+repository = { workspace = true }
+version = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+clap = { workspace = true }
+enum-map = { workspace = true }
+game_controller_core = { workspace = true }
+game_controller_msgs = { workspace = true }
+game_controller_net = { workspace = true }
+network-interface = { workspace = true }
+serde = { workspace = true }
+serde_with = { workspace = true }
+serde_repr = { workspace = true }
+serde_yaml = { workspace = true }
+time = { workspace = true }
+tokio = { workspace = true }
+tokio-util = { workspace = true }

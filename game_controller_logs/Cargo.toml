@@ -1,0 +1,15 @@
+[package]
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+name = "game_controller_logs"
+version = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+bytes = { workspace = true }
+clap = { workspace = true }
+enum-map = { workspace = true }
+game_controller_core = { workspace = true }
+game_controller_msgs = { workspace = true }
+serde_yaml = { workspace = true }

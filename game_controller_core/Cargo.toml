@@ -1,0 +1,14 @@
+[package]
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+name = "game_controller_core"
+repository = { workspace = true }
+version = { workspace = true }
+
+[dependencies]
+enum-map = { workspace = true }
+serde = { workspace = true }
+serde_with = { workspace = true }
+time = { workspace = true }
+trait_enum = { workspace = true }
