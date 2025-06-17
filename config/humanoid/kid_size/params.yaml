@@ -1,5 +1,5 @@
 name: "Kid Size"
-playersPerTeam: 5
+playersPerTeam: 4
 penalties:
   noPenalty:
     duration:
