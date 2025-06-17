@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
-pub use time::Duration;
 use crate::action::{Action, ActionContext, VAction};
 use crate::timer::{BehaviorAtZero, RunCondition, Timer};
 use crate::types::{Penalty, PlayerNumber, Side};
+use serde::{Deserialize, Serialize};
+pub use time::Duration;
 
 /// This struct defines an action to substitute players.
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -32,13 +32,12 @@ impl Action for HlUnpenalize {
                 })]),
             };
         } else if c.game.teams[self.side][self.player].penalty == Penalty::Substitute {
-            let mut unsubs = 0;
-            for idx in 1..20 {
-                if c.game.teams[self.side][PlayerNumber::new(idx)].penalty != Penalty::Substitute {
-                    unsubs += 1;
-                }
-            }
-            if unsubs < 5 {
+            let unsubs = c.game.teams[self.side]
+                .players
+                .iter()
+                .filter(|player| player.penalty != Penalty::Substitute)
+                .count();
+            if unsubs < c.params.competition.players_per_team.into() {
                 c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
             }
         } else {
