@@ -33,7 +33,7 @@ impl TryFrom<Bytes> for RefereeMessage {
         let command_4 = bytes.get_u8();
         let command_5 = bytes.get_u8();
 
-        Ok(RefereeMessage{
+        Ok(RefereeMessage {
             command_1,
             command_2,
             command_3,

@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext};
 use crate::timer::Timer;
-use crate::types::{Penalty, Phase, SetPlay, Side, SideMapping, State, League, SecState};
+use crate::types::{League, Penalty, Phase, SecState, SetPlay, Side, SideMapping, State};
 
 /// This struct defines an action which starts a penalty (kick) shoot-out. To disambiguate this
 /// from penalty kicks as set plays within the game, penalty kicks in a penalty (kick) shoot-out
@@ -45,7 +45,6 @@ impl Action for StartPenaltyShootout {
             c.game.primary_timer = Timer::Stopped;
             c.game.secondary_timer = Timer::Stopped;
         }
-
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {

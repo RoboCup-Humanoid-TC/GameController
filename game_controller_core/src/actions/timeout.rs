@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext, VAction};
-use crate::actions::{HlStateShifter};
+use crate::actions::HlStateShifter;
 use crate::timer::{BehaviorAtZero, RunCondition, Timer};
-use crate::types::{Phase, SetPlay, Side, State, League, SecState};
+use crate::types::{League, Phase, SecState, SetPlay, Side, State};
 
 /// This struct defines an action for when a team or the referee takes a timeout.
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -46,12 +46,12 @@ impl Action for Timeout {
                 // In some cases, an existing timer is modified to avoid situations like "We are going
                 // to take a timeout once their timeout is over".
                 remaining: if c.game.state == State::Timeout
-                        || (c.game.state == State::Initial && c.game.phase == Phase::SecondHalf)
-                    {
-                        c.game.secondary_timer.get_remaining() + duration
-                    } else {
-                        duration.try_into().unwrap()
-                    },
+                    || (c.game.state == State::Initial && c.game.phase == Phase::SecondHalf)
+                {
+                    c.game.secondary_timer.get_remaining() + duration
+                } else {
+                    duration.try_into().unwrap()
+                },
                 run_condition: RunCondition::Always,
                 behavior_at_zero: BehaviorAtZero::Overflow,
             };
@@ -62,15 +62,19 @@ impl Action for Timeout {
             }
         } else {
             if self.side.is_some() {
-                if (c.game.state != State::Playing || c.game.state != State::Finished) && c.game.sec_state.state != SecState::Timeout {
+                if (c.game.state != State::Playing || c.game.state != State::Finished)
+                    && c.game.sec_state.state != SecState::Timeout
+                {
                     c.game.secondary_timer = Timer::Started {
                         // In some cases, an existing timer is modified to avoid situations like "We are going
                         // to take a timeout once their timeout is over".
                         remaining: duration.try_into().unwrap(),
                         run_condition: RunCondition::Always,
-                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(HlStateShifter {
-                            state: c.game.state
-                        })]),
+                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
+                            HlStateShifter {
+                                state: c.game.state,
+                            },
+                        )]),
                     };
                     c.game.sec_state.state = SecState::Timeout;
                     c.game.state = State::Initial;
@@ -85,9 +89,11 @@ impl Action for Timeout {
                         // to take a timeout once their timeout is over".
                         remaining: duration.try_into().unwrap(),
                         run_condition: RunCondition::Always,
-                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(HlStateShifter {
-                            state: State::Ready
-                        })]),
+                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
+                            HlStateShifter {
+                                state: State::Ready,
+                            },
+                        )]),
                     };
                     c.game.sec_state.state = SecState::Timeout;
                     c.game.state = State::Initial;

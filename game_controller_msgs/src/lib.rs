@@ -4,12 +4,12 @@
 //! [mod@game_controller_core::types].
 
 mod bindings;
-mod hl_control_message;
 mod control_message;
-mod monitor_request;
+mod hl_control_message;
 mod hl_status_message;
-mod status_message;
+mod monitor_request;
 mod referee_message;
+mod status_message;
 
 use bindings::{
     GAMECONTROLLER_DATA_PORT, GAMECONTROLLER_RETURN_PORT, GAMECONTROLLER_RETURN_STRUCT_SIZE,
@@ -37,9 +37,9 @@ pub const STATUS_MESSAGE_FORWARD_PORT: u16 = STATUS_MESSAGE_PORT + 1;
 /// communication.
 pub const TEAM_MESSAGE_PORT_BASE: u16 = 10000;
 
-pub use hl_control_message::HlControlMessage;
 pub use control_message::ControlMessage;
-pub use monitor_request::MonitorRequest;
+pub use hl_control_message::HlControlMessage;
 pub use hl_status_message::HlStatusMessage;
-pub use status_message::StatusMessage;
+pub use monitor_request::MonitorRequest;
 pub use referee_message::RefereeMessage;
+pub use status_message::StatusMessage;

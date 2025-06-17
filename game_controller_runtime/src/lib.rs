@@ -29,13 +29,13 @@ use game_controller_core::{
         LogEntry, LoggedMetadata, LoggedMonitorRequest, LoggedStatusMessage, LoggedTeamMessage,
         TimestampedLogEntry,
     },
-    types::{ActionSource, Game, Params, PlayerNumber, Side, League},
+    types::{ActionSource, Game, League, Params, PlayerNumber, Side},
     GameController,
 };
-use game_controller_msgs::{MonitorRequest, StatusMessage, HlStatusMessage, RefereeMessage};
+use game_controller_msgs::{HlStatusMessage, MonitorRequest, RefereeMessage, StatusMessage};
 use game_controller_net::{
-    ControlMessageSender, Event, MonitorRequestReceiver, StatusMessageForwarder,
-    StatusMessageReceiver, TeamMessageReceiver, RefereeReceiver, RefereeSender,
+    ControlMessageSender, Event, MonitorRequestReceiver, RefereeReceiver, RefereeSender,
+    StatusMessageForwarder, StatusMessageReceiver, TeamMessageReceiver,
 };
 
 pub mod cli;

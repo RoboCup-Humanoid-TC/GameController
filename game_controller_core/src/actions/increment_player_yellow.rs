@@ -6,7 +6,7 @@ use crate::types::{PlayerNumber, Side};
 /// This struct defines an action to apply a penalty to players.
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct IncrementPlayerYellow{
+pub struct IncrementPlayerYellow {
     /// The side whose player is warned.
     pub side: Side,
     /// The number of the player who is warned.
@@ -15,9 +15,13 @@ pub struct IncrementPlayerYellow{
 
 impl Action for IncrementPlayerYellow {
     fn execute(&self, c: &mut ActionContext) {
-        if c.game.teams[self.side][self.player].yellow < 1 && c.game.teams[self.side][self.player].red < 1{
+        if c.game.teams[self.side][self.player].yellow < 1
+            && c.game.teams[self.side][self.player].red < 1
+        {
             c.game.teams[self.side][self.player].yellow += 1;
-        } else if c.game.teams[self.side][self.player].yellow == 1 && c.game.teams[self.side][self.player].red < 1 {
+        } else if c.game.teams[self.side][self.player].yellow == 1
+            && c.game.teams[self.side][self.player].red < 1
+        {
             c.game.teams[self.side][self.player].red += 1;
             c.game.teams[self.side][self.player].yellow = 0;
             c.game.teams[self.side][self.player].warnings = 0;

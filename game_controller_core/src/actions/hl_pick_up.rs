@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use crate::action::{Action, ActionContext};
 use crate::types::{Penalty, PlayerNumber, Side, State};
+use serde::{Deserialize, Serialize};
 
 /// This struct defines an action to substitute players.
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -14,8 +14,7 @@ pub struct HlPickUp {
 
 impl Action for HlPickUp {
     fn execute(&self, c: &mut ActionContext) {
-        if c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
-        {
+        if c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty {
             c.game.teams[self.side][self.player].penalty = Penalty::PickedUp;
         }
     }

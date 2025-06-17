@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext, VAction};
-use crate::actions::{StartSetPlay, HlStateShifter};
-use crate::timer::{Timer, BehaviorAtZero, RunCondition, SignedDuration};
-use crate::types::{Phase, SetPlay, Side, State, SecState, League, Penalty};
+use crate::actions::{HlStateShifter, StartSetPlay};
+use crate::timer::{BehaviorAtZero, RunCondition, SignedDuration, Timer};
+use crate::types::{League, Penalty, Phase, SecState, SetPlay, Side, State};
 
 /// This struct defines an action for when a goal has been scored.
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -63,9 +63,9 @@ impl Action for Goal {
                 c.game.secondary_timer = Timer::Started {
                     remaining: SignedDuration::new(45, 0),
                     run_condition: RunCondition::Always,
-                    behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(HlStateShifter {
-                        state: State::Set,
-                    })]),
+                    behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
+                        HlStateShifter { state: State::Set },
+                    )]),
                 };
                 c.game.state = State::Ready;
             } else {
@@ -73,9 +73,9 @@ impl Action for Goal {
                 c.game.primary_timer = Timer::Started {
                     remaining: SignedDuration::new(60, 0),
                     run_condition: RunCondition::Playing,
-                    behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(HlStateShifter {
-                        state: State::Set,
-                    })]),
+                    behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
+                        HlStateShifter { state: State::Set },
+                    )]),
                 };
                 c.game.teams.values_mut().for_each(|team| {
                     team.goalkeeper = None;

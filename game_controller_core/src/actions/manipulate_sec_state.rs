@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext};
-use crate::types::{State, SecState};
+use crate::types::{SecState, State};
 
 /// This struct defines an action for when a goal has been scored.
 #[derive(Clone, Debug, Deserialize, Serialize)]

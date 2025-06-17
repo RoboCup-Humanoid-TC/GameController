@@ -20,7 +20,6 @@ pub enum ChallengeMode {
     KidSize,
     /// AdultSize
     AdultSize,
-
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
@@ -31,7 +30,6 @@ pub enum League {
     /// Humanoid League
     Humanoid,
 }
-
 
 /// This struct contains constant parameters of a penalty type.
 #[derive(Clone, Deserialize, Serialize)]
@@ -181,7 +179,6 @@ pub enum State {
     Finished,
     /// This state is active during a timeout (either for a team or by the referee).
     Timeout,
-
 }
 
 /// This enumerates the second state that the can have (HL)
@@ -496,7 +493,6 @@ pub struct SecondaryState {
     pub side: Side,
     /// phase of the secondary state
     pub phase: u8,
-
 }
 
 /// This enumerates the possible sources that can trigger actions.
