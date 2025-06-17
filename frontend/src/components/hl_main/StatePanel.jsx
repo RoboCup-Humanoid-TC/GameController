@@ -29,7 +29,7 @@ const StatePanel = ({ game, legalGameActions }) => {
       <ActionButton
         action={{ type: "hlStateShifter", args: {state: "set"} }}
         label="Set"
-        legal={game.state === "ready" || game.secState.state == "penalityshoot"}
+        legal={game.state === "ready" || game.secState.state == "penaltyshoot"}
       />
     ) : (
       <></>
