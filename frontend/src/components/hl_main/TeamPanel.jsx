@@ -58,7 +58,7 @@ const TeamStats = ({ game, side, sign, team }) => {
   );
 };
 
-const FreeKickButtons = ({ game, side, sign }) => {
+const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
   return (
     <div className="h-1/4">
       <div
@@ -80,13 +80,7 @@ const FreeKickButtons = ({ game, side, sign }) => {
                 : ""
               : "Goal Kick"
           }
-          legal={
-            (game.secState.state === "normal" ||
-              (game.secState.state === "goalKick" && game.secState.side === side)) &&
-            game.state == "playing"
-              ? true
-              : false
-          }
+          legal={legalTeamActions[actions.GOAL_KICK]}
         />
         <TeamPenaltyButton
           action={{ type: "hlSetPlay", args: { side: side, setPlay: "throwIn", seconds: 30 } }}
@@ -104,13 +98,7 @@ const FreeKickButtons = ({ game, side, sign }) => {
                 : ""
               : "Throw in"
           }
-          legal={
-            (game.secState.state === "normal" ||
-              (game.secState.state === "throwIn" && game.secState.side === side)) &&
-            game.state == "playing"
-              ? true
-              : false
-          }
+          legal={legalTeamActions[actions.THROW_IN]}
         />
         <TeamPenaltyButton
           action={{ type: "hlSetPlay", args: { side: side, setPlay: "cornerKick", seconds: 30 } }}
@@ -128,13 +116,7 @@ const FreeKickButtons = ({ game, side, sign }) => {
                 : ""
               : "Corner Kick"
           }
-          legal={
-            (game.secState.state === "normal" ||
-              (game.secState.state === "cornerKick" && game.secState.side === side)) &&
-            game.state == "playing"
-              ? true
-              : false
-          }
+          legal={legalTeamActions[actions.CORNER_KICK]}
         />
       </div>
       <div
@@ -156,13 +138,7 @@ const FreeKickButtons = ({ game, side, sign }) => {
                 : ""
               : "Penalty Kick"
           }
-          legal={
-            (game.secState.state === "normal" ||
-              (game.secState.state === "penaltykick" && game.secState.side === side)) &&
-            game.state == "playing"
-              ? true
-              : false
-          }
+          legal={legalTeamActions[actions.PENALTY_KICK]}
         />
         <TeamPenaltyButton
           action={{
@@ -183,13 +159,7 @@ const FreeKickButtons = ({ game, side, sign }) => {
                 : ""
               : "Direct Free Kick"
           }
-          legal={
-            (game.secState.state === "normal" ||
-              (game.secState.state === "directFreekick" && game.secState.side === side)) &&
-            game.state == "playing"
-              ? true
-              : false
-          }
+          legal={legalTeamActions[actions.DIRECT_FREE_KICK]}
         />
         <TeamPenaltyButton
           action={{
@@ -210,13 +180,7 @@ const FreeKickButtons = ({ game, side, sign }) => {
                 : ""
               : "Indirect Free Kick"
           }
-          legal={
-            (game.secState.state === "normal" ||
-              (game.secState.state === "indirectFreekick" && game.secState.side === side)) &&
-            game.state == "playing"
-              ? true
-              : false
-          }
+          legal={legalTeamActions[actions.INDIRECT_FREE_KICK]}
         />
       </div>
       <div
@@ -226,13 +190,13 @@ const FreeKickButtons = ({ game, side, sign }) => {
           action={{ type: "hlRetake", args: { side: side } }}
           active={false}
           label="Retake"
-          legal={game.secState.state !== "normal" && game.secState.side === side ? true : false}
+          legal={legalTeamActions[actions.RETAKE]}
         />
         <ActionButton
           action={{ type: "hlAbort", args: { side: side } }}
           active={false}
           label="Abort"
-          legal={game.secState.state !== "normal" && game.secState.side === side ? true : false}
+          legal={legalTeamActions[actions.ABORT]}
         />
       </div>
     </div>

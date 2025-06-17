@@ -12,9 +12,7 @@ export const PENALTIES = [
   ["Player Stance", "playerStance"],
   ["Arms / Hands", "playingWithArmsHands"],
 ];
-// DANIEL
-// const NUM_OF_PLAYERS = 20;
-const NUM_OF_PLAYERS = 11;
+const NUM_OF_PLAYERS = 20;
 const NUM_OF_TEAMS = 2;
 
 const TEAM_ACTION_BASE = 0;
@@ -46,7 +44,7 @@ export const START_KICK_OFF_AWAY = 11;
 export const ADD_EXTRA_TIME = 12;
 export const REFEREE_TIMEOUT = 13;
 
-const NUM_OF_GAME_ACTIONS = 15;
+const NUM_OF_GAME_ACTIONS = 14;
 
 const PENALTY_ACTION_BASE = GAME_ACTION_BASE + NUM_OF_GAME_ACTIONS;
 
@@ -88,7 +86,6 @@ export const getActions = () => {
   actions.push({ type: "startSetPlay", args: { side: "away", setPlay: "kickOff" } });
   actions.push({ type: "addExtraTime", args: null });
   actions.push({ type: "timeout", args: { side: null } });
-  actions.push({ type: "switchHalf", args: null });
   for (const penalty of PENALTIES) {
     for (const side of ["home", "away"]) {
       for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {

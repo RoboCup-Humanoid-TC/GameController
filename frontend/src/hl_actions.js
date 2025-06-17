@@ -12,11 +12,7 @@ export const PENALTIES = [
   ["Placeholder", "playerStance"],
   ["Placeholder", "playingWithArmsHands"],
 ];
-// TODO: Evtl. entkopplung möglich (IsPenaltyLegal umschreiben)
-// TODO: Rest oder Websockets (Durch asynchrone Daten ist Websockets besser)
-// DANIEL
-// const NUM_OF_PLAYERS = 20;
-const NUM_OF_PLAYERS = 11;
+const NUM_OF_PLAYERS = 20;
 const NUM_OF_TEAMS = 2;
 
 const TEAM_ACTION_BASE = 0;
@@ -25,10 +21,15 @@ export const TIMEOUT = 0;
 export const GLOBAL_GAME_STUCK = 1;
 export const GOAL = 2;
 export const GOAL_KICK = 3;
-export const KICK_IN = 4;
+export const THROW_IN = 4;
 export const CORNER_KICK = 5;
+export const INDIRECT_FREE_KICK = 6;
+export const DIRECT_FREE_KICK = 7;
+export const PENALTY_KICK = 8;
+export const ABORT = 9;
+export const RETAKE = 10;
 
-const NUM_OF_TEAM_ACTIONS = 6;
+const NUM_OF_TEAM_ACTIONS = 11;
 
 const GAME_ACTION_BASE = TEAM_ACTION_BASE + NUM_OF_TEAMS * NUM_OF_TEAM_ACTIONS;
 
@@ -47,12 +48,18 @@ export const START_KICK_OFF_HOME = 10;
 export const START_KICK_OFF_AWAY = 11;
 export const ADD_EXTRA_TIME = 12;
 export const REFEREE_TIMEOUT = 13;
+export const INITIAL = 14;
+export const READY = 15;
+export const SET = 16;
+export const PLAYING = 17;
+export const FINISHED = 18;
+export const HL_TIMEOUT = 19;
 
-const NUM_OF_GAME_ACTIONS = 15;
+const NUM_OF_GAME_ACTIONS = 20;
 
 const PENALTY_ACTION_BASE = GAME_ACTION_BASE + NUM_OF_GAME_ACTIONS;
 
-const NUM_OF_PENALTY_ACTIONS = NUM_OF_TEAMS * NUM_OF_PLAYERS * (PENALTIES.length + 1); // The + 1 is the unpenalize action.
+const NUM_OF_PENALTY_ACTIONS = NUM_OF_TEAMS * NUM_OF_PLAYERS * (6 + 3); // The + 1 is the unpenalize action.
 
 const UNDO_ACTION_BASE = PENALTY_ACTION_BASE + NUM_OF_PENALTY_ACTIONS;
 
@@ -71,9 +78,14 @@ export const getActions = () => {
       { type: "timeout", args: { side: side } },
       { type: "globalGameStuck", args: { side: side } },
       { type: "goal", args: { side: side } },
-      { type: "startSetPlay", args: { side: side, setPlay: "goalKick" } },
-      { type: "startSetPlay", args: { side: side, setPlay: "kickIn" } },
-      { type: "startSetPlay", args: { side: side, setPlay: "cornerKick" } }
+      { type: "hlSetPlay", args: { side: side, setPlay: "goalKick", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "throwIn", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "cornerKick", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "directFreekick", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "indirectFreekick", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "penaltykick", seconds: 30 } },
+      { type: "hlAbort", args: { side: side } },
+      { type: "hlRetake", args: { side: side } }
     );
   }
   actions.push({ type: "switchHalf", args: null });
@@ -90,29 +102,13 @@ export const getActions = () => {
   actions.push({ type: "startSetPlay", args: { side: "away", setPlay: "kickOff" } });
   actions.push({ type: "addExtraTime", args: null });
   actions.push({ type: "timeout", args: { side: null } });
-  actions.push({ type: "freeSetPlay", args: null });
-  actions.push({ type: "hlPenaltyKick", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlPenaltyKick", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlDirectFreeKick", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlDirectFreeKick", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlAbort", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlAbort", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlIndirectFreeKick", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlIndirectFreeKick", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlCornerKick", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlCornerKick", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlGoalKick", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlGoalKick", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlThrowIn", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlThrowIn", args: { side: "away", seconds: 0 } });
-  actions.push({ type: "hlRetake", args: { side: "home", seconds: 0 } });
-  actions.push({ type: "hlRetake", args: { side: "away", seconds: 0 } });
   actions.push({ type: "hlStateShifter", args: { state: "initial" } });
   actions.push({ type: "hlStateShifter", args: { state: "ready" } });
   actions.push({ type: "hlStateShifter", args: { state: "set" } });
   actions.push({ type: "hlStateShifter", args: { state: "playing" } });
   actions.push({ type: "hlStateShifter", args: { state: "finished" } });
   actions.push({ type: "hlStateShifter", args: { state: "timeout" } });
+  /*
   for (const penalty of PENALTIES) {
     for (const side of ["home", "away"]) {
       for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
@@ -120,6 +116,7 @@ export const getActions = () => {
       }
     }
   }
+  */
   for (const side of ["home", "away"]) {
     for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
       actions.push({ type: "incrementPlayerWarning", args: { side: side, player: number } });
@@ -133,13 +130,6 @@ export const getActions = () => {
   for (const side of ["home", "away"]) {
     for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
       actions.push({ type: "incrementPlayerRed", args: { side: side, player: number } });
-    }
-  }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      for (const timer of [true, false]) {
-        actions.push({ type: "hlUnpenalize", args: { side: side, player: number, timer: timer } });
-      }
     }
   }
   for (const side of ["home", "away"]) {
@@ -160,6 +150,13 @@ export const getActions = () => {
   for (const side of ["home", "away"]) {
     for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
       actions.push({ type: "unpenalize", args: { side: side, player: number } });
+    }
+  }
+  for (const timer of [true, false]) {
+    for (const side of ["home", "away"]) {
+      for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
+        actions.push({ type: "hlUnpenalize", args: { side: side, player: number, timer: timer } });
+      }
     }
   }
   for (let states = 1; states <= NUM_OF_UNDO_ACTIONS; ++states) {
