@@ -13,16 +13,6 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
           selected={selectedPenaltyCall === index}
         />
       ))} */}
-      {/* <PenaltyButton
-        key={"test"}
-        label={"test"}
-        legal={false}
-        onClick={applyAction({
-          type: "manipulateSecState",
-          args: {i: 8},
-        })}
-        selected={false}
-        /> */}
       <PenaltyButtonWA
         action={function () {
           if (selectedPenaltyCall !== "hlPushing") {

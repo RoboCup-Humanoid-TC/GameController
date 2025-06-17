@@ -33,7 +33,6 @@ mod hl_unpen;
 mod increment_player_red;
 mod increment_player_warning;
 mod increment_player_yellow;
-mod manipulate_sec_state;
 
 pub use add_extra_time::AddExtraTime;
 pub use finish_half::FinishHalf;
@@ -68,4 +67,3 @@ pub use hl_unpen::HlUnpenalize;
 pub use increment_player_red::IncrementPlayerRed;
 pub use increment_player_warning::IncrementPlayerWarning;
 pub use increment_player_yellow::IncrementPlayerYellow;
-pub use manipulate_sec_state::ManipulateSecState;

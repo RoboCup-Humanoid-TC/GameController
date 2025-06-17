@@ -61,7 +61,6 @@ trait_enum! {
         IncrementPlayerRed,
         IncrementPlayerWarning,
         IncrementPlayerYellow,
-        ManipulateSecState,
     }
 }
 
