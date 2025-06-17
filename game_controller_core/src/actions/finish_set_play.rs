@@ -7,7 +7,7 @@ use crate::types::{SetPlay, State};
 /// This struct defines an action which corresponds to the referee call "Ball Free". It is the last
 /// part of a set play (i.e. fourth part of "complex" set plays with Ready and Set state and second
 /// part of "simple" set plays).
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct FinishSetPlay;
 
 impl Action for FinishSetPlay {

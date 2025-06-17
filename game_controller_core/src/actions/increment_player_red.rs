@@ -4,7 +4,7 @@ use crate::action::{Action, ActionContext};
 use crate::types::{PlayerNumber, Side};
 
 /// This struct defines an action to apply a penalty to players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct IncrementPlayerRed {
     /// The side whose player is warned.

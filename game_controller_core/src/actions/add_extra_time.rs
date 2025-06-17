@@ -7,7 +7,7 @@ use crate::timer::{BehaviorAtZero, RunCondition, Timer};
 use crate::types::State;
 
 /// This struct defines an action that adds a minute of extra time.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct AddExtraTime;
 
 impl AddExtraTime {

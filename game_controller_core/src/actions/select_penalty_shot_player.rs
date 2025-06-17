@@ -7,7 +7,7 @@ use crate::timer::Timer;
 use crate::types::{Penalty, Phase, Player, PlayerNumber, Side};
 
 /// This struct defines an action to select the player in a penalty shoot-out.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SelectPenaltyShotPlayer {
     /// The side which selects a player.

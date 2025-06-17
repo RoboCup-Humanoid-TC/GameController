@@ -4,7 +4,7 @@ use crate::action::{Action, ActionContext};
 use crate::types::{Penalty, PlayerNumber, Side, State};
 
 /// This struct defines an action to substitute players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlSubstitute {
     /// The side which does the substitution.

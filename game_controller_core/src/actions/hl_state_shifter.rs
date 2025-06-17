@@ -3,7 +3,7 @@ use crate::timer::{BehaviorAtZero, RunCondition, SignedDuration, Timer};
 use crate::types::{Penalty, Phase, SecState, SecondaryState, SetPlay, Side, State};
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlStateShifter {
     /// The type of set play to start.

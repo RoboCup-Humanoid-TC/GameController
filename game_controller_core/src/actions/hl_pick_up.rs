@@ -3,7 +3,7 @@ use crate::types::{Penalty, PlayerNumber, Side, State};
 use serde::{Deserialize, Serialize};
 
 /// This struct defines an action to substitute players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlPickUp {
     /// The side which does the substitution.

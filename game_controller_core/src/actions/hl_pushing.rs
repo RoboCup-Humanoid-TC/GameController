@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 pub use time::Duration;
 
 /// This struct defines an action to substitute players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlPushing {
     /// The side which does the substitution.

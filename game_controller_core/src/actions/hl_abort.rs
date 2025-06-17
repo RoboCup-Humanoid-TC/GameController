@@ -4,7 +4,7 @@ use crate::types::{SecState, Side, State};
 use serde::{Deserialize, Serialize};
 
 /// This struct defines an action for when a goal has been scored.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlAbort {
     pub side: Side,

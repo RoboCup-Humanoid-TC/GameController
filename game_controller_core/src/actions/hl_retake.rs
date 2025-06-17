@@ -5,7 +5,7 @@ use crate::timer::Timer;
 use crate::types::{SecState, Side, State};
 
 /// This struct defines an action for when a goal has been scored.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlRetake {
     pub side: Side,

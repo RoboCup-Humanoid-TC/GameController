@@ -7,7 +7,7 @@ use crate::types::{League, Penalty, Phase, SecState, SetPlay, Side, SideMapping,
 /// This struct defines an action which starts a penalty (kick) shoot-out. To disambiguate this
 /// from penalty kicks as set plays within the game, penalty kicks in a penalty (kick) shoot-out
 /// are mostly referred to as "penalty shots".
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StartPenaltyShootout {
     /// This defines the goal on which all penalty shots are taken. Since the home team always has

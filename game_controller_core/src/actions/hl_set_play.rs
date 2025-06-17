@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 pub use time::Duration;
 
 /// This struct defines an action to cycle through the states of a Humanoid League set play.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HlSetPlay {
     pub side: Side,

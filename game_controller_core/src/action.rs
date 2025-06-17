@@ -25,7 +25,7 @@ pub trait Action {
 
 trait_enum! {
     /// This is a "variant" of all actions.
-    #[derive(Clone, Debug, Deserialize, Serialize)]
+    #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
     #[serde(tag = "type", content = "args", rename_all = "camelCase")]
     pub enum VAction: Action {
         AddExtraTime,
@@ -41,7 +41,6 @@ trait_enum! {
         StartPenaltyShootout,
         StartSetPlay,
         Substitute,
-        HlSubstitute,
         SwitchHalf,
         TeamMessage,
         Timeout,
@@ -49,20 +48,20 @@ trait_enum! {
         Unpenalize,
         WaitForPenaltyShot,
         WaitForSetPlay,
-        IncrementPlayerWarning,
-        IncrementPlayerYellow,
-        IncrementPlayerRed,
 
-        ManipulateSecState,
         HlAbort,
-        HlSetPlay,
-        HlRetake,
-        HlUnpenalize,
-        HlPushing,
         HlBallManipulation,
         HlPickUp,
-
+        HlPushing,
+        HlRetake,
+        HlSetPlay,
         HlStateShifter,
+        HlSubstitute,
+        HlUnpenalize,
+        IncrementPlayerRed,
+        IncrementPlayerWarning,
+        IncrementPlayerYellow,
+        ManipulateSecState,
     }
 }
 
@@ -130,7 +129,7 @@ impl ActionContext<'_> {
     pub fn is_undo_available(&self, back: u32) -> bool {
         self.history
             .as_ref()
-            .map_or(false, |history| history.len() >= (back as usize))
+            .is_some_and(|history| history.len() >= (back as usize))
     }
 
     /// This function reverts the game state to the state before a given number of actions.

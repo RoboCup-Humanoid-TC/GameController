@@ -87,7 +87,7 @@ pub enum LogEntry {
     MonitorRequest(LoggedMonitorRequest),
     StatusMessage(LoggedStatusMessage),
     TeamMessage(LoggedTeamMessage),
-    /// This is an marker that is the last entry in intact log files and allows to reconstruct the
+    /// This is a marker that is the last entry in intact log files and allows to reconstruct the
     /// final state of timers.
     End,
 }

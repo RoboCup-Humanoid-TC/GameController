@@ -139,13 +139,12 @@ impl GameController {
 
     /// This function returns the last n actions that can be undone.
     pub fn get_undo_actions(&self, n: u32) -> Vec<VAction> {
-        return self
-            .history
+        self.history
             .iter()
             .rev()
             .take(n as usize)
             .map(|entry| entry.1.clone())
-            .collect();
+            .collect()
     }
 
     /// This function lets time progress. Timers are updated and expiration actions applied when

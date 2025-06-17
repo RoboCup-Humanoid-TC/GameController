@@ -6,7 +6,7 @@ use crate::timer::{BehaviorAtZero, RunCondition, Timer};
 use crate::types::{League, Phase, SecState, SetPlay, Side, State};
 
 /// This struct defines an action for when a team or the referee takes a timeout.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Timeout {
     /// The side which takes the timeout or [None] for a referee timeout.

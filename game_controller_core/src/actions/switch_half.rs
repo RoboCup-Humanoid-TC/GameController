@@ -6,7 +6,7 @@ use crate::types::{Penalty, Phase, State};
 
 /// This struct defines an action that switches from the end of the first half to the beginning of
 /// the second half, including the switch of sides.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct SwitchHalf;
 
 impl Action for SwitchHalf {

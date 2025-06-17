@@ -65,7 +65,7 @@ impl Index<RunCondition> for EvaluatedRunConditions {
 }
 
 /// This enumerates the possible behaviors of a timer when 0 is reached.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum BehaviorAtZero {
     /// When the timer reaches 0, it stops itself and potentially releases some actions to be
@@ -78,7 +78,7 @@ pub enum BehaviorAtZero {
 }
 
 /// This struct describes the state of a timer. A timer can be either started or stopped.
-#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Timer {
     /// The timer is active with some parameters. It may still be paused.
@@ -140,7 +140,6 @@ impl Timer {
                     None
                 }
             }
-
             _ => None,
         }
     }

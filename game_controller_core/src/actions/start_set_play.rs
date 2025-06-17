@@ -8,7 +8,7 @@ use crate::types::{Phase, SetPlay, Side, State};
 /// This struct defines an action to start a set play. Depending on the set play type, this means
 /// switching to the Ready state or just setting a flag for the current set play within the Playing
 /// state.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StartSetPlay {
     /// The side which can execute the set play.
