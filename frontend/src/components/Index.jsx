@@ -19,7 +19,7 @@ const Index = () => {
     return <Main />;
   } else if (launched && league === "humanoid") {
     return <HL_Main />;
-  } else if (league === "spl" ) {
+  } else if (league === "spl") {
     return <Launcher setLaunched={setLaunched} />;
   } else if (league === "humanoid") {
     return <HL_Launcher setLaunched={setLaunched} />;

@@ -165,7 +165,10 @@ const FreeKickButtons = ({ game, side, sign }) => {
           }
         />
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "directFreekick", seconds: 30 } }}
+          action={{
+            type: "hlSetPlay",
+            args: { side: side, setPlay: "directFreekick", seconds: 30 },
+          }}
           active={false}
           label={
             game.secState.state == "normal"
@@ -189,7 +192,10 @@ const FreeKickButtons = ({ game, side, sign }) => {
           }
         />
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "indirectFreekick", seconds: 30 } }}
+          action={{
+            type: "hlSetPlay",
+            args: { side: side, setPlay: "indirectFreekick", seconds: 30 },
+          }}
           active={false}
           label={
             game.secState.state == "normal"
@@ -387,46 +393,45 @@ const TeamPanel = ({
       </div>
       <div className="grow flex flex-col gap-2 overflow-auto">
         {team.players
-              .slice(0, 6)
-              .map((player, index) => {
-                return {
-                  ...player,
-                  connectionStatus: teamConnectionStatus[index],
-                  number: index + 1,
-                };
-              })
-              .map((player) => (
-                <PlayerButton
-                  key={player.number}
-                  color={
-                    (
-                      selectingPlayerInPSO
-                        ? substitutedPlayer === true
-                        : (selectingPlayerIn ? substitutedPlayer : player.number) ===
-                          team.goalkeeper
-                    )
-                      ? teamParams.fieldPlayerColor // later change this back to goalkeeperColor if hl teams have different colors for goalkeepers
-                      : teamParams.fieldPlayerColor
-                  }
-                  legal={
-                    substitute ||
-                    player.penalty !== "noPenalty" ||
-                    actions.isPenaltyCallLegalForPlayer(
-                      legalPenaltyActions,
-                      side,
-                      player.number,
-                      selectedPenaltyCall
-                    )
-                  }
-                  sign={sign}
-                  onClick={() => handlePlayerClick(player)}
-                  onClickW={() => handleWarning(player)}
-                  onClickY={() => handleYellow(player)}
-                  onClickR={() => handleRed(player)}
-                  player={player}
-                  side={side}
-                />
-              ))}
+          .slice(0, 6)
+          .map((player, index) => {
+            return {
+              ...player,
+              connectionStatus: teamConnectionStatus[index],
+              number: index + 1,
+            };
+          })
+          .map((player) => (
+            <PlayerButton
+              key={player.number}
+              color={
+                (
+                  selectingPlayerInPSO
+                    ? substitutedPlayer === true
+                    : (selectingPlayerIn ? substitutedPlayer : player.number) === team.goalkeeper
+                )
+                  ? teamParams.fieldPlayerColor // later change this back to goalkeeperColor if hl teams have different colors for goalkeepers
+                  : teamParams.fieldPlayerColor
+              }
+              legal={
+                substitute ||
+                player.penalty !== "noPenalty" ||
+                actions.isPenaltyCallLegalForPlayer(
+                  legalPenaltyActions,
+                  side,
+                  player.number,
+                  selectedPenaltyCall
+                )
+              }
+              sign={sign}
+              onClick={() => handlePlayerClick(player)}
+              onClickW={() => handleWarning(player)}
+              onClickY={() => handleYellow(player)}
+              onClickR={() => handleRed(player)}
+              player={player}
+              side={side}
+            />
+          ))}
       </div>
       <FreeKickButtons game={game} legalTeamActions={legalTeamActions} side={side} sign={sign} />
     </div>

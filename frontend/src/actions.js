@@ -88,7 +88,7 @@ export const getActions = () => {
   actions.push({ type: "startSetPlay", args: { side: "away", setPlay: "kickOff" } });
   actions.push({ type: "addExtraTime", args: null });
   actions.push({ type: "timeout", args: { side: null } });
-  actions.push({ type: "switchHalf", args: null })
+  actions.push({ type: "switchHalf", args: null });
   for (const penalty of PENALTIES) {
     for (const side of ["home", "away"]) {
       for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {

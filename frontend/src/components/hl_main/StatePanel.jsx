@@ -12,9 +12,9 @@ const StatePanel = ({ game, legalGameActions }) => {
       (game.phase === "firstHalf" && game.state === "finished")) ? (
       <div className={inHalfTimeBreak ? "col-span-3" : "col-span-3"}>
         <ActionButton
-          action={{ type: "hlStateShifter", args: {state: "ready"} }}
+          action={{ type: "hlStateShifter", args: { state: "ready" } }}
           label="Ready"
-          legal={inHalfTimeBreak ? game.phase === "secondHalf" ? true : false : true}
+          legal={inHalfTimeBreak ? (game.phase === "secondHalf" ? true : false) : true}
         />
       </div>
     ) : (
@@ -27,7 +27,7 @@ const StatePanel = ({ game, legalGameActions }) => {
     game.state === "set" ||
     game.state === "playing" ? (
       <ActionButton
-        action={{ type: "hlStateShifter", args: {state: "set"} }}
+        action={{ type: "hlStateShifter", args: { state: "set" } }}
         label="Set"
         legal={game.state === "ready" || game.secState.state == "penaltyshoot"}
       />
@@ -42,7 +42,7 @@ const StatePanel = ({ game, legalGameActions }) => {
     game.state === "playing" ? (
       <div className={game.secState.state === "penaltyshoot" ? "col-span-2" : "col-span-1"}>
         <ActionButton
-          action={{ type: "hlStateShifter", args: {state: "playing"} }}
+          action={{ type: "hlStateShifter", args: { state: "playing" } }}
           label="Playing"
           legal={game.state === "set"}
         />
@@ -70,7 +70,7 @@ const StatePanel = ({ game, legalGameActions }) => {
     game.state === "set" ||
     game.state === "playing" ? (
       <ActionButton
-        action={{ type: "hlStateShifter", args: {state: "finished"} }}
+        action={{ type: "hlStateShifter", args: { state: "finished" } }}
         label="Finish"
         legal={true}
       />
