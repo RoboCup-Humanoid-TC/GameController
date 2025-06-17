@@ -465,6 +465,15 @@ impl IndexMut<PlayerNumber> for Team {
     }
 }
 
+/// This enumerats the cards that a player can be shown in the Humanoid League.
+#[derive(Clone, Copy, Debug, Deserialize, Enum, Eq, Hash, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum HlCard {
+    Warning,
+    Yellow,
+    Red,
+}
+
 /// This struct contains the dynamic state of a player.
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -473,15 +482,8 @@ pub struct Player {
     pub penalty: Penalty,
     /// The timer which counts down until the penalty is over.
     pub penalty_timer: Timer,
-    /// HL Stuff
-    /// warnings the player has received
-    pub warnings: u8,
-    /// yellow card the player has received
-    pub yellow: u8,
-    /// red cards the player has received
-    pub red: u8,
-    /// Goalkeeper
-    pub goalkeeper: u8,
+    /// The cards that this player has been shown.
+    pub cards: EnumMap<HlCard, u8>,
 }
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -507,6 +509,6 @@ pub enum ActionSource {
     Timer,
     /// The action was triggered by the user (and should be replayed).
     User,
-    /// referee
+    /// The action was triggered by the (automatic) referee.
     Referee,
 }

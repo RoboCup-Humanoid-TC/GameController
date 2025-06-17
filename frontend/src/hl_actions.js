@@ -117,34 +117,21 @@ export const getActions = () => {
     }
   }
   */
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "incrementPlayerWarning", args: { side: side, player: number } });
+  for (const card of ["warning", "yellow", "red"]) {
+    for (const side of ["home", "away"]) {
+      for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
+        actions.push({ type: "hlAddCard", args: { side: side, player: number, card: card } });
+      }
     }
   }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "incrementPlayerYellow", args: { side: side, player: number } });
-    }
-  }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "incrementPlayerRed", args: { side: side, player: number } });
-    }
-  }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "hlPushing", args: { side: side, player: number } });
-    }
-  }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "hlPickUp", args: { side: side, player: number } });
-    }
-  }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "hlBallManipulation", args: { side: side, player: number } });
+  for (const penalty of ["ballHolding", "playerPushing", "pickedUp"]) {
+    for (const side of ["home", "away"]) {
+      for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
+        actions.push({
+          type: "hlPenalize",
+          args: { side: side, player: number, penalty: penalty },
+        });
+      }
     }
   }
   for (const side of ["home", "away"]) {

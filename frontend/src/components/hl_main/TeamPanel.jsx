@@ -263,10 +263,11 @@ const TeamPanel = ({
       setSubstitute(false);
     } else if (selectedPenaltyCall != null) {
       applyAction({
-        type: selectedPenaltyCall,
+        type: "hlPenalize",
         args: {
           side: side,
           player: player.number,
+          penalty: selectedPenaltyCall,
         },
       });
       setSelectedPenaltyCall(null);

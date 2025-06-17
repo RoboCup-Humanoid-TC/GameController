@@ -50,17 +50,13 @@ trait_enum! {
         WaitForSetPlay,
 
         HlAbort,
-        HlBallManipulation,
-        HlPickUp,
-        HlPushing,
+        HlAddCard,
+        HlPenalize,
         HlRetake,
         HlSetPlay,
         HlStateShifter,
         HlSubstitute,
         HlUnpenalize,
-        IncrementPlayerRed,
-        IncrementPlayerWarning,
-        IncrementPlayerYellow,
     }
 }
 

@@ -1,5 +1,6 @@
 use std::mem::replace;
 
+use enum_map::enum_map;
 use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext};
@@ -31,10 +32,7 @@ impl Action for SelectPenaltyShotPlayer {
                     Player {
                         penalty: Penalty::Substitute,
                         penalty_timer: Timer::Stopped,
-                        warnings: 0,
-                        yellow: 0,
-                        red: 0,
-                        goalkeeper: 0,
+                        cards: enum_map! { _ => 0 },
                     },
                 )
             })
@@ -42,10 +40,7 @@ impl Action for SelectPenaltyShotPlayer {
             .unwrap_or(Player {
                 penalty: Penalty::NoPenalty,
                 penalty_timer: Timer::Stopped,
-                warnings: 0,
-                yellow: 0,
-                red: 0,
-                goalkeeper: 0,
+                cards: enum_map! { _ => 0 },
             });
 
         c.game.teams[self.side].goalkeeper = if self.goalkeeper {

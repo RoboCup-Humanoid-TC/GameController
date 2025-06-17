@@ -3,7 +3,8 @@ use bytes::{BufMut, Bytes, BytesMut};
 use game_controller_core::{
     timer::SignedDuration,
     types::{
-        ChallengeMode, Color, Game, Params, Penalty, Phase, SecState, Side, SideMapping, State,
+        ChallengeMode, Color, Game, HlCard, Params, Penalty, Phase, PlayerNumber, SecState, Side,
+        SideMapping, State,
     },
 };
 
@@ -244,10 +245,9 @@ impl HlControlMessage {
                 },
                 players: game.teams[side]
                     .players
-                    // The alternative to this clone is doing iter() here, and collecting into a
-                    // Vec in the end, and then try_into() that Vec into the fixed size array.
-                    .clone()
-                    .map(|player| ControlMessagePlayer {
+                    .iter()
+                    .enumerate()
+                    .map(|(index, player)| ControlMessagePlayer {
                         penalty: match player.penalty {
                             Penalty::NoPenalty => PENALTY_NONE,
                             Penalty::Substitute => SUBSTITUTE,
@@ -270,11 +270,16 @@ impl HlControlMessage {
                             u8::MAX as i64,
                         ) as u8,
                         // TODO
-                        number_of_warnings: player.warnings,
-                        yellow_card_count: player.yellow,
-                        red_card_count: player.red,
-                        goalkeeper: player.goalkeeper,
-                    }),
+                        number_of_warnings: player.cards[HlCard::Warning],
+                        yellow_card_count: player.cards[HlCard::Yellow],
+                        red_card_count: player.cards[HlCard::Red],
+                        goalkeeper: game.teams[side].goalkeeper.is_some_and(|goalkeeper| {
+                            u8::from(goalkeeper) - PlayerNumber::MIN == index as u8
+                        }) as u8,
+                    })
+                    .collect::<Vec<_>>()
+                    .try_into()
+                    .unwrap(),
             }),
         }
     }

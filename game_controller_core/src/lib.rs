@@ -20,8 +20,8 @@ use crate::actions::*;
 use crate::log::{LogEntry, LoggedAction, Logger, TimestampedLogEntry};
 use crate::timer::{BehaviorAtZero, EvaluatedRunConditions, RunCondition, Timer};
 use crate::types::{
-    ActionSource, Game, Params, Penalty, Phase, Player, PlayerNumber, SecState, SecondaryState,
-    SetPlay, Side, State, Team,
+    ActionSource, Game, HlCard, Params, Penalty, Phase, Player, PlayerNumber, SecState,
+    SecondaryState, SetPlay, Side, State, Team,
 };
 
 /// This struct encapsulates a delayed game state.
@@ -85,10 +85,9 @@ impl GameController {
                                 Penalty::Substitute
                             },
                             penalty_timer: Timer::Stopped,
-                            warnings: 0,
-                            yellow: 0,
-                            red: 0,
-                            goalkeeper: 0,
+                            cards: enum_map! {
+                                _ => 0,
+                            },
                         })
                         // We have to collect into a Vec first because this thing cannot be directly
                         // collected into a fixed size array.
@@ -453,23 +452,26 @@ impl GameController {
                 ActionSource::Referee,
             ),
             2 => self.apply(
-                VAction::HlPushing(HlPushing {
+                VAction::HlPenalize(HlPenalize {
                     side: side,
                     player: PlayerNumber(command_4),
+                    penalty: Penalty::PlayerPushing,
                 }),
                 ActionSource::Referee,
             ),
             3 => self.apply(
-                VAction::HlPickUp(HlPickUp {
+                VAction::HlPenalize(HlPenalize {
                     side: side,
                     player: PlayerNumber(command_4),
+                    penalty: Penalty::PickedUp,
                 }),
                 ActionSource::Referee,
             ),
             4 => self.apply(
-                VAction::HlBallManipulation(HlBallManipulation {
+                VAction::HlPenalize(HlPenalize {
                     side: side,
                     player: PlayerNumber(command_4),
+                    penalty: Penalty::BallHolding,
                 }),
                 ActionSource::Referee,
             ),
@@ -482,23 +484,26 @@ impl GameController {
                 ActionSource::Referee,
             ),
             6 => self.apply(
-                VAction::IncrementPlayerRed(IncrementPlayerRed {
+                VAction::HlAddCard(HlAddCard {
                     side: side,
                     player: PlayerNumber(command_4),
+                    card: HlCard::Red,
                 }),
                 ActionSource::Referee,
             ),
             7 => self.apply(
-                VAction::IncrementPlayerYellow(IncrementPlayerYellow {
+                VAction::HlAddCard(HlAddCard {
                     side: side,
                     player: PlayerNumber(command_4),
+                    card: HlCard::Yellow,
                 }),
                 ActionSource::Referee,
             ),
             8 => self.apply(
-                VAction::IncrementPlayerWarning(IncrementPlayerWarning {
+                VAction::HlAddCard(HlAddCard {
                     side: side,
                     player: PlayerNumber(command_4),
+                    card: HlCard::Warning,
                 }),
                 ActionSource::Referee,
             ),

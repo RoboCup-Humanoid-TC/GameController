@@ -33,10 +33,11 @@ const penaltyDescriptions = {
 const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
   const addCard = (color) => {
     applyAction({
-      type: `incrementPlayer${color}`,
+      type: "hlAddCard",
       args: {
         side: side,
         player: player.number,
+        card: color,
       },
     });
   };
@@ -108,26 +109,26 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
       <button
         className={"grow rounded-md border border-red-500 bg-red-500"}
         disabled={false}
-        onClick={() => addCard("Red")}
+        onClick={() => addCard("red")}
         style={{ width: "10%", height: "100%" }}
       >
-        {player.red}
+        {player.cards["red"]}
       </button>
       <button
         className={"grow rounded-md border border-yellow-300 bg-yellow-300"}
         disabled={false}
-        onClick={() => addCard("Yellow")}
+        onClick={() => addCard("yellow")}
         style={{ width: "10%", height: "100%", margin: 0, alignContent: "center" }}
       >
-        {player.yellow}
+        {player.cards["yellow"]}
       </button>
       <button
         className={"grow rounded-md border border-blue-400 bg-blue-400"}
         disabled={false}
-        onClick={() => addCard("Warning")}
+        onClick={() => addCard("warning")}
         style={{ width: "10%", height: "100%" }}
       >
-        {player.warnings}
+        {player.cards["warning"]}
       </button>
     </div>
   );
