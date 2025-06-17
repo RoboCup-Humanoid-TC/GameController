@@ -42,7 +42,7 @@ impl EvaluatedRunConditions {
                     && !params.game.long
                     && game.primary_timer.get_remaining()
                         != TryInto::<SignedDuration>::try_into(params.competition.half_duration)
-                            .unwrap())) && (game.sec_state.state == SecState::Normal || (game.sec_state.state == SecState::Penalityshoot && game.state != State::Set)),
+                            .unwrap())) && (game.sec_state.state == SecState::Normal || (game.sec_state.state == SecState::Penaltyshoot && game.state != State::Set)),
             ready_or_playing: (game.state == State::Ready || game.state == State::Playing) && game.sec_state.state == SecState::Normal,
         }
     }

@@ -192,8 +192,8 @@ pub enum State {
 pub enum SecState {
     /// normal
     Normal,
-    /// Penalityshoot
-    Penalityshoot,
+    /// Penaltyshoot
+    Penaltyshoot,
     /// Overtime
     Overtime,
     /// Timeout

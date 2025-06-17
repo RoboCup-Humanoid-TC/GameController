@@ -6,7 +6,7 @@ const StatePanel = ({ game, legalGameActions }) => {
     (game.phase === "firstHalf" && game.state === "finished") ||
     (game.phase === "secondHalf" && game.state === "initial");
   let readyButton =
-    game.secState.state != "penalityshoot" &&
+    game.secState.state != "penaltyshoot" &&
     (game.state === "initial" ||
       game.state === "timeout" ||
       (game.phase === "firstHalf" && game.state === "finished")) ? (
@@ -22,7 +22,7 @@ const StatePanel = ({ game, legalGameActions }) => {
     );
 
   let setButton =
-    game.secState.state === "penalityshoot" ||
+    game.secState.state === "penaltyshoot" ||
     game.state === "ready" ||
     game.state === "set" ||
     game.state === "playing" ? (
@@ -36,11 +36,11 @@ const StatePanel = ({ game, legalGameActions }) => {
     );
 
   let playingButton =
-    game.secState.state === "penalityshoot" ||
+    game.secState.state === "penaltyshoot" ||
     game.state === "ready" ||
     game.state === "set" ||
     game.state === "playing" ? (
-      <div className={game.secState.state === "penalityshoot" ? "col-span-2" : "col-span-1"}>
+      <div className={game.secState.state === "penaltyshoot" ? "col-span-2" : "col-span-1"}>
         <ActionButton
           action={{ type: "hlStateShifter", args: {state: "playing"} }}
           label="Playing"
@@ -51,20 +51,21 @@ const StatePanel = ({ game, legalGameActions }) => {
       <></>
     );
 
-  let ballFreeButton =
-  //   game.phase != "penalityshoot" &&
-  //   (game.state === "ready" || game.state === "set" || game.state === "playing") ? (
-  //     <ActionButton
-  //       action={{ type: "finishSetPlay", args: null }}
-  //       label={"Ball Free"}
-  //       legal={legalGameActions[actions.FINISH_SET_PLAY]}
-  //     />
-  //   ) : (
-      <></>
+  let ballFreeButton = (
+    //   game.phase != "penaltyshoot" &&
+    //   (game.state === "ready" || game.state === "set" || game.state === "playing") ? (
+    //     <ActionButton
+    //       action={{ type: "finishSetPlay", args: null }}
+    //       label={"Ball Free"}
+    //       legal={legalGameActions[actions.FINISH_SET_PLAY]}
+    //     />
+    //   ) : (
+    <></>
+  );
   //   );
 
   let finishButton =
-    game.secState.state === "penalityshoot" ||
+    game.secState.state === "penaltyshoot" ||
     game.state === "ready" ||
     game.state === "set" ||
     game.state === "playing" ? (
@@ -82,15 +83,16 @@ const StatePanel = ({ game, legalGameActions }) => {
   // the operator clicked the button exactly at that time, but the button switches its meaning to
   // Ready before the button is actually clicked. Therefore, both buttons (Ready and Second Half)
   // are displayed during the entire half-time break, even though only one of them can be legal.
-  let secondHalfButton = inHalfTimeBreak && game.secState.state != "penalityshoot" ? (
-    <ActionButton
-      action={{ type: "hlStateShifter", args: {state: "initial"} }}
-      label="Second Half"
-      legal={legalGameActions[actions.SWITCH_HALF]}
-    />
-  ) : (
-    <></>
-  );
+  let secondHalfButton =
+    inHalfTimeBreak && game.secState.state != "penaltyshoot" ? (
+      <ActionButton
+        action={{ type: "hlStateShifter", args: { state: "initial" } }}
+        label="Second Half"
+        legal={legalGameActions[actions.SWITCH_HALF]}
+      />
+    ) : (
+      <></>
+    );
 
   let penaltyshootButtons =
     game.phase === "secondHalf" && game.state === "finished" ? (

@@ -41,7 +41,7 @@ impl Action for StartPenaltyShootout {
         } else {
             c.game.sides = self.sides;
             c.game.state = State::Initial;
-            c.game.sec_state.state = SecState::Penalityshoot;
+            c.game.sec_state.state = SecState::Penaltyshoot;
             c.game.sec_state.side = Side::Home;
             c.game.primary_timer = Timer::Stopped;
             c.game.secondary_timer = Timer::Stopped;

@@ -10,7 +10,7 @@ pub struct ManipulateSecState;
 
 impl Action for ManipulateSecState {
     fn execute(&self, c: &mut ActionContext) {
-        c.game.sec_state.state = SecState::Penalityshoot;
+        c.game.sec_state.state = SecState::Penaltyshoot;
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {

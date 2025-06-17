@@ -38,7 +38,7 @@ impl Action for HlStateShifter {
             run_condition: RunCondition::Playing,
             behavior_at_zero: BehaviorAtZero::Overflow,
         };
-        } else if self.state == State::Set && c.game.sec_state.state == SecState::Penalityshoot {
+        } else if self.state == State::Set && c.game.sec_state.state == SecState::Penaltyshoot {
             c.game.state = self.state;
             c.game.primary_timer = Timer::Started {
                 remaining: SignedDuration::new(60, 0),
@@ -56,9 +56,9 @@ impl Action for HlStateShifter {
                     player.penalty_timer = Timer::Stopped;
                 });
             });
-        } else if self.state == State::Playing && c.game.sec_state.state == SecState::Penalityshoot {
+        } else if self.state == State::Playing && c.game.sec_state.state == SecState::Penaltyshoot {
             c.game.state = self.state;
-        } else if self.state == State::Finished && c.game.sec_state.state == SecState::Penalityshoot {
+        } else if self.state == State::Finished && c.game.sec_state.state == SecState::Penaltyshoot {
             c.game.state = State::Ready;
                 c.game.primary_timer = Timer::Started {
                     remaining: SignedDuration::new(60, 0),

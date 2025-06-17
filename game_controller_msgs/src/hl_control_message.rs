@@ -198,7 +198,7 @@ impl HlControlMessage {
             kicking_team: params.game.teams[game.kicking_side].number,
             sec_game_state: match game.sec_state.state {
                 SecState::Normal => STATE2_NORMAL,
-                SecState::Penalityshoot => STATE2_PENALTYSHOOT,
+                SecState::Penaltyshoot => STATE2_PENALTYSHOOT,
                 SecState::Overtime => STATE2_OVERTIME,
                 SecState::Timeout => STATE2_TIMEOUT,
                 SecState::DirectFreekick => STATE2_DIRECT_FREEKICK,

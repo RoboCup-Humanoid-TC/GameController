@@ -59,7 +59,7 @@ impl Action for Goal {
             c.game.teams[self.side].score += 1;
             // TODO: Kickoff
             c.game.kicking_side = -self.side;
-            if c.game.sec_state.state != SecState::Penalityshoot {
+            if c.game.sec_state.state != SecState::Penaltyshoot {
                 c.game.secondary_timer = Timer::Started {
                     remaining: SignedDuration::new(45, 0),
                     run_condition: RunCondition::Always,
