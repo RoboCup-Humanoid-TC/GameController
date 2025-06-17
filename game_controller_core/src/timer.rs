@@ -39,7 +39,6 @@ impl EvaluatedRunConditions {
             playing: (game.state == State::Playing
                 || ((game.state == State::Ready || game.state == State::Set)
                     && game.phase != Phase::PenaltyShootout
-                    && !params.game.long
                     && game.primary_timer.get_remaining()
                         != TryInto::<SignedDuration>::try_into(params.competition.half_duration)
                             .unwrap()))
