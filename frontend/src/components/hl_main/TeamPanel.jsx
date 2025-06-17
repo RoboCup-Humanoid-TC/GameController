@@ -61,89 +61,173 @@ const TeamStats = ({ game, side, sign, team }) => {
 const FreeKickButtons = ({ game, side, sign }) => {
   return (
     <div className="h-1/4">
-      <div className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}>
+      <div
+        className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}
+      >
         <TeamPenaltyButton
-          action={{ type: "hlGoalKick", args: { side: side, seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "goalKick", seconds: 30 } }}
           active={false}
-          label={game.secState.state == "normal" ? 
-            "Goal Kick" : game.secState.state == "goalKick" && game.secState.side == side ?
-            game.secState.phase == 0 ? "Placement" : 
-            game.secState.phase == 1 ? "!Placement" :
-            game.secState.phase == 2 ? "Execute" : "" : "Goal Kick"}
-          legal={(game.secState.state === "normal" || (game.secState.state === "goalKick" && game.secState.side === side))
-            && game.state == "playing" ? true : false}
+          label={
+            game.secState.state == "normal"
+              ? "Goal Kick"
+              : game.secState.state == "goalKick" && game.secState.side == side
+              ? game.secState.phase == 0
+                ? "Placement"
+                : game.secState.phase == 1
+                ? "!Placement"
+                : game.secState.phase == 2
+                ? "Execute"
+                : ""
+              : "Goal Kick"
+          }
+          legal={
+            (game.secState.state === "normal" ||
+              (game.secState.state === "goalKick" && game.secState.side === side)) &&
+            game.state == "playing"
+              ? true
+              : false
+          }
         />
         <TeamPenaltyButton
-          action={{ type: "hlThrowIn", args: { side: side, seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "throwIn", seconds: 30 } }}
           active={false}
-          label={game.secState.state == "normal" ? 
-            "Throw in" : game.secState.state == "throwIn" && game.secState.side == side ?
-            game.secState.phase == 0 ? "Placement" : 
-            game.secState.phase == 1 ? "!Placement" :
-            game.secState.phase == 2 ? "Execute" : "" : "Throw in"}
-          legal={(game.secState.state === "normal" || (game.secState.state === "throwIn" && game.secState.side === side))
-            && game.state == "playing" ? true : false}
+          label={
+            game.secState.state == "normal"
+              ? "Throw in"
+              : game.secState.state == "throwIn" && game.secState.side == side
+              ? game.secState.phase == 0
+                ? "Placement"
+                : game.secState.phase == 1
+                ? "!Placement"
+                : game.secState.phase == 2
+                ? "Execute"
+                : ""
+              : "Throw in"
+          }
+          legal={
+            (game.secState.state === "normal" ||
+              (game.secState.state === "throwIn" && game.secState.side === side)) &&
+            game.state == "playing"
+              ? true
+              : false
+          }
         />
         <TeamPenaltyButton
-          action={{ type: "hlCornerKick", args: { side: side, seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "cornerKick", seconds: 30 } }}
           active={false}
-          label={game.secState.state == "normal" ? 
-            "Corner Kick" : game.secState.state == "cornerKick" && game.secState.side == side ?
-            game.secState.phase == 0 ? "Placement" : 
-            game.secState.phase == 1 ? "!Placement" :
-            game.secState.phase == 2 ? "Execute" : "" : "Corner Kick"}
-          legal={(game.secState.state === "normal" || (game.secState.state === "cornerKick" && game.secState.side === side))
-            && game.state == "playing" ? true : false}
+          label={
+            game.secState.state == "normal"
+              ? "Corner Kick"
+              : game.secState.state == "cornerKick" && game.secState.side == side
+              ? game.secState.phase == 0
+                ? "Placement"
+                : game.secState.phase == 1
+                ? "!Placement"
+                : game.secState.phase == 2
+                ? "Execute"
+                : ""
+              : "Corner Kick"
+          }
+          legal={
+            (game.secState.state === "normal" ||
+              (game.secState.state === "cornerKick" && game.secState.side === side)) &&
+            game.state == "playing"
+              ? true
+              : false
+          }
         />
       </div>
-      <div className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}>
-      <TeamPenaltyButton
-        action={{ type: "hlPenaltyKick", args: { side: side, seconds: 30 } }}
-        active={false}
-        label={game.secState.state == "normal" ? 
-          "Penalty Kick" : game.secState.state == "penaltykick" && game.secState.side == side ?
-          game.secState.phase == 0 ? "Placement" : 
-          game.secState.phase == 1 ? "!Placement" :
-          game.secState.phase == 2 ? "Execute" : "" : "Penalty Kick"}
-        legal={(game.secState.state === "normal" || (game.secState.state === "penaltykick" && game.secState.side === side))
-          && game.state == "playing" ? true : false}
-      />
-      <TeamPenaltyButton
-        action={{ type: "hlDirectFreeKick", args: { side: side, seconds: 30 } }}
-        active={false}
-        label={game.secState.state == "normal" ? 
-          "Direct Free Kick" : game.secState.state == "directFreekick" && game.secState.side == side ?
-          game.secState.phase == 0 ? "Placement" : 
-          game.secState.phase == 1 ? "!Placement" :
-          game.secState.phase == 2 ? "Execute" : "" : "Direct Free Kick"}
-        legal={(game.secState.state === "normal" || (game.secState.state === "directFreekick" && game.secState.side === side))
-          && game.state == "playing" ? true : false}
-      />
-      <TeamPenaltyButton
-        action={{ type: "hlIndirectFreeKick", args: { side: side, seconds: 30 } }}
-        active={false}
-        label={game.secState.state == "normal" ? 
-          "Indirect Free Kick" : game.secState.state == "indirectFreekick" && game.secState.side == side ?
-          game.secState.phase == 0 ? "Placement" : 
-          game.secState.phase == 1 ? "!Placement" :
-          game.secState.phase == 2 ? "Execute" : "" : "Indirect Free Kick"}
-        legal={(game.secState.state === "normal" || (game.secState.state === "indirectFreekick" && game.secState.side === side))
-          && game.state == "playing" ? true : false}
-      />
+      <div
+        className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}
+      >
+        <TeamPenaltyButton
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "penaltykick", seconds: 30 } }}
+          active={false}
+          label={
+            game.secState.state == "normal"
+              ? "Penalty Kick"
+              : game.secState.state == "penaltykick" && game.secState.side == side
+              ? game.secState.phase == 0
+                ? "Placement"
+                : game.secState.phase == 1
+                ? "!Placement"
+                : game.secState.phase == 2
+                ? "Execute"
+                : ""
+              : "Penalty Kick"
+          }
+          legal={
+            (game.secState.state === "normal" ||
+              (game.secState.state === "penaltykick" && game.secState.side === side)) &&
+            game.state == "playing"
+              ? true
+              : false
+          }
+        />
+        <TeamPenaltyButton
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "directFreekick", seconds: 30 } }}
+          active={false}
+          label={
+            game.secState.state == "normal"
+              ? "Direct Free Kick"
+              : game.secState.state == "directFreekick" && game.secState.side == side
+              ? game.secState.phase == 0
+                ? "Placement"
+                : game.secState.phase == 1
+                ? "!Placement"
+                : game.secState.phase == 2
+                ? "Execute"
+                : ""
+              : "Direct Free Kick"
+          }
+          legal={
+            (game.secState.state === "normal" ||
+              (game.secState.state === "directFreekick" && game.secState.side === side)) &&
+            game.state == "playing"
+              ? true
+              : false
+          }
+        />
+        <TeamPenaltyButton
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "indirectFreekick", seconds: 30 } }}
+          active={false}
+          label={
+            game.secState.state == "normal"
+              ? "Indirect Free Kick"
+              : game.secState.state == "indirectFreekick" && game.secState.side == side
+              ? game.secState.phase == 0
+                ? "Placement"
+                : game.secState.phase == 1
+                ? "!Placement"
+                : game.secState.phase == 2
+                ? "Execute"
+                : ""
+              : "Indirect Free Kick"
+          }
+          legal={
+            (game.secState.state === "normal" ||
+              (game.secState.state === "indirectFreekick" && game.secState.side === side)) &&
+            game.state == "playing"
+              ? true
+              : false
+          }
+        />
       </div>
-      <div className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}>
-      <ActionButton
-        action={{ type: "hlRetake", args: { side: side } }}
-        active={false}
-        label="Retake"
-        legal={game.secState.state !== "normal" && game.secState.side === side ? true : false}
-      />
-      <ActionButton
-        action={{ type: "hlAbort", args: { side: side } }}
-        active={false}
-        label="Abort"
-        legal={game.secState.state !== "normal" && game.secState.side === side ? true : false}
-      />
+      <div
+        className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}
+      >
+        <ActionButton
+          action={{ type: "hlRetake", args: { side: side } }}
+          active={false}
+          label="Retake"
+          legal={game.secState.state !== "normal" && game.secState.side === side ? true : false}
+        />
+        <ActionButton
+          action={{ type: "hlAbort", args: { side: side } }}
+          active={false}
+          label="Abort"
+          legal={game.secState.state !== "normal" && game.secState.side === side ? true : false}
+        />
       </div>
     </div>
   );
@@ -256,7 +340,7 @@ const TeamPanel = ({
           type: "hlUnpenalize",
           args: { side: side, player: player.number, timer: false },
         });
-     }
+      }
     }
   };
 

@@ -375,28 +375,34 @@ impl GameController {
         }
         match command_2 {
             // Home
-            1 => {self.apply(VAction::HlGoalKick(HlGoalKick{
+            1 => {self.apply(VAction::HlSetPlay(HlSetPlay{
                 side: side,
+                set_play: SecState::GoalKick,
                 seconds: 45,
             }), ActionSource::Referee)},
-            2 => {self.apply(VAction::HlThrowIn(HlThrowIn{
+            2 => {self.apply(VAction::HlSetPlay(HlSetPlay{
                 side: side,
+                set_play: SecState::ThrowIn,
                 seconds: 45,
             }), ActionSource::Referee)},
-            3 => {self.apply(VAction::HlCornerKick(HlCornerKick{
+            3 => {self.apply(VAction::HlSetPlay(HlSetPlay{
                 side: side,
+                set_play: SecState::CornerKick,
                 seconds: 45,
             }), ActionSource::Referee)},
-            4 => {self.apply(VAction::HlPenaltyKick(HlPenaltyKick{
+            4 => {self.apply(VAction::HlSetPlay(HlSetPlay{
                 side: side,
+                set_play: SecState::Penaltykick,
                 seconds: 45,
             }), ActionSource::Referee)},
-            5 => {self.apply(VAction::HlDirectFreeKick(HlDirectFreeKick{
+            5 => {self.apply(VAction::HlSetPlay(HlSetPlay{
                 side: side,
+                set_play: SecState::DirectFreekick,
                 seconds: 45,
             }), ActionSource::Referee)},
-            6 => {self.apply(VAction::HlIndirectFreeKick(HlIndirectFreeKick{
+            6 => {self.apply(VAction::HlSetPlay(HlSetPlay{
                 side: side,
+                set_play: SecState::IndirectFreekick,
                 seconds: 45,
             }), ActionSource::Referee)},
             7 => {self.apply(VAction::HlRetake(HlRetake{
