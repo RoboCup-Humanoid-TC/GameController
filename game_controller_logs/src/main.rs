@@ -7,7 +7,7 @@ use clap::{Parser, Subcommand};
 
 use game_controller_core::log::TimestampedLogEntry;
 
-use game_controller_logs::{data_minimization_challenge, statistics};
+use game_controller_logs::{statistics, team_communication};
 
 /// This struct defines the parser for the command line arguments.
 #[derive(Parser)]
@@ -24,10 +24,10 @@ struct Args {
 /// This struct defines the command line subcommands.
 #[derive(Subcommand)]
 enum Commands {
-    /// Extract statistics for the data minimization challenge.
-    DataMinimizationChallenge,
     /// Extract statistics about general game events.
     Statistics,
+    /// Extract statistics about the bandwidth usage of team communication.
+    TeamCommunication,
 }
 
 /// This function applies a subcommand to one log file.
@@ -35,12 +35,12 @@ fn process_file(f: File, command: &Commands) -> Result<()> {
     let entries: Vec<TimestampedLogEntry> =
         serde_yaml::from_reader(f).context("could not parse log file")?;
     match command {
-        Commands::DataMinimizationChallenge => {
-            data_minimization_challenge::evaluate(entries)
-                .context("could not evaluate data minimization challenge")?;
-        }
         Commands::Statistics => {
             statistics::evaluate(entries).context("could not create statistics from log file")?;
+        }
+        Commands::TeamCommunication => {
+            team_communication::evaluate(entries)
+                .context("could not evaluate team communication")?;
         }
     }
     Ok(())
@@ -48,6 +48,7 @@ fn process_file(f: File, command: &Commands) -> Result<()> {
 
 fn main() -> Result<()> {
     let args = Args::parse();
+
     if let Some(path) = args.path {
         let f = File::open(path).context("could not open log file")?;
         process_file(f, &args.command)?;

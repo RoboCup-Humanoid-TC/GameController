@@ -35,14 +35,7 @@ async fn launch(settings: LaunchSettings, window: Window, app: AppHandle) {
     app.manage(SyncState(runtime_notify.clone()));
 
     // Unfortunately we cannot use the number of players per team here.
-    let size = LogicalSize::<f64>::new(
-        1024.0,
-        if settings.competition.id == "champions_cup" {
-            768.0
-        } else {
-            620.0
-        },
-    );
+    let size = LogicalSize::<f64>::new(1024.0, 768.0);
     let _ = window.set_min_size(Some(size));
     #[cfg(target_os = "windows")]
     let _ = window.set_size(size);

@@ -56,7 +56,6 @@ pub fn get_connection_status_map(
         };
         result[key.0][(u8::from(key.1) - PlayerNumber::MIN) as usize] = status;
     }
-    
     result
 }
 

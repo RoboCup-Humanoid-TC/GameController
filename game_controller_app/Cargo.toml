@@ -5,6 +5,7 @@ edition = { workspace = true }
 license = { workspace = true }
 name = "game_controller_app"
 repository = { workspace = true }
+rust-version = { workspace = true }
 version = { workspace = true }
 
 [build-dependencies]

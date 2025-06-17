@@ -1,4 +1,4 @@
-//! This module implements functions to evaluate the data minimization challenge (RoboCup 2023).
+//! This module implements functions to evaluate the bandwidth usage of team communication.
 
 use std::{collections::HashMap, time::Duration};
 
@@ -13,16 +13,16 @@ use game_controller_core::{
 use game_controller_msgs::StatusMessage;
 
 /// This function checks if the given game is in a state where team messages are counted for this
-/// challenge.
+/// statistic.
 fn is_valid_state(game: &Game) -> bool {
     game.phase != Phase::PenaltyShootout
         && matches!(game.state, State::Ready | State::Playing | State::Set)
 }
 
-/// This function evaluates the statistics for the data minimization challenge on a single game.
-/// For each team, a line is written to the standard output with three comma separated values: the
-/// team number, the number of payload bytes that the team sent during the game, and the overall
-/// uptime of the team during the game in milliseconds.
+/// This function evaluates the bandwidth usage of team communication on a single game. For each
+/// team, a line is written to the standard output with three comma separated values: the team
+/// number, the number of payload bytes that the team sent during the game, and the overall uptime
+/// of the team during the game in milliseconds.
 pub fn evaluate(entries: Vec<TimestampedLogEntry>) -> Result<()> {
     let mut iter = entries.iter();
     let metadata: &LoggedMetadata =

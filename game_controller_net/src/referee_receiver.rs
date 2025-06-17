@@ -17,7 +17,6 @@ pub struct RefereeReceiver {
 impl RefereeReceiver {
     /// This function creates a new receiver for status messages.
     pub async fn new(address: IpAddr, event_sender: mpsc::UnboundedSender<Event>) -> Result<Self> {
-        println!("DEBUG2");
         Ok(Self {
             socket: UdpSocket::bind((address, 4040)).await?,
             event_sender,

@@ -27,7 +27,6 @@ impl Action for StartPenaltyShootout {
                 player.penalty_timer = Timer::Stopped;
             });
         });
-        println!("DEBUG_PEN");
         if c.params.competition.league == League::Spl {
             c.game.sides = self.sides;
             c.game.phase = Phase::PenaltyShootout;

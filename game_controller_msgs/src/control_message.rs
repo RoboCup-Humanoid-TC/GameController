@@ -121,7 +121,6 @@ impl From<ControlMessage> for Bytes {
                 bytes.put_u8(player.secs_till_unpenalized);
             }
         }
-        println!("{}", GAMECONTROLLER_STRUCT_SIZE);
         assert!(bytes.len() == GAMECONTROLLER_STRUCT_SIZE);
         bytes.freeze()
     }

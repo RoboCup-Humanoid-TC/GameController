@@ -22,18 +22,8 @@ use handlers::get_invoke_handler;
 fn main() {
     // Parse the command line arguments first. This includes handling the version and help commands
     // and wrong arguments.
-    // TODO: original please uncomment it
     let args = Args::parse();
-    // println!("DEBUGMain");
-    // println!("{:#?}", args.league);
 
-    // DEBUG for Humanoid League
-    // let mut args = Args::parse();
-    // println!("DEBUGMain");
-    // println!("{:#?}", args.league);
-    // args.league = true;
-
-    
     // We want to manage an external tokio runtime, mainly to keep dependencies to tauri minimal,
     // but also because I don't know how to do the shutdown correctly otherwise.
     let runtime = tokio::runtime::Builder::new_multi_thread()
