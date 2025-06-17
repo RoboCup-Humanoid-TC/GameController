@@ -21,7 +21,7 @@ use crate::log::{LogEntry, LoggedAction, Logger, TimestampedLogEntry};
 use crate::timer::{BehaviorAtZero, EvaluatedRunConditions, RunCondition, Timer};
 use crate::types::{
     ActionSource, Game, Params, Penalty, Phase, Player, PlayerNumber, SetPlay, State, SecState,
-    SecondaryState, Team, Side, League,
+    SecondaryState, Team, Side,
 };
 
 /// This struct encapsulates a delayed game state.
@@ -97,12 +97,6 @@ impl GameController {
                         .unwrap(),
                 },
             },
-            // TODO: Switch with args
-            league: match params.competition.league {
-                0 => League::Spl,
-                1 => League::Humanoid,
-                _ => League::Spl,
-            }
         };
         Self {
             params,
@@ -123,10 +117,6 @@ impl GameController {
         } else {
             &self.game
         }
-    }
-
-    pub fn get_league(&self) -> League {
-        self.game.league
     }
 
     /// This function returns an action context for the game. Although there is nothing that

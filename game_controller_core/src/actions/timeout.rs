@@ -20,7 +20,7 @@ impl Action for Timeout {
         } else {
             c.params.competition.referee_timeout_duration
         };
-        if c.game.league == League::Spl {
+        if c.params.competition.league == League::Spl {
             // Cancel all penalty timers.
             c.game.teams.values_mut().for_each(|team| {
                 team.players.iter_mut().for_each(|player| {

@@ -28,7 +28,7 @@ impl Action for StartPenaltyShootout {
             });
         });
         println!("DEBUG_PEN");
-        if c.game.league == League::Spl {
+        if c.params.competition.league == League::Spl {
             c.game.sides = self.sides;
             c.game.phase = Phase::PenaltyShootout;
             c.game.state = State::Initial;

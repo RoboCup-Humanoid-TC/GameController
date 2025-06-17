@@ -146,4 +146,4 @@ delayAfterGoal:
 delayAfterPlaying:
   secs: 0
   nanos: 0
-league: 1
+league: humanoid

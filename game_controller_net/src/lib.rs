@@ -5,21 +5,21 @@ use std::net::IpAddr;
 use bytes::Bytes;
 
 mod control_message_sender;
-mod referee_sender;
 mod monitor_request_receiver;
+mod referee_receiver;
+mod referee_sender;
 mod status_message_forwarder;
 mod status_message_receiver;
 mod team_message_receiver;
-mod referee_receiver;
 mod workaround;
 
 pub use control_message_sender::ControlMessageSender;
-pub use referee_sender::RefereeSender;
 pub use monitor_request_receiver::MonitorRequestReceiver;
+pub use referee_receiver::RefereeReceiver;
+pub use referee_sender::RefereeSender;
 pub use status_message_forwarder::StatusMessageForwarder;
 pub use status_message_receiver::StatusMessageReceiver;
 pub use team_message_receiver::TeamMessageReceiver;
-pub use referee_receiver::RefereeReceiver;
 
 /// This enumerates network events.
 #[derive(Debug)]
@@ -56,5 +56,5 @@ pub enum Event {
     RefereeMessage {
         /// The payload of the message.
         data: Bytes,
-    }
+    },
 }

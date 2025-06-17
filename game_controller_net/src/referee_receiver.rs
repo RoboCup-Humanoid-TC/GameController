@@ -1,4 +1,4 @@
-use std::{net::IpAddr};
+use std::net::IpAddr;
 
 use anyhow::Result;
 use bytes::Bytes;
@@ -28,7 +28,8 @@ impl RefereeReceiver {
     pub async fn run(&self) -> Result<()> {
         let mut buffer = vec![0u8; 10 + 1];
         loop {
-            let (_length, _address) = crate::workaround::recv_from(&self.socket, &mut buffer).await?;
+            let (_length, _address) =
+                crate::workaround::recv_from(&self.socket, &mut buffer).await?;
             println!("DEBUG1 {:?}", Bytes::copy_from_slice(&buffer[..]));
             self.event_sender.send(Event::RefereeMessage {
                 data: Bytes::copy_from_slice(&buffer[..]),

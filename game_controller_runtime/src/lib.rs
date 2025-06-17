@@ -276,7 +276,7 @@ async fn event_loop(
                         // here because it is possible that nobody is subscribed at the moment.
                         let _ = status_forward_sender.send((host, data.clone()));
                         // TODO: DANIEL
-                        if game_controller.get_league() == League::Spl {
+                        if game_controller.params.competition.league == League::Spl {
                             if let Ok(status_message) = StatusMessage::try_from(data) {
                                 if let Some(side)
                                     = game_controller.params.game.get_side(status_message.team_number)

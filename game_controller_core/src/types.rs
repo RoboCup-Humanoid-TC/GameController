@@ -97,8 +97,8 @@ pub struct CompetitionParams {
     pub delay_after_goal: Duration,
     /// The duration for which the true game state is hidden after switching to the Playing state.
     pub delay_after_playing: Duration,
-    /// league for the config 0: SPL; 1: Humanoid
-    pub league: u8,
+    /// league for the config
+    pub league: League,
 }
 
 /// This struct contains constant parameters for one team.
@@ -396,8 +396,6 @@ pub struct Game {
     pub switch_half_timer: Timer,
     /// The two competing teams.
     pub teams: EnumMap<Side, Team>,
-    /// League
-    pub league: League,
 }
 
 impl Game {

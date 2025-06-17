@@ -15,7 +15,7 @@ pub struct Goal {
 
 impl Action for Goal {
     fn execute(&self, c: &mut ActionContext) {
-        if c.game.league == League::Spl {
+        if c.params.competition.league == League::Spl {
             // Mercy rule: At a certain goal difference, the game is finished.
             let mercy_rule = c.game.phase != Phase::PenaltyShootout
                 && !c.game.teams[self.side].illegal_communication
@@ -55,7 +55,7 @@ impl Action for Goal {
                     1u16 << (c.game.teams[self.side].penalty_shot - 1);
                 c.game.state = State::Finished;
             }
-        } else if c.game.league == League::Humanoid {
+        } else if c.params.competition.league == League::Humanoid {
             c.game.teams[self.side].score += 1;
             // TODO: Kickoff
             c.game.kicking_side = -self.side;
@@ -91,11 +91,11 @@ impl Action for Goal {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if c.game.league == League::Spl {
+        if c.params.competition.league == League::Spl {
             c.game.state == State::Playing
                 && (c.game.phase != Phase::PenaltyShootout || self.side == c.game.kicking_side)
                 && (c.params.competition.challenge_mode.is_none() || self.side == Side::Home)
-        } else if c.game.league == League::Humanoid {
+        } else if c.params.competition.league == League::Humanoid {
             c.game.state == State::Playing
         } else {
             false
