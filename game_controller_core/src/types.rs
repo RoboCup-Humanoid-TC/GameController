@@ -246,14 +246,6 @@ pub enum Color {
     Gray,
 }
 
-/// This enumerates the jersey colors. Values may be added to match actually submitted jersey designs.
-#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum HLColor {
-    Red,
-    Blue,
-}
-
 /// This enumerates the reasons why a player can be penalized.
 #[derive(Clone, Copy, Debug, Deserialize, Enum, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
