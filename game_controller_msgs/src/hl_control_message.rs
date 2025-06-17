@@ -182,7 +182,6 @@ impl HlControlMessage {
             packet_number,
             players_per_team: params.competition.players_per_team,
             competition_type: match params.competition.challenge_mode {
-                Some(ChallengeMode::DynamicBallHandling) => UNKNOWN,
                 Some(ChallengeMode::DropIn) => GAME_DROPIN,
                 Some(ChallengeMode::AdultSize) => GAME_ADULT,
                 Some(ChallengeMode::KidSize) | None => GAME_KID_SIZE,

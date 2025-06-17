@@ -14,8 +14,6 @@ use crate::timer::Timer;
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ChallengeMode {
-    /// Dynamic Ball Handling Challenge
-    DynamicBallHandling,
     /// DropIn
     DropIn,
     /// KidSize
