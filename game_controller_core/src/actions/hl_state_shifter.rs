@@ -97,7 +97,7 @@ impl Action for HlStateShifter {
             c.game.secondary_timer = Timer::Started {
                 remaining: SignedDuration::new(10, 0),
                 run_condition: RunCondition::Always,
-                behavior_at_zero: BehaviorAtZero::Clip,
+                behavior_at_zero: BehaviorAtZero::Expire(vec![]),
             };
             c.game.set_play = SetPlay::NoSetPlay;
         } else if self.state == State::Finished {
