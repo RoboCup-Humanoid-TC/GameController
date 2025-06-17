@@ -102,7 +102,11 @@ const StatePanel = ({ game, legalGameActions }) => {
     );
 
   let refereeTimeoutButton = (
-    <div className={game.phase === "secondHalf" && game.state === "finished" ? "col-span-2" : "col-span-1"}>
+    <div
+      className={
+        game.phase === "secondHalf" && game.state === "finished" ? "col-span-2" : "col-span-1"
+      }
+    >
       <ActionButton
         action={{ type: "timeout", args: { side: null } }}
         label="Referee Timeout"

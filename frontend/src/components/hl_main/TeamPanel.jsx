@@ -283,35 +283,6 @@ const TeamPanel = ({
   const team = game.teams[side];
   const teamConnectionStatus = connectionStatus[side];
   const teamParams = params.game.teams[side];
-  const handleWarning = (player) => {
-    applyAction({
-      type: "incrementPlayerWarning",
-      args: {
-        side: side,
-        player: player.number,
-      },
-    });
-  };
-
-  const handleYellow = (player) => {
-    applyAction({
-      type: "incrementPlayerYellow",
-      args: {
-        side: side,
-        player: player.number,
-      },
-    });
-  };
-
-  const handleRed = (player) => {
-    applyAction({
-      type: "incrementPlayerRed",
-      args: {
-        side: side,
-        player: player.number,
-      },
-    });
-  };
   const handlePlayerClick = (player) => {
     if (selectingPlayerInPSO) {
       applyAction({
@@ -425,9 +396,6 @@ const TeamPanel = ({
               }
               sign={sign}
               onClick={() => handlePlayerClick(player)}
-              onClickW={() => handleWarning(player)}
-              onClickY={() => handleYellow(player)}
-              onClickR={() => handleRed(player)}
               player={player}
               side={side}
             />

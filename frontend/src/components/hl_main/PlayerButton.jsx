@@ -30,17 +30,17 @@ const penaltyDescriptions = {
   leavingTheField: "Leaving the Field",
 };
 
-const PlayerButton = ({
-  color,
-  legal,
-  sign,
-  onClick,
-  onClickW,
-  onClickY,
-  onClickR,
-  player,
-  side,
-}) => {
+const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
+  const addCard = (color) => {
+    applyAction({
+      type: `incrementPlayer${color}`,
+      args: {
+        side: side,
+        player: player.number,
+      },
+    });
+  };
+
   const shouldFlash =
     player &&
     player.penalty != "noPenalty" &&
@@ -108,7 +108,7 @@ const PlayerButton = ({
       <button
         className={"grow rounded-md border border-red-500 bg-red-500"}
         disabled={false}
-        onClick={onClickR}
+        onClick={() => addCard("Red")}
         style={{ width: "10%", height: "100%" }}
       >
         {player.red}
@@ -116,7 +116,7 @@ const PlayerButton = ({
       <button
         className={"grow rounded-md border border-yellow-300 bg-yellow-300"}
         disabled={false}
-        onClick={onClickY}
+        onClick={() => addCard("Yellow")}
         style={{ width: "10%", height: "100%", margin: 0, alignContent: "center" }}
       >
         {player.yellow}
@@ -124,7 +124,7 @@ const PlayerButton = ({
       <button
         className={"grow rounded-md border border-blue-400 bg-blue-400"}
         disabled={false}
-        onClick={onClickW}
+        onClick={() => addCard("Warning")}
         style={{ width: "10%", height: "100%" }}
       >
         {player.warnings}
