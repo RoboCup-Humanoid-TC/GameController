@@ -12,7 +12,7 @@ use network_interface::NetworkInterfaceConfig;
 use serde::{Deserialize, Serialize};
 
 use game_controller_core::types::{
-    Color, CompetitionParams, GameParams, Side, SideMapping, TeamParams,
+    Color, CompetitionParams, GameParams, League, Side, SideMapping, TeamParams,
 };
 
 use crate::cli::Args;
@@ -102,7 +102,7 @@ pub struct LogSettings {
 #[serde(rename_all = "camelCase")]
 pub struct LeagueSettings {
     /// Humanoid or SPL
-    pub league: bool,
+    pub league: League,
 }
 
 /// This represents the overall settings that can be configured in the launcher.
@@ -119,8 +119,8 @@ pub struct LaunchSettings {
     pub network: NetworkSettings,
     /// Settings for logging.
     pub log: LogSettings,
-    /// Settings of the leage
-    pub league: LeagueSettings
+    /// Settings of the league
+    pub league: LeagueSettings,
 }
 
 /// The bundle of data that is passed to JavaScript.
@@ -137,9 +137,9 @@ pub struct LaunchData {
     pub default_settings: LaunchSettings,
 }
 
-/// This function creates a list of competitions from the subdirectories of `config`.
+/// This function creates a list of competitions from the subdirectories of `config/<league>`.
 /// The files `params.yaml` and `teams.yaml` must exist within a subdirectory to consider it.
-fn get_competitions(config_directory: &Path, league: bool) -> Result<Vec<Competition>> {
+fn get_competitions(config_directory: &Path) -> Result<Vec<Competition>> {
     let mut result: Vec<Competition> = std::fs::read_dir(config_directory)
         .context("could not open config directory")?
         .map(|entry| {
@@ -147,20 +147,9 @@ fn get_competitions(config_directory: &Path, league: bool) -> Result<Vec<Competi
             if !entry.file_type()?.is_dir() {
                 return Ok(None);
             }
-            let dir_name = entry.path().display().to_string();
-            if league == true {
-                if !dir_name.contains("hl_") {
-                    return Ok(None);
-                }
-            } else {
-                if dir_name.contains("hl_") {
-                    return Ok(None);
-                }
-            }
-            
+
             let params_path = entry.path().join("params.yaml");
             let teams_path = entry.path().join("teams.yaml");
-            println!("{}", teams_path.display());
             if !params_path.try_exists()? || !teams_path.try_exists()? {
                 return Ok(None);
             }
@@ -173,7 +162,13 @@ fn get_competitions(config_directory: &Path, league: bool) -> Result<Vec<Competi
             )
             .context("could not parse competition teams")?;
             Ok(Some(Competition {
-                id: dir_name.to_string(),
+                id: entry
+                    .path()
+                    .file_name()
+                    .unwrap()
+                    .to_str()
+                    .unwrap()
+                    .to_string(),
                 name: params.name,
                 teams,
             }))
@@ -186,19 +181,12 @@ fn get_competitions(config_directory: &Path, league: bool) -> Result<Vec<Competi
     Ok(result)
 }
 
-/// This function reads all teams from `config/teams.yaml`.
-fn get_teams(config_directory: &Path, league: bool) -> Result<Vec<Team>> {
-    if league == true {
-        serde_yaml::from_reader(
-            File::open(config_directory.join("hl_teams.yaml")).context("could not open teams config")?,
-        )
-        .context("could not parse teams config")
-    } else {
-        serde_yaml::from_reader(
-            File::open(config_directory.join("teams.yaml")).context("could not open teams config")?,
-        )
-        .context("could not parse teams config")
-    }
+/// This function reads all teams from `config/<league>/teams.yaml`.
+fn get_teams(config_directory: &Path) -> Result<Vec<Team>> {
+    serde_yaml::from_reader(
+        File::open(config_directory.join("teams.yaml")).context("could not open teams config")?,
+    )
+    .context("could not parse teams config")
 }
 
 /// This function returns the list of available network interfaces with a configured IPv4 address.
@@ -227,7 +215,14 @@ fn get_network_interfaces() -> Result<Vec<NetworkInterface>> {
 /// This function creates [LaunchData] from a path to the `config` directory and a map of command
 /// line arguments that can initialize certain values of the default settings.
 pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchData> {
-    let teams = get_teams(config_directory, args.league).context("could not read teams")?;
+    let league = if args.league {
+        League::Humanoid
+    } else {
+        League::Spl
+    };
+    let league_config_directory =
+        config_directory.join(if args.league { "humanoid" } else { "spl" });
+    let teams = get_teams(&league_config_directory).context("could not read teams")?;
     if teams.is_empty() {
         bail!("there are no teams");
     }
@@ -235,7 +230,6 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
         if teams.iter().any(|team| team.field_player_colors.len() != 2) {
             bail!("All teams have to have 2 colors (Red, Blue)");
         }
-    
     } else {
         if teams.iter().any(|team| team.field_player_colors.len() < 2) {
             bail!("not all teams have at least two field player colors");
@@ -253,7 +247,8 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
         .find(|team| team.number == 0)
         .context("could not find the default team")?;
 
-    let competitions = get_competitions(config_directory, args.league).context("could not read competitions")?;
+    let competitions =
+        get_competitions(&league_config_directory).context("could not read competitions")?;
     if competitions.is_empty() {
         bail!("there are no competitions");
     }
@@ -382,9 +377,7 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
             sync: args.sync,
             replay: args.replay,
         },
-        league: LeagueSettings {
-            league: args.league,
-        },
+        league: LeagueSettings { league },
     };
 
     Ok(LaunchData {

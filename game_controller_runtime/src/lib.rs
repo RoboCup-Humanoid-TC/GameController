@@ -385,6 +385,10 @@ pub async fn start_runtime(
                 competition: serde_yaml::from_reader(
                     File::open(
                         config_directory
+                            .join(match settings.league.league {
+                                League::Spl => "spl",
+                                League::Humanoid => "humanoid",
+                            })
                             .join(&settings.competition.id)
                             .join("params.yaml"),
                     )
