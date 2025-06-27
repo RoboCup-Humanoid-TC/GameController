@@ -214,9 +214,9 @@ impl HlControlMessage {
                 0,
                 0,
             ],
-            drop_in_team: 1,
-            drop_in_time: 1,
             // TODO: until here
+            drop_in_team: 0,
+            drop_in_time: u16::MAX,
             secs_remaining: get_duration(
                 game.primary_timer.get_remaining(),
                 i16::MIN as i64,
