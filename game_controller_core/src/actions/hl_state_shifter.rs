@@ -18,7 +18,7 @@ impl Action for HlStateShifter {
             c.game.phase = Phase::SecondHalf;
             c.game.state = self.state;
             c.game.sec_state.state = SecState::Normal;
-            c.game.kicking_side = -c.params.game.kick_off_side;
+            c.game.kicking_side = Some(-c.params.game.kick_off_side);
 
             c.game.teams.values_mut().for_each(|team| {
                 team.goalkeeper = None;

@@ -201,7 +201,9 @@ impl ControlMessage {
 
             },
             first_half: game.phase == Phase::FirstHalf,
-            kicking_team: params.game.teams[game.kicking_side].number,
+            kicking_team: game
+                .kicking_side
+                .map_or(255u8, |side| params.game.teams[side].number),
             secs_remaining: get_duration(
                 game.primary_timer.get_remaining(),
                 i16::MIN as i64,

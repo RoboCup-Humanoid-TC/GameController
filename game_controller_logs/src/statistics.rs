@@ -148,7 +148,10 @@ pub fn evaluate(entries: Vec<TimestampedLogEntry>) -> Result<()> {
                     _ => {}
                 }
             }
-            VAction::StartSetPlay(StartSetPlay { side, set_play }) => {
+            VAction::StartSetPlay(StartSetPlay {
+                side: Some(side),
+                set_play,
+            }) => {
                 statistics[side].set_plays_for[set_play] += 1;
                 statistics[-side].set_plays_against[set_play] += 1;
             }

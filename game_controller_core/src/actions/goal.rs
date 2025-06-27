@@ -46,7 +46,7 @@ impl Action for Goal {
             } else if c.game.phase != Phase::PenaltyShootout {
                 // A kick-off for the other team.
                 StartSetPlay {
-                    side: -self.side,
+                    side: Some(-self.side),
                     set_play: SetPlay::KickOff,
                 }
                 .execute(c);
@@ -58,7 +58,7 @@ impl Action for Goal {
         } else if c.params.competition.league == League::Humanoid {
             c.game.teams[self.side].score += 1;
             // TODO: Kickoff
-            c.game.kicking_side = -self.side;
+            c.game.kicking_side = Some(-self.side);
             if c.game.sec_state.state != SecState::Penaltyshoot {
                 c.game.secondary_timer = Timer::Started {
                     remaining: SignedDuration::new(45, 0),
@@ -93,7 +93,8 @@ impl Action for Goal {
     fn is_legal(&self, c: &ActionContext) -> bool {
         if c.params.competition.league == League::Spl {
             c.game.state == State::Playing
-                && (c.game.phase != Phase::PenaltyShootout || self.side == c.game.kicking_side)
+                && (c.game.phase != Phase::PenaltyShootout
+                    || c.game.kicking_side.is_none_or(|side| side == self.side))
                 && (c.params.competition.challenge_mode.is_none() || self.side == Side::Home)
         } else if c.params.competition.league == League::Humanoid {
             c.game.state == State::Playing

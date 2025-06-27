@@ -12,7 +12,7 @@ use crate::types::{Phase, SetPlay, Side, State};
 #[serde(rename_all = "camelCase")]
 pub struct StartSetPlay {
     /// The side which can execute the set play.
-    pub side: Side,
+    pub side: Option<Side>,
     /// The type of set play to start.
     pub set_play: SetPlay,
 }
@@ -79,10 +79,12 @@ impl Action for StartSetPlay {
                 (c.game.state == State::Initial || c.game.state == State::Timeout)
                     && c.game.kicking_side == self.side
             } else {
+                // All set plays other than kick-off must be "for" some team.
+                self.side.is_some()
                 // It must be Playing, and we can only start set play during other set plays if
                 // they are for the other team (this is a shortcut, because FinishSetPlay should
                 // have been clicked before).
-                c.game.state == State::Playing
+                    && c.game.state == State::Playing
                     && (c.game.set_play == SetPlay::NoSetPlay || c.game.kicking_side != self.side)
                     && c.params.competition.challenge_mode.is_none()
             })

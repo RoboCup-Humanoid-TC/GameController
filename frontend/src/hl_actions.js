@@ -76,7 +76,7 @@ export const getActions = () => {
   for (const side of ["home", "away"]) {
     actions.push(
       { type: "timeout", args: { side: side } },
-      { type: "globalGameStuck", args: { side: side } },
+      { type: "globalGameStuck", args: null },
       { type: "goal", args: { side: side } },
       { type: "hlSetPlay", args: { side: side, setPlay: "goalKick" } },
       { type: "hlSetPlay", args: { side: side, setPlay: "throwIn" } },

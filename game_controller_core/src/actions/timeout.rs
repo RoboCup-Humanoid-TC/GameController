@@ -31,7 +31,7 @@ impl Action for Timeout {
             if c.game.phase != Phase::PenaltyShootout {
                 // If this is not a referee timeout, the next kick-off is for the other team.
                 if let Some(side) = self.side {
-                    c.game.kicking_side = -side;
+                    c.game.kicking_side = Some(-side);
                 }
                 // The primary timer is rewound to the time when the stoppage of play has started.
                 c.game.primary_timer = Timer::Started {

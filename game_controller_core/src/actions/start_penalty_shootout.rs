@@ -34,7 +34,7 @@ impl Action for StartPenaltyShootout {
             c.game.set_play = SetPlay::NoSetPlay;
             // "The first (left) team in the GameController will have the striker robot for the first
             // penalty kick." - 2023 rule book section 3.16
-            c.game.kicking_side = Side::Home;
+            c.game.kicking_side = Some(Side::Home);
             c.game.primary_timer = Timer::Stopped;
             c.game.secondary_timer = Timer::Stopped;
         } else {

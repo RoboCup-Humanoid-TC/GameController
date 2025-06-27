@@ -201,7 +201,7 @@ const TeamPanel = ({
             />
           ) : (
             <ActionButton
-              action={{ type: "globalGameStuck", args: { side: side } }}
+              action={{ type: "globalGameStuck", args: null }}
               label="Global GS"
               legal={legalTeamActions[actions.GLOBAL_GAME_STUCK]}
             />

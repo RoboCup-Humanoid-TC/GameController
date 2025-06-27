@@ -57,7 +57,7 @@ impl GameController {
             },
             // !HL
             set_play: SetPlay::NoSetPlay,
-            kicking_side: params.game.kick_off_side,
+            kicking_side: Some(params.game.kick_off_side),
             primary_timer: Timer::Started {
                 remaining: params.competition.half_duration.try_into().unwrap(),
                 run_condition: RunCondition::Playing,
