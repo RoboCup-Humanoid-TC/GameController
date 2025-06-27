@@ -5,8 +5,10 @@
     windows_subsystem = "windows"
 )]
 
+use std::env::current_exe;
+
 use clap::Parser;
-use tauri::{async_runtime, generate_context, Manager, RunEvent, WindowBuilder, WindowUrl};
+use tauri::{async_runtime, generate_context, Manager, RunEvent, WebviewUrl, WebviewWindowBuilder};
 
 use game_controller_runtime::{
     cli::Args, launch::make_launch_data, shutdown_runtime, RuntimeState,
@@ -34,10 +36,8 @@ fn main() {
 
     let app = tauri::Builder::default()
         .setup(|app| {
-            // TODO: This will probably not work in production.
-            let config_directory = app
-                .path_resolver()
-                .resource_dir()
+            let config_directory = current_exe()?
+                .parent()
                 .unwrap()
                 .join("..")
                 .join("..")
@@ -52,12 +52,13 @@ fn main() {
                 }
             };
 
-            let _window = WindowBuilder::new(app, "main", WindowUrl::App("index.html".into()))
-                .center()
-                .inner_size(640.0, 480.0)
-                .resizable(false)
-                .title("GameController")
-                .build()?;
+            let _window =
+                WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
+                    .center()
+                    .inner_size(640.0, 480.0)
+                    .resizable(false)
+                    .title("GameController")
+                    .build()?;
             Ok(())
         })
         .invoke_handler(get_invoke_handler())

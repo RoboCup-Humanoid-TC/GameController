@@ -6,7 +6,7 @@ This is the GameController software for robot soccer games in the RoboCup Humano
 
 ### Prerequisites
 
-- Rust and other platform-specific tauri dependencies as [listed here](https://tauri.app/v1/guides/getting-started/prerequisites)
+- Rust and other platform-specific tauri dependencies as [listed here](https://tauri.app/start/prerequisites/)
 - nodejs and npm (or a compatible package manager)
 - libclang (for bindgen)
     - On Windows:

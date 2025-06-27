@@ -1,9 +1,9 @@
-import { invoke } from "@tauri-apps/api/tauri";
-import { appWindow } from "@tauri-apps/api/window";
+import { invoke } from "@tauri-apps/api/core";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { NUM_OF_ACTIONS } from "./actions.js";
 
 export const getLaunchData = async () => {
-  if (window.__TAURI_METADATA__) {
+  if (window.__TAURI_INTERNALS__) {
     return await invoke("get_launch_data");
   } else {
     return {
@@ -74,7 +74,7 @@ export const getLaunchData = async () => {
 };
 
 export const launch = async (settings) => {
-  if (window.__TAURI_METADATA__) {
+  if (window.__TAURI_INTERNALS__) {
     await invoke("launch", { settings: settings });
   } else {
     console.log(settings);
@@ -82,8 +82,8 @@ export const launch = async (settings) => {
 };
 
 export const listenForState = async (handler) => {
-  if (window.__TAURI_METADATA__) {
-    return await appWindow.listen("state", (event) => {
+  if (window.__TAURI_INTERNALS__) {
+    return await getCurrentWebviewWindow().listen("state", (event) => {
       handler(event.payload);
     });
   } else {
@@ -178,7 +178,7 @@ export const listenForState = async (handler) => {
 };
 
 export const syncWithBackend = async () => {
-  if (window.__TAURI_METADATA__) {
+  if (window.__TAURI_INTERNALS__) {
     return await invoke("sync_with_backend");
   } else {
     return {
@@ -203,7 +203,7 @@ export const syncWithBackend = async () => {
 };
 
 export const applyAction = (action) => {
-  if (window.__TAURI_METADATA__) {
+  if (window.__TAURI_INTERNALS__) {
     invoke("apply_action", { action: action });
   } else {
     console.log(action);
@@ -211,7 +211,7 @@ export const applyAction = (action) => {
 };
 
 export const declareActions = (actions) => {
-  if (window.__TAURI_METADATA__) {
+  if (window.__TAURI_INTERNALS__) {
     invoke("declare_actions", { actions: actions });
   } else {
     console.log(actions);

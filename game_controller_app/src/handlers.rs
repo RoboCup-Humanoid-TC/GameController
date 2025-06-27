@@ -1,10 +1,11 @@
 //! This module defines handlers that can be called from JavaScript.
 
-use std::sync::Arc;
+use std::{env::current_exe, sync::Arc};
 
 use anyhow::{anyhow, Context};
 use tauri::{
-    command, generate_handler, AppHandle, InvokeHandler, LogicalSize, Manager, State, Window, Wry,
+    command, generate_handler, ipc::InvokeHandler, AppHandle, Emitter, LogicalSize, Manager, State,
+    WebviewWindow, Wry,
 };
 use tokio::sync::Notify;
 
@@ -29,7 +30,7 @@ fn get_launch_data(launch_data: State<LaunchData>) -> LaunchData {
 /// This function is called when the user finishes the launcher dialog. It creates a game state and
 /// network services, and spawns tasks to handle events.
 #[command]
-async fn launch(settings: LaunchSettings, window: Window, app: AppHandle) {
+async fn launch(settings: LaunchSettings, window: WebviewWindow, app: AppHandle) {
     // The notify object must be managed before the window is created.
     let runtime_notify = Arc::new(Notify::new());
     app.manage(SyncState(runtime_notify.clone()));
@@ -53,15 +54,16 @@ async fn launch(settings: LaunchSettings, window: Window, app: AppHandle) {
 
     let launch_data = app.state::<LaunchData>();
     match start_runtime(
-        // TODO: This will probably not work in production.
-        &app.path_resolver()
-            .resource_dir()
+        &current_exe()
+            .unwrap()
+            .parent()
             .unwrap()
             .join("..")
             .join("..")
             .join("config"),
-        &app.path_resolver()
-            .resource_dir()
+        &current_exe()
+            .unwrap()
+            .parent()
             .unwrap()
             .join("..")
             .join("..")

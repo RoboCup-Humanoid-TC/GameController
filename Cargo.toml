@@ -26,8 +26,8 @@ serde_with = { version = "2.3", features = ["base64", "time_0_3"] }
 serde_repr = { version = "0.1" }
 serde_yaml = { version = "0.9" }
 socket2 = { version = "0.5", features = ["all"] }
-tauri = { version = "1.6", features = [] }
-tauri-build = { version = "1.5", features = [] }
+tauri = { version = "2.1", features = [] }
+tauri-build = { version = "2.0", features = [] }
 time = { version = "0.3", features = ["formatting", "local-offset", "macros", "serde"] }
 tokio = { version = "1.0", features = ["fs", "io-util", "macros", "net", "rt", "rt-multi-thread", "sync", "time"] }
 tokio-util = { version = "0.7" }
