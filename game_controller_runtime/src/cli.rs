@@ -20,6 +20,15 @@ pub struct Args {
     /// Set the away team (name or number).
     #[arg(long)]
     pub away_team: Option<String>,
+    /// Set the no-delay test flag.
+    #[arg(long)]
+    pub no_delay: bool,
+    /// Set the penalty shoot-out test flag.
+    #[arg(long)]
+    pub penalty_shootout: bool,
+    /// Set the unpenalize test flag.
+    #[arg(long)]
+    pub unpenalize: bool,
     /// Open the main window in fullscreen mode.
     #[arg(long, short)]
     pub fullscreen: bool,

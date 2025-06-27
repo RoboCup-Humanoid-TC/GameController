@@ -63,6 +63,11 @@ export const getLaunchData = async () => {
           long: false,
           kickOffSide: "home",
           sideMapping: "homeDefendsLeftGoal",
+          test: {
+            noDelay: false,
+            penaltyShootout: false,
+            unpenalize: false,
+          },
         },
         window: { fullscreen: false },
         network: { interface: "en0", broadcast: false, multicast: false },

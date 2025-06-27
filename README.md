@@ -125,6 +125,10 @@ The following settings are exposed via the launcher:
     - Kick-off for (home / away) team: This box selects which team has the first kick-off, as a result of the coin tosses before the game.
     - The main box selects the team on the respective side.
     - Field player color and goalkeeper color: These boxes select the jersey colors of the team.
+- Testing:
+    - No Delay: This checkbox disables the delay of game state transitions.
+    - Penalty Shoot-out: This checkbox allows to start/continue a penalty shoot-out even though the game is actually decided.
+    - Unpenalize: This checkbox allows to unpenalize players before their time is over.
 - Mirror: This checkbox selects if the home (first on the schedule) team defends the right side (from the GameController's perspective) instead of the left side, as a result of the coin tosses before the game.
 - Fullscreen: This checkbox selects if the window should be switched to fullscreen mode when started.
 - Interface: This box selects the network interface to run on (see [above](#network-communication)). Not all interfaces that are listed will necessarily work.

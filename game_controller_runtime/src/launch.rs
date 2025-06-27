@@ -12,7 +12,7 @@ use network_interface::NetworkInterfaceConfig;
 use serde::{Deserialize, Serialize};
 
 use game_controller_core::types::{
-    Color, CompetitionParams, GameParams, League, Side, SideMapping, TeamParams,
+    Color, CompetitionParams, GameParams, League, Side, SideMapping, TeamParams, TestParams,
 };
 
 use crate::cli::Args;
@@ -147,7 +147,6 @@ fn get_competitions(config_directory: &Path) -> Result<Vec<Competition>> {
             if !entry.file_type()?.is_dir() {
                 return Ok(None);
             }
-
             let params_path = entry.path().join("params.yaml");
             let teams_path = entry.path().join("teams.yaml");
             if !params_path.try_exists()? || !teams_path.try_exists()? {
@@ -341,6 +340,11 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
             long: args.play_off,
             kick_off_side: Side::Home,
             side_mapping: SideMapping::HomeDefendsLeftGoal,
+            test: TestParams {
+                no_delay: args.no_delay,
+                penalty_shootout: args.penalty_shootout,
+                unpenalize: args.unpenalize,
+            },
         },
         window: WindowSettings {
             fullscreen: args.fullscreen,

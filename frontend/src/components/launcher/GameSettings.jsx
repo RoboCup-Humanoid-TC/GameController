@@ -1,4 +1,5 @@
 import TeamSettings from "./TeamSettings";
+import TestSettings from "./TestSettings";
 
 const GameSettings = ({ teams, game, setGame }) => {
   return (
@@ -60,6 +61,7 @@ const GameSettings = ({ teams, game, setGame }) => {
           }
         />
       </div>
+      <TestSettings test={game.test} setTest={(test) => setGame({ ...game, test: test })} />
     </div>
   );
 };

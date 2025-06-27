@@ -111,6 +111,20 @@ pub struct TeamParams {
     pub goalkeeper_color: Color,
 }
 
+/// This struct contains constant parameters that toggle certain behavior that is useful for
+/// testing.
+#[derive(Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TestParams {
+    /// Game state transitions are never delayed.
+    pub no_delay: bool,
+    /// It is allowed to start/continue a penalty shoot-out even though the game is actually
+    /// decided.
+    pub penalty_shootout: bool,
+    /// It is allowed to unpenalize players before their time is over.
+    pub unpenalize: bool,
+}
+
 /// This struct contains constant parameters that are specific to a game.
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -125,6 +139,9 @@ pub struct GameParams {
     pub kick_off_side: Side,
     /// The side mapping for the first half.
     pub side_mapping: SideMapping,
+    /// The test parameters with which the game is played.
+    #[serde(default)]
+    pub test: TestParams,
 }
 
 impl GameParams {
