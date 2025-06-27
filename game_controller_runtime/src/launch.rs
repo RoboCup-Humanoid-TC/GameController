@@ -216,26 +216,26 @@ fn get_network_interfaces() -> Result<Vec<NetworkInterface>> {
 /// line arguments that can initialize certain values of the default settings.
 pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchData> {
     let league = if args.league {
-        League::Humanoid
-    } else {
         League::Spl
+    } else {
+        League::Humanoid
     };
     let league_config_directory =
-        config_directory.join(if args.league { "humanoid" } else { "spl" });
+        config_directory.join(if args.league { "spl" } else { "humanoid" });
     let teams = get_teams(&league_config_directory).context("could not read teams")?;
     if teams.is_empty() {
         bail!("there are no teams");
     }
-    if args.league == true {
-        if teams.iter().any(|team| team.field_player_colors.len() != 2) {
-            bail!("All teams have to have 2 colors (Red, Blue)");
-        }
-    } else {
+    if args.league {
         if teams.iter().any(|team| team.field_player_colors.len() < 2) {
             bail!("not all teams have at least two field player colors");
         }
         if teams.iter().any(|team| team.goalkeeper_colors.len() < 2) {
             bail!("not all teams have at least two goalkeeper colors");
+        }
+    } else {
+        if teams.iter().any(|team| team.field_player_colors.len() != 2) {
+            bail!("All teams have to have 2 colors (Red, Blue)");
         }
     }
     // TODO: check that all team numbers are pairwise distinct

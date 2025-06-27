@@ -111,13 +111,6 @@ A list of arguments (that is always up to date, in contrast to what would be wri
 cargo run -- -h
 ```
 
-To run the GameController for the Humanoid League please use the following command in the `game_controller_app` folder
-
-```bash
-cargo run -- -l
-```
-
-
 Note that release builds on Windows do not output any text.
 
 ### Launcher
