@@ -3,7 +3,7 @@
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: Nu Bots
+- name: NUbots
   number: 1
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
