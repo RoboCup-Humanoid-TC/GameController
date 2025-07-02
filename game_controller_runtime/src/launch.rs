@@ -220,13 +220,14 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
     } else {
         League::Humanoid
     };
+    println!("Using league: {:?}", league);
     let league_config_directory =
-        config_directory.join(if args.league { "spl" } else { "humanoid" });
+        config_directory.join(if league == League::Spl { "spl" } else { "humanoid" });
     let teams = get_teams(&league_config_directory).context("could not read teams")?;
     if teams.is_empty() {
         bail!("there are no teams");
     }
-    if args.league {
+    if league == League::Spl {
         if teams.iter().any(|team| team.field_player_colors.len() < 2) {
             bail!("not all teams have at least two field player colors");
         }
