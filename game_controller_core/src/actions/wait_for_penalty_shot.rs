@@ -6,7 +6,7 @@ use crate::types::{Penalty, Phase, Side, State};
 
 /// This struct defines an action which corresponds to the referee call "Set" in a penalty
 /// shoot-out.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct WaitForPenaltyShot;
 
 impl Action for WaitForPenaltyShot {

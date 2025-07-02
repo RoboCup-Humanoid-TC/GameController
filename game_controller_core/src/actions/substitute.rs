@@ -7,7 +7,7 @@ use crate::timer::{BehaviorAtZero, RunCondition, Timer};
 use crate::types::{Penalty, Phase, PlayerNumber, Side, State};
 
 /// This struct defines an action to substitute players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Substitute {
     /// The side which does the substitution.

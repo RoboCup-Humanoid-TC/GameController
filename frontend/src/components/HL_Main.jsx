@@ -10,7 +10,7 @@ import {
   extractUndoActions,
   isPenaltyCallLegal,
   NUM_OF_ACTIONS,
-} from "../actions.js";
+} from "../hl_actions.js";
 import { getLaunchData, declareActions, listenForState, syncWithBackend } from "../api.js";
 
 const HL_Main = () => {

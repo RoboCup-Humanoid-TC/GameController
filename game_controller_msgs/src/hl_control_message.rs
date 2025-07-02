@@ -3,22 +3,19 @@ use bytes::{BufMut, Bytes, BytesMut};
 use game_controller_core::{
     timer::SignedDuration,
     types::{
-        ChallengeMode, Color, Game, Params, Penalty, Phase, Side,
-        SideMapping, State, SecState,
+        ChallengeMode, Color, Game, HlCard, Params, Penalty, Phase, PlayerNumber, SecState, Side,
+        SideMapping, State,
     },
 };
 
 use crate::bindings::{
-    GAMECONTROLLER_STRUCT_HEADER, HL_GAMECONTROLLER_STRUCT_SIZE, 
-    MAX_NUM_PLAYERS, HL_MAX_NUM_PLAYERS, PENALTY_NONE, GAME_KID_SIZE, GAME_ADULT , GAME_DROPIN, 
-    STATE_FINISHED, STATE_INITIAL, STATE_PLAYING, STATE_READY, STATE_SET,
-    STATE2_NORMAL, STATE2_PENALTYSHOOT, STATE2_OVERTIME, STATE2_TIMEOUT, STATE2_DIRECT_FREEKICK,
-    STATE2_INDIRECT_FREEKICK, STATE2_PENALTYKICK, STATE2_CORNER_KICK, STATE2_GOAL_KICK, STATE2_THROW_IN,
-    UNKNOWN, SUBSTITUTE, 
-    HL_BALL_MANIPULATION, HL_PHYSICAL_CONTACT, 
-    HL_PICKUP_OR_INCAPABLE,
-    TEAM_BLACK, TEAM_BLUE, TEAM_BROWN, TEAM_GRAY,
-    TEAM_GREEN, TEAM_ORANGE, TEAM_PURPLE, TEAM_RED, TEAM_WHITE, TEAM_YELLOW, 
+    GAMECONTROLLER_STRUCT_HEADER, GAME_ADULT, GAME_DROPIN, GAME_KID_SIZE, HL_BALL_MANIPULATION,
+    HL_GAMECONTROLLER_STRUCT_SIZE, HL_MAX_NUM_PLAYERS, HL_PHYSICAL_CONTACT, HL_PICKUP_OR_INCAPABLE,
+    MAX_NUM_PLAYERS, PENALTY_NONE, STATE2_CORNER_KICK, STATE2_DIRECT_FREEKICK, STATE2_GOAL_KICK,
+    STATE2_INDIRECT_FREEKICK, STATE2_NORMAL, STATE2_OVERTIME, STATE2_PENALTYKICK,
+    STATE2_PENALTYSHOOT, STATE2_THROW_IN, STATE2_TIMEOUT, STATE_FINISHED, STATE_INITIAL,
+    STATE_PLAYING, STATE_READY, STATE_SET, SUBSTITUTE, TEAM_BLACK, TEAM_BLUE, TEAM_BROWN,
+    TEAM_GRAY, TEAM_GREEN, TEAM_ORANGE, TEAM_PURPLE, TEAM_RED, TEAM_WHITE, TEAM_YELLOW, UNKNOWN,
 };
 
 /// This struct corresponds to the `RobotInfo`.
@@ -122,12 +119,12 @@ impl From<HlControlMessage> for Bytes {
             bytes.put_u16_le(team.single_shots);
             bytes.put_u8(team.coach_sequence);
             bytes.put(&team.coach_message[..]);
-                bytes.put_u8(team.coach.penalty);
-                bytes.put_u8(team.coach.secs_till_unpenalized);
-                bytes.put_u8(team.coach.number_of_warnings);
-                bytes.put_u8(team.coach.yellow_card_count);
-                bytes.put_u8(team.coach.red_card_count);
-                bytes.put_u8(team.coach.goalkeeper);
+            bytes.put_u8(team.coach.penalty);
+            bytes.put_u8(team.coach.secs_till_unpenalized);
+            bytes.put_u8(team.coach.number_of_warnings);
+            bytes.put_u8(team.coach.yellow_card_count);
+            bytes.put_u8(team.coach.red_card_count);
+            bytes.put_u8(team.coach.goalkeeper);
             for idx in 0..(HL_MAX_NUM_PLAYERS as usize) {
                 bytes.put_u8(team.players[idx].penalty);
                 bytes.put_u8(team.players[idx].secs_till_unpenalized);
@@ -182,7 +179,6 @@ impl HlControlMessage {
             packet_number,
             players_per_team: params.competition.players_per_team,
             competition_type: match params.competition.challenge_mode {
-                Some(ChallengeMode::DynamicBallHandling) => UNKNOWN,
                 Some(ChallengeMode::DropIn) => GAME_DROPIN,
                 Some(ChallengeMode::AdultSize) => GAME_ADULT,
                 Some(ChallengeMode::KidSize) | None => GAME_KID_SIZE,
@@ -194,11 +190,11 @@ impl HlControlMessage {
                 State::Playing => STATE_PLAYING,
                 State::Finished => STATE_FINISHED,
             },
-            first_half: if game.phase == Phase::FirstHalf {0} else {1},
+            first_half: if game.phase == Phase::FirstHalf { 0 } else { 1 },
             kicking_team: params.game.teams[game.kicking_side].number,
             sec_game_state: match game.sec_state.state {
                 SecState::Normal => STATE2_NORMAL,
-                SecState::Penalityshoot => STATE2_PENALTYSHOOT,
+                SecState::Penaltyshoot => STATE2_PENALTYSHOOT,
                 SecState::Overtime => STATE2_OVERTIME,
                 SecState::Timeout => STATE2_TIMEOUT,
                 SecState::DirectFreekick => STATE2_DIRECT_FREEKICK,
@@ -249,10 +245,9 @@ impl HlControlMessage {
                 },
                 players: game.teams[side]
                     .players
-                    // The alternative to this clone is doing iter() here, and collecting into a
-                    // Vec in the end, and then try_into() that Vec into the fixed size array.
-                    .clone()
-                    .map(|player| ControlMessagePlayer {
+                    .iter()
+                    .enumerate()
+                    .map(|(index, player)| ControlMessagePlayer {
                         penalty: match player.penalty {
                             Penalty::NoPenalty => PENALTY_NONE,
                             Penalty::Substitute => SUBSTITUTE,
@@ -275,11 +270,16 @@ impl HlControlMessage {
                             u8::MAX as i64,
                         ) as u8,
                         // TODO
-                        number_of_warnings: player.warnings,
-                        yellow_card_count: player.yellow,
-                        red_card_count: player.red,
-                        goalkeeper: player.goalkeeper,
-                    }),
+                        number_of_warnings: player.cards[HlCard::Warning],
+                        yellow_card_count: player.cards[HlCard::Yellow],
+                        red_card_count: player.cards[HlCard::Red],
+                        goalkeeper: game.teams[side].goalkeeper.is_some_and(|goalkeeper| {
+                            u8::from(goalkeeper) - PlayerNumber::MIN == index as u8
+                        }) as u8,
+                    })
+                    .collect::<Vec<_>>()
+                    .try_into()
+                    .unwrap(),
             }),
         }
     }

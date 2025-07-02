@@ -1,4 +1,5 @@
 [workspace]
+default-members = ["game_controller_app"]
 members = [
   "game_controller_app",
   "game_controller_core",
@@ -11,10 +12,10 @@ resolver = "2"
 
 [workspace.dependencies]
 anyhow = { version = "1.0" }
-bindgen = { version = "0.64" }
+bindgen = { version = "0.69" }
 bytes = { version = "1.0" }
 clap = { version = "4.2", features = ["derive"] }
-enum-map = { version = "2.5", features = ["serde"] }
+enum-map = { version = "2.7", features = ["serde"] }
 game_controller_core = { path = "game_controller_core" }
 game_controller_msgs = { path = "game_controller_msgs" }
 game_controller_net = { path = "game_controller_net" }
@@ -25,8 +26,8 @@ serde_with = { version = "2.3", features = ["base64", "time_0_3"] }
 serde_repr = { version = "0.1" }
 serde_yaml = { version = "0.9" }
 socket2 = { version = "0.5", features = ["all"] }
-tauri = { version = "1.4", features = [] }
-tauri-build = { version = "1.4", features = [] }
+tauri = { version = "1.6", features = [] }
+tauri-build = { version = "1.5", features = [] }
 time = { version = "0.3", features = ["formatting", "local-offset", "macros", "serde"] }
 tokio = { version = "1.0", features = ["fs", "io-util", "macros", "net", "rt", "rt-multi-thread", "sync", "time"] }
 tokio-util = { version = "0.7" }
@@ -37,6 +38,7 @@ authors = ["Arne Hasselbring <arha@uni-bremen.de>"]
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/RoboCup-SPL/GameController3"
+rust-version = "1.82"
 version = "1.0.0-rc.2"
 
 [profile.release-dist]

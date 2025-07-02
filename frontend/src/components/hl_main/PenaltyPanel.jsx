@@ -13,50 +13,54 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
           selected={selectedPenaltyCall === index}
         />
       ))} */}
-      {/* <PenaltyButton
-        key={"test"}
-        label={"test"}
-        legal={false}
-        onClick={applyAction({
-          type: "manipulateSecState",
-          args: {i: 8},
-        })}
-        selected={false}
-        /> */}
-    <PenaltyButtonWA
-      action={function() {
-        if (selectedPenaltyCall !== "hlPushing") {
-          setSelectedPenaltyCall("hlPushing")
-        } else {
-          setSelectedPenaltyCall(null)}}
-      }
-      label={selectedPenaltyCall === "hlPushing" ? "Pushing activated" : "Pushing"}
-      legal={(selectedPenaltyCall === "hlPickUp" || selectedPenaltyCall === "hlBallManipulation") ? 
-        false : true}
-    />
-    <PenaltyButtonWA
-      action={function() {
-        if (selectedPenaltyCall !== "hlPickUp") {
-          setSelectedPenaltyCall("hlPickUp")
-        } else {
-          setSelectedPenaltyCall(null)}}
-      }
-      label={selectedPenaltyCall === "hlPickUp" ? "Pick Up activated" : "Pick Up"}
-      legal={(selectedPenaltyCall === "hlPushing" || selectedPenaltyCall === "hlBallManipulation") ? 
-        false : true}
-    />
-    <PenaltyButtonWA
-      action={function() {
-        if (selectedPenaltyCall !== "hlBallManipulation") {
-          setSelectedPenaltyCall("hlBallManipulation")
-        } else {
-          setSelectedPenaltyCall(null)}}
-      }
-      label={selectedPenaltyCall === "hlBallManipulation" ? "Ball Manipulation activated" : "Ball Manipulation"}
-      legal={(selectedPenaltyCall === "hlPushing" || selectedPenaltyCall === "hlPickUp") ? 
-        false : true}
-    />
-    {/* <PenaltyButtonWA
+      <PenaltyButtonWA
+        action={function () {
+          if (selectedPenaltyCall !== "playerPushing") {
+            setSelectedPenaltyCall("playerPushing");
+          } else {
+            setSelectedPenaltyCall(null);
+          }
+        }}
+        label={selectedPenaltyCall === "playerPushing" ? "Pushing activated" : "Pushing"}
+        legal={
+          selectedPenaltyCall === "pickedUp" || selectedPenaltyCall === "ballHolding" ? false : true
+        }
+      />
+      <PenaltyButtonWA
+        action={function () {
+          if (selectedPenaltyCall !== "pickedUp") {
+            setSelectedPenaltyCall("pickedUp");
+          } else {
+            setSelectedPenaltyCall(null);
+          }
+        }}
+        label={selectedPenaltyCall === "pickedUp" ? "Pick Up activated" : "Pick Up"}
+        legal={
+          selectedPenaltyCall === "playerPushing" || selectedPenaltyCall === "ballHolding"
+            ? false
+            : true
+        }
+      />
+      <PenaltyButtonWA
+        action={function () {
+          if (selectedPenaltyCall !== "ballHolding") {
+            setSelectedPenaltyCall("ballHolding");
+          } else {
+            setSelectedPenaltyCall(null);
+          }
+        }}
+        label={
+          selectedPenaltyCall === "ballHolding"
+            ? "Ball Manipulation activated"
+            : "Ball Manipulation"
+        }
+        legal={
+          selectedPenaltyCall === "playerPushing" || selectedPenaltyCall === "pickedUp"
+            ? false
+            : true
+        }
+      />
+      {/* <PenaltyButtonWA
       action={null}
       label={""}
       legal={false}

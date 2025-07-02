@@ -7,7 +7,7 @@ use crate::types::{SetPlay, State};
 
 /// This struct defines an action which corresponds to the referee call "Playing". It is the third
 /// part of "complex" set plays which have a Ready and Set state.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct FreeSetPlay;
 
 impl Action for FreeSetPlay {

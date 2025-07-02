@@ -7,8 +7,8 @@ use anyhow::Result;
 use bytes::Bytes;
 use tokio::{net::UdpSocket, sync::watch, time::interval};
 
-use game_controller_core::types::{Game, Params};
-use game_controller_msgs::{ControlMessage, CONTROL_MESSAGE_PORT, HlControlMessage,};
+use game_controller_core::types::{Game, League, Params};
+use game_controller_msgs::{ControlMessage, HlControlMessage, CONTROL_MESSAGE_PORT};
 
 /// This struct represents a sender for control messages. The messages are sent as UDP packets to
 /// the given destination address. The states to be sent are obtained from a [tokio::sync::watch]
@@ -57,40 +57,30 @@ impl ControlMessageSender {
         let mut interval = interval(Self::SEND_INTERVAL);
         let mut packet_number: u8 = 0;
         loop {
-            if self.params.competition.league == 0 {
-                interval.tick().await;
-                // It would be better if the timers were updated to the current time before
-                // serialization. At the moment, this is not necessary because the main thread updates
-                // the state each time a (rounded) timer crosses a second boundary. However, this tight
-                // coupling between the fact that timers are sent as seconds and the main logic is
-                // undesirable.
-                let buffer: Bytes = ControlMessage::new(
+            interval.tick().await;
+            // It would be better if the timers were updated to the current time before
+            // serialization. At the moment, this is not necessary because the main thread updates
+            // the state each time a (rounded) timer crosses a second boundary. However, this tight
+            // coupling between the fact that timers are sent as seconds and the main logic is
+            // undesirable.
+            let buffer: Bytes = match self.params.competition.league {
+                League::Spl => ControlMessage::new(
                     &self.game_receiver.borrow(),
                     &self.params,
                     packet_number,
                     self.to_monitor,
                 )
-                .into();
-                let _ = self.socket.send(&buffer).await;
-                packet_number = packet_number.wrapping_add(1);
-            } else if self.params.competition.league == 1 {
-                interval.tick().await;
-                // It would be better if the timers were updated to the current time before
-                // serialization. At the moment, this is not necessary because the main thread updates
-                // the state each time a (rounded) timer crosses a second boundary. However, this tight
-                // coupling between the fact that timers are sent as seconds and the main logic is
-                // undesirable.
-                let buffer: Bytes = HlControlMessage::new(
+                .into(),
+                League::Humanoid => HlControlMessage::new(
                     &self.game_receiver.borrow(),
                     &self.params,
                     packet_number,
                     self.to_monitor,
                 )
-                .into();
-                let _ = self.socket.send(&buffer).await;
-                packet_number = packet_number.wrapping_add(1);
-            }
-            
+                .into(),
+            };
+            let _ = self.socket.send(&buffer).await;
+            packet_number = packet_number.wrapping_add(1);
         }
     }
 }

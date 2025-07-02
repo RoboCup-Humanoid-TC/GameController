@@ -7,7 +7,7 @@ use crate::types::{Phase, SetPlay, State};
 
 /// This struct defines an action which corresponds to the referee call "Finish" (or rather
 /// two/three successive whistles).
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct FinishHalf;
 
 impl Action for FinishHalf {

@@ -161,8 +161,9 @@ pub fn evaluate(entries: Vec<TimestampedLogEntry>) -> Result<()> {
     }
     for side in [Side::Home, Side::Away] {
         println!(
-            "{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}",
+            "{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}",
             params.game.teams[side].number,
+            params.competition.players_per_team,
             statistics[side].goals,
             statistics[side].timeouts,
             statistics[side].penalties[PenaltyCall::RequestForPickUp],
@@ -199,8 +200,8 @@ pub fn evaluate(entries: Vec<TimestampedLogEntry>) -> Result<()> {
 /// [evaluate] would write.
 pub fn header() {
     println!(
-        "team,goals,timeouts,request for pickup,illegal position,motion in set,\
-        fallen/inactive,local game stuck,ball holding,player stance,pushing,\
+        "team,players per team,goals,timeouts,request for pickup,illegal position,\
+        motion in set,fallen/inactive,local game stuck,ball holding,player stance,pushing,\
         playing with arms/hands,leaving the field,kick-in against,goal kick against,\
         corner kick against,pushing free kick against,penalty kick against,kick-in for,\
         goal kick for,corner kick for,pushing free kick for,penalty kick for,playing,\

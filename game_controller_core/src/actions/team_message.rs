@@ -4,7 +4,7 @@ use crate::action::{Action, ActionContext};
 use crate::types::{Phase, Side, State};
 
 /// This struct defines an action that is triggered when a team message is received.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TeamMessage {
     /// The side which sent the team message.

@@ -4,10 +4,10 @@ use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext};
 use crate::timer::{BehaviorAtZero, RunCondition, Timer};
-use crate::types::{State};
+use crate::types::State;
 
 /// This struct defines an action that adds a minute of extra time.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct AddExtraTime;
 
 impl AddExtraTime {
@@ -29,6 +29,6 @@ impl Action for AddExtraTime {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-            c.game.state == State::Playing
+        c.game.state == State::Playing
     }
 }

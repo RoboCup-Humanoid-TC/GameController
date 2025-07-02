@@ -30,7 +30,18 @@ const penaltyDescriptions = {
   leavingTheField: "Leaving the Field",
 };
 
-const PlayerButton = ({ color, legal, sign, onClick, onClickW, onClickY, onClickR, player, side }) => {
+const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
+  const addCard = (color) => {
+    applyAction({
+      type: "hlAddCard",
+      args: {
+        side: side,
+        player: player.number,
+        card: color,
+      },
+    });
+  };
+
   const shouldFlash =
     player &&
     player.penalty != "noPenalty" &&
@@ -47,9 +58,11 @@ const PlayerButton = ({ color, legal, sign, onClick, onClickW, onClickY, onClick
         } ${legal ? "" : "text-gray-500"}`}
         disabled={!legal}
         onClick={onClick}
-        style={{width:'70%'}}
+        style={{ width: "70%" }}
       >
-        <div className={`flex ${sign > 0 ? "flex-row" : "flex-row-reverse"} items-center gap-4 px-4`}>
+        <div
+          className={`flex ${sign > 0 ? "flex-row" : "flex-row-reverse"} items-center gap-4 px-4`}
+        >
           <div className="grow flex flex-col">
             <p>{color.charAt(0).toUpperCase() + color.slice(1)}</p>
             {player ? (
@@ -92,31 +105,30 @@ const PlayerButton = ({ color, legal, sign, onClick, onClickW, onClickY, onClick
             <></>
           )}
         </div>
-        
       </button>
       <button
-        className={'grow rounded-md border border-red-500 bg-red-500'}
+        className={"grow rounded-md border border-red-500 bg-red-500"}
         disabled={false}
-        onClick={onClickR}
-        style={{width:'10%', height: '100%'}}
+        onClick={() => addCard("red")}
+        style={{ width: "10%", height: "100%" }}
       >
-        {player.red}
+        {player.cards["red"]}
       </button>
       <button
-        className={'grow rounded-md border border-yellow-300 bg-yellow-300'}
+        className={"grow rounded-md border border-yellow-300 bg-yellow-300"}
         disabled={false}
-        onClick={onClickY}
-        style={{width:'10%', height: '100%', margin: 0, alignContent: 'center'}}
+        onClick={() => addCard("yellow")}
+        style={{ width: "10%", height: "100%", margin: 0, alignContent: "center" }}
       >
-        {player.yellow}
+        {player.cards["yellow"]}
       </button>
       <button
-        className={'grow rounded-md border border-blue-400 bg-blue-400'}
+        className={"grow rounded-md border border-blue-400 bg-blue-400"}
         disabled={false}
-        onClick={onClickW}
-        style={{width:'10%', height: '100%'}}
+        onClick={() => addCard("warning")}
+        style={{ width: "10%", height: "100%" }}
       >
-        {player.warnings}
+        {player.cards["warning"]}
       </button>
     </div>
   );

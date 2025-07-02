@@ -9,10 +9,9 @@ use game_controller_core::{
 };
 
 use crate::bindings::{
-    COMPETITION_PHASE_PLAYOFF, COMPETITION_PHASE_ROUNDROBIN,
-    COMPETITION_TYPE_DYNAMIC_BALL_HANDLING, COMPETITION_TYPE_NORMAL, GAMECONTROLLER_STRUCT_HEADER,
-    GAMECONTROLLER_STRUCT_SIZE, GAMECONTROLLER_STRUCT_VERSION, GAME_PHASE_NORMAL,
-    GAME_PHASE_PENALTYSHOOT, GAME_PHASE_TIMEOUT, MAX_NUM_PLAYERS, PENALTY_NONE,
+    COMPETITION_PHASE_PLAYOFF, COMPETITION_PHASE_ROUNDROBIN, COMPETITION_TYPE_NORMAL,
+    GAMECONTROLLER_STRUCT_HEADER, GAMECONTROLLER_STRUCT_SIZE, GAMECONTROLLER_STRUCT_VERSION,
+    GAME_PHASE_NORMAL, GAME_PHASE_PENALTYSHOOT, GAME_PHASE_TIMEOUT, MAX_NUM_PLAYERS, PENALTY_NONE,
     PENALTY_SPL_ILLEGAL_BALL_CONTACT, PENALTY_SPL_ILLEGAL_MOTION_IN_SET,
     PENALTY_SPL_ILLEGAL_POSITION, PENALTY_SPL_ILLEGAL_POSITION_IN_SET, PENALTY_SPL_INACTIVE_PLAYER,
     PENALTY_SPL_LEAVING_THE_FIELD, PENALTY_SPL_LOCAL_GAME_STUCK, PENALTY_SPL_PLAYER_PUSHING,
@@ -122,7 +121,6 @@ impl From<ControlMessage> for Bytes {
                 bytes.put_u8(player.secs_till_unpenalized);
             }
         }
-        println!("{}", GAMECONTROLLER_STRUCT_SIZE);
         assert!(bytes.len() == GAMECONTROLLER_STRUCT_SIZE);
         bytes.freeze()
     }
@@ -173,10 +171,9 @@ impl ControlMessage {
                 COMPETITION_PHASE_ROUNDROBIN
             },
             competition_type: match params.competition.challenge_mode {
-                Some(ChallengeMode::DynamicBallHandling) => COMPETITION_TYPE_DYNAMIC_BALL_HANDLING,
                 Some(ChallengeMode::DropIn) => COMPETITION_TYPE_NORMAL,
                 Some(ChallengeMode::KidSize) => COMPETITION_TYPE_NORMAL,
-                Some(ChallengeMode::AdultSize) => COMPETITION_TYPE_NORMAL, 
+                Some(ChallengeMode::AdultSize) => COMPETITION_TYPE_NORMAL,
                 None => COMPETITION_TYPE_NORMAL,
             },
             game_phase: match (game.phase, game.state) {

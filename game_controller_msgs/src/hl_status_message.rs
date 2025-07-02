@@ -1,10 +1,7 @@
 use anyhow::{bail, Error};
 use bytes::{Buf, Bytes};
 
-use crate::bindings::{
-    GAMECONTROLLER_RETURN_STRUCT_HEADER,
-    MAX_NUM_PLAYERS,
-};
+use crate::bindings::{GAMECONTROLLER_RETURN_STRUCT_HEADER, MAX_NUM_PLAYERS};
 
 /// This struct corresponds to `RoboCupGameControlReturnData`.
 /// `RoboCupGameControlReturnData::header` and `RoboCupGameControlReturnData::version` are

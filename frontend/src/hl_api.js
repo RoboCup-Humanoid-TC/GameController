@@ -67,6 +67,7 @@ export const getLaunchData = async () => {
         },
         window: { fullscreen: false },
         network: { interface: "en0", broadcast: false, multicast: false },
+        league: { league: "humanoid" },
       },
     };
   }

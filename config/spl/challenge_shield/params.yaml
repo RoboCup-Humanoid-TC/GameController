@@ -1,4 +1,4 @@
-name: "Kid Size"
+name: "Challenge Shield"
 playersPerTeam: 5
 penalties:
   noPenalty:
@@ -13,19 +13,19 @@ penalties:
     incremental: false
   pickedUp:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
     incremental: false
   illegalPositionInSet:
     duration:
-      secs: 10
+      secs: 15
       nanos: 0
     incremental: false
   illegalPosition:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
-    incremental: false
+    incremental: true
   motionInSet:
     duration:
       secs: 15
@@ -33,41 +33,41 @@ penalties:
     incremental: false
   fallenInactive:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
     incremental: false
   localGameStuck:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
     incremental: false
   ballHolding:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
-    incremental: false
+    incremental: true
   playerStance:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
-    incremental: false
+    incremental: true
   playerPushing:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
-    incremental: false
+    incremental: true
   playingWithArmsHands:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
-    incremental: false
+    incremental: true
   leavingTheField:
     duration:
-      secs: 10
+      secs: 45
       nanos: 0
-    incremental: false
+    incremental: true
 penaltyDurationIncrement:
-  secs: 0
+  secs: 10
   nanos: 0
 setPlays:
   noSetPlay:
@@ -79,11 +79,11 @@ setPlays:
       nanos: 0
   kickOff:
     duration:
-      secs: 0
+      secs: 10
       nanos: 0
     readyDuration:
-      secs: 0
-      nanos: 1
+      secs: 45
+      nanos: 0
   kickIn:
     duration:
       secs: 30
@@ -126,24 +126,24 @@ halfTimeBreakDuration:
   secs: 600
   nanos: 0
 timeoutDuration:
-  secs: 120
+  secs: 300
   nanos: 0
-timeoutsPerTeam: 0
+timeoutsPerTeam: 1
 refereeTimeoutDuration:
   secs: 600
   nanos: 0
 messagesPerTeam: 1200
 messagesPerTeamPerExtraMinute: 60
-mercyRuleScoreDifference: 1
+mercyRuleScoreDifference: 10
 penaltyShots: 3
 suddenDeathPenaltyShots: 3
 penaltyShotDuration:
-  secs: 10
+  secs: 30
   nanos: 0
 delayAfterGoal:
-  secs: 0
+  secs: 15
   nanos: 0
 delayAfterPlaying:
-  secs: 0
+  secs: 15
   nanos: 0
-league: 1
+league: spl

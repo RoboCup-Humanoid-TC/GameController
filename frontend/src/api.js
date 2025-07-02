@@ -66,7 +66,7 @@ export const getLaunchData = async () => {
         },
         window: { fullscreen: false },
         network: { interface: "en0", broadcast: false, multicast: false },
-        league: {league: false},
+        league: { league: "spl" },
       },
     };
   }
@@ -214,13 +214,5 @@ export const declareActions = (actions) => {
     invoke("declare_actions", { actions: actions });
   } else {
     console.log(actions);
-  }
-};
-
-export const getLeague =  async () => {
-  if (window.__TAURI_METADATA__) {
-    return await invoke("get_league");
-  } else {
-    return false;
   }
 };

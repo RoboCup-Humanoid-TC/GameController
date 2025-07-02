@@ -1,5 +1,5 @@
-name: "Challenge Shield"
-playersPerTeam: 5
+name: "Kid Size"
+playersPerTeam: 4
 penalties:
   noPenalty:
     duration:
@@ -13,19 +13,19 @@ penalties:
     incremental: false
   pickedUp:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
     incremental: false
   illegalPositionInSet:
     duration:
-      secs: 15
+      secs: 10
       nanos: 0
     incremental: false
   illegalPosition:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
-    incremental: true
+    incremental: false
   motionInSet:
     duration:
       secs: 15
@@ -33,41 +33,41 @@ penalties:
     incremental: false
   fallenInactive:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
     incremental: false
   localGameStuck:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
     incremental: false
   ballHolding:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
-    incremental: true
+    incremental: false
   playerStance:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
-    incremental: true
+    incremental: false
   playerPushing:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
-    incremental: true
+    incremental: false
   playingWithArmsHands:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
-    incremental: true
+    incremental: false
   leavingTheField:
     duration:
-      secs: 45
+      secs: 10
       nanos: 0
-    incremental: true
+    incremental: false
 penaltyDurationIncrement:
-  secs: 10
+  secs: 0
   nanos: 0
 setPlays:
   noSetPlay:
@@ -79,11 +79,11 @@ setPlays:
       nanos: 0
   kickOff:
     duration:
-      secs: 10
+      secs: 0
       nanos: 0
     readyDuration:
-      secs: 45
-      nanos: 0
+      secs: 0
+      nanos: 1
   kickIn:
     duration:
       secs: 30
@@ -126,24 +126,24 @@ halfTimeBreakDuration:
   secs: 600
   nanos: 0
 timeoutDuration:
-  secs: 300
+  secs: 120
   nanos: 0
-timeoutsPerTeam: 1
+timeoutsPerTeam: 0
 refereeTimeoutDuration:
   secs: 600
   nanos: 0
 messagesPerTeam: 1200
 messagesPerTeamPerExtraMinute: 60
-mercyRuleScoreDifference: 10
+mercyRuleScoreDifference: 1
 penaltyShots: 3
 suddenDeathPenaltyShots: 3
 penaltyShotDuration:
-  secs: 30
+  secs: 10
   nanos: 0
 delayAfterGoal:
-  secs: 15
+  secs: 0
   nanos: 0
 delayAfterPlaying:
-  secs: 15
+  secs: 0
   nanos: 0
-league: 0
+league: humanoid

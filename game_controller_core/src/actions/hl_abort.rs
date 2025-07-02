@@ -1,12 +1,12 @@
-use serde::{Deserialize, Serialize};
 use crate::action::{Action, ActionContext};
-use crate::timer::{Timer};
-use crate::types::{Side, State, SecState};
+use crate::timer::Timer;
+use crate::types::{SecState, Side, State};
+use serde::{Deserialize, Serialize};
 
 /// This struct defines an action for when a goal has been scored.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct HlAbort{
+pub struct HlAbort {
     pub side: Side,
 }
 
@@ -19,6 +19,8 @@ impl Action for HlAbort {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        c.game.state == State::Playing && c.game.sec_state.state != SecState::Normal && c.game.sec_state.side == self.side
+        c.game.state == State::Playing
+            && c.game.sec_state.state != SecState::Normal
+            && c.game.sec_state.side == self.side
     }
 }

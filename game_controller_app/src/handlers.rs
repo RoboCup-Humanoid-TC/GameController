@@ -35,14 +35,7 @@ async fn launch(settings: LaunchSettings, window: Window, app: AppHandle) {
     app.manage(SyncState(runtime_notify.clone()));
 
     // Unfortunately we cannot use the number of players per team here.
-    let size = LogicalSize::<f64>::new(
-        1024.0,
-        if settings.competition.id == "champions_cup" {
-            768.0
-        } else {
-            620.0
-        },
-    );
+    let size = LogicalSize::<f64>::new(1024.0, 768.0);
     let _ = window.set_min_size(Some(size));
     #[cfg(target_os = "windows")]
     let _ = window.set_size(size);
@@ -120,13 +113,6 @@ fn declare_actions(actions: Vec<VAction>, state: State<RuntimeState>) {
     let _ = state.subscribed_actions_sender.send(actions);
 }
 
-/// This function gives the actual league to the webinterface (Standard: SPL)
-#[command]
-fn get_league(launch_data: State<LaunchData>) -> bool {
-    launch_data.default_settings.league.league
-}
-
-
 /// This function returns a handler that can be passed to [tauri::Builder::invoke_handler].
 /// It must be boxed because otherwise its size is unknown at compile time.
 pub fn get_invoke_handler() -> Box<InvokeHandler<Wry>> {
@@ -136,6 +122,5 @@ pub fn get_invoke_handler() -> Box<InvokeHandler<Wry>> {
         get_launch_data,
         launch,
         sync_with_backend,
-        get_league,
     ])
 }

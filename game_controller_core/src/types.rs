@@ -14,15 +14,12 @@ use crate::timer::Timer;
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ChallengeMode {
-    /// Dynamic Ball Handling Challenge
-    DynamicBallHandling,
     /// DropIn
     DropIn,
     /// KidSize
     KidSize,
     /// AdultSize
     AdultSize,
-
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
@@ -33,7 +30,6 @@ pub enum League {
     /// Humanoid League
     Humanoid,
 }
-
 
 /// This struct contains constant parameters of a penalty type.
 #[derive(Clone, Deserialize, Serialize)]
@@ -99,8 +95,8 @@ pub struct CompetitionParams {
     pub delay_after_goal: Duration,
     /// The duration for which the true game state is hidden after switching to the Playing state.
     pub delay_after_playing: Duration,
-    /// league for the config 0: SPL; 1: Humanoid
-    pub league: u8,
+    /// league for the config
+    pub league: League,
 }
 
 /// This struct contains constant parameters for one team.
@@ -183,7 +179,6 @@ pub enum State {
     Finished,
     /// This state is active during a timeout (either for a team or by the referee).
     Timeout,
-
 }
 
 /// This enumerates the second state that the can have (HL)
@@ -192,8 +187,8 @@ pub enum State {
 pub enum SecState {
     /// normal
     Normal,
-    /// Penalityshoot
-    Penalityshoot,
+    /// Penaltyshoot
+    Penaltyshoot,
     /// Overtime
     Overtime,
     /// Timeout
@@ -246,14 +241,6 @@ pub enum Color {
     Purple,
     Brown,
     Gray,
-}
-
-/// This enumerates the jersey colors. Values may be added to match actually submitted jersey designs.
-#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum HLColor {
-    Red,
-    Blue,
 }
 
 /// This enumerates the reasons why a player can be penalized.
@@ -380,7 +367,7 @@ impl From<PlayerNumber> for u8 {
 }
 
 /// This struct contains the dynamic state of a game.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Game {
     /// The current mapping of the home/away team to the left/right side of the field.
@@ -406,8 +393,6 @@ pub struct Game {
     pub switch_half_timer: Timer,
     /// The two competing teams.
     pub teams: EnumMap<Side, Team>,
-    /// League
-    pub league: League,
 }
 
 impl Game {
@@ -443,7 +428,7 @@ impl Game {
 }
 
 /// This struct contains the dynamic state of a team.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Team {
     /// The player number of the goalkeeper. Can be [None] (only) during a penalty shoot-out.
@@ -480,26 +465,28 @@ impl IndexMut<PlayerNumber> for Team {
     }
 }
 
+/// This enumerats the cards that a player can be shown in the Humanoid League.
+#[derive(Clone, Copy, Debug, Deserialize, Enum, Eq, Hash, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum HlCard {
+    Warning,
+    Yellow,
+    Red,
+}
+
 /// This struct contains the dynamic state of a player.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Player {
     /// The current penalty of the player.
     pub penalty: Penalty,
     /// The timer which counts down until the penalty is over.
     pub penalty_timer: Timer,
-    /// HL Stuff
-    /// warnings the player has received
-    pub warnings: u8,
-    /// yellow card the player has received
-    pub yellow: u8,
-    /// red cards the player has received
-    pub red: u8,
-    /// Goalkeeper
-    pub goalkeeper: u8,
+    /// The cards that this player has been shown.
+    pub cards: EnumMap<HlCard, u8>,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SecondaryState {
     /// Kind of the secondary State
@@ -508,7 +495,6 @@ pub struct SecondaryState {
     pub side: Side,
     /// phase of the secondary state
     pub phase: u8,
-
 }
 
 /// This enumerates the possible sources that can trigger actions.
@@ -523,6 +509,6 @@ pub enum ActionSource {
     Timer,
     /// The action was triggered by the user (and should be replayed).
     User,
-    /// referee
+    /// The action was triggered by the (automatic) referee.
     Referee,
 }

@@ -1,5 +1,4 @@
-name: "Dynamic Ball Handling Challenge"
-challengeMode: dynamicBallHandling
+name: "Drop In"
 playersPerTeam: 3
 penalties:
   noPenalty:
@@ -14,17 +13,17 @@ penalties:
     incremental: false
   pickedUp:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   illegalPositionInSet:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   illegalPosition:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   motionInSet:
@@ -34,37 +33,37 @@ penalties:
     incremental: false
   fallenInactive:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   localGameStuck:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   ballHolding:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   playerStance:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   playerPushing:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   playingWithArmsHands:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
   leavingTheField:
     duration:
-      secs: 240
+      secs: 10
       nanos: 0
     incremental: false
 penaltyDurationIncrement:
@@ -121,13 +120,13 @@ setPlays:
       secs: 30
       nanos: 0
 halfDuration:
-  secs: 240
+  secs: 10
   nanos: 0
 halfTimeBreakDuration:
   secs: 600
   nanos: 0
 timeoutDuration:
-  secs: 300
+  secs: 120
   nanos: 0
 timeoutsPerTeam: 0
 refereeTimeoutDuration:
@@ -139,7 +138,7 @@ mercyRuleScoreDifference: 1
 penaltyShots: 3
 suddenDeathPenaltyShots: 3
 penaltyShotDuration:
-  secs: 30
+  secs: 600
   nanos: 0
 delayAfterGoal:
   secs: 15
@@ -147,4 +146,4 @@ delayAfterGoal:
 delayAfterPlaying:
   secs: 15
   nanos: 0
-league: 0
+league: humanoid

@@ -5,7 +5,7 @@ use crate::timer::Timer;
 use crate::types::{Penalty, PlayerNumber, Side, State};
 
 /// This struct defines an action to unpenalize players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Unpenalize {
     /// The side whose player is unpenalized.

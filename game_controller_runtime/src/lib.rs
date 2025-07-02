@@ -29,13 +29,13 @@ use game_controller_core::{
         LogEntry, LoggedMetadata, LoggedMonitorRequest, LoggedStatusMessage, LoggedTeamMessage,
         TimestampedLogEntry,
     },
-    types::{ActionSource, Game, Params, PlayerNumber, Side, League},
+    types::{ActionSource, Game, League, Params, PlayerNumber, Side},
     GameController,
 };
-use game_controller_msgs::{MonitorRequest, StatusMessage, HlStatusMessage, RefereeMessage};
+use game_controller_msgs::{HlStatusMessage, MonitorRequest, RefereeMessage, StatusMessage};
 use game_controller_net::{
-    ControlMessageSender, Event, MonitorRequestReceiver, StatusMessageForwarder,
-    StatusMessageReceiver, TeamMessageReceiver, RefereeReceiver, RefereeSender,
+    ControlMessageSender, Event, MonitorRequestReceiver, RefereeReceiver, RefereeSender,
+    StatusMessageForwarder, StatusMessageReceiver, TeamMessageReceiver,
 };
 
 pub mod cli;
@@ -168,7 +168,12 @@ async fn event_loop(
     let (true_control_sender, _) = watch::channel(game_controller.get_game(false).clone());
 
     // We must wait for the main window before sending the first UI state.
-    ui_notify.notified().await;
+    select! {
+        _ = ui_notify.notified() => {},
+        _ = shutdown_token.cancelled() => {
+            return Ok(());
+        }
+    }
 
     loop {
         send_ui_state(UiState {
@@ -276,7 +281,7 @@ async fn event_loop(
                         // here because it is possible that nobody is subscribed at the moment.
                         let _ = status_forward_sender.send((host, data.clone()));
                         // TODO: DANIEL
-                        if game_controller.get_league() == League::Spl {
+                        if game_controller.params.competition.league == League::Spl {
                             if let Ok(status_message) = StatusMessage::try_from(data) {
                                 if let Some(side)
                                     = game_controller.params.game.get_side(status_message.team_number)
@@ -314,7 +319,6 @@ async fn event_loop(
                         }), ActionSource::Network);
                     },
                     Some(Event::RefereeMessage { data }) => {
-                        println!("Message received");
                         println!("Referee Message {:?}", data);
                         if let Ok(referee_message) = RefereeMessage::try_from(data) {
                             game_controller.automated_referee(referee_message.command_1, referee_message.command_2, referee_message.command_3, referee_message.command_4, referee_message.command_5);
@@ -385,6 +389,10 @@ pub async fn start_runtime(
                 competition: serde_yaml::from_reader(
                     File::open(
                         config_directory
+                            .join(match settings.league.league {
+                                League::Spl => "spl",
+                                League::Humanoid => "humanoid",
+                            })
                             .join(&settings.competition.id)
                             .join("params.yaml"),
                     )

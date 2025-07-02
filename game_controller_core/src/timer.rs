@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 pub use time::Duration as SignedDuration;
 
 use crate::action::VAction;
-use crate::types::{Game, Params, Phase, State, SecState};
+use crate::types::{Game, Params, Phase, SecState, State};
 
 /// This enumerates conditions which restrict in which states a timer actually counts down.
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
@@ -39,11 +39,14 @@ impl EvaluatedRunConditions {
             playing: (game.state == State::Playing
                 || ((game.state == State::Ready || game.state == State::Set)
                     && game.phase != Phase::PenaltyShootout
-                    && !params.game.long
                     && game.primary_timer.get_remaining()
                         != TryInto::<SignedDuration>::try_into(params.competition.half_duration)
-                            .unwrap())) && (game.sec_state.state == SecState::Normal || (game.sec_state.state == SecState::Penalityshoot && game.state != State::Set)),
-            ready_or_playing: (game.state == State::Ready || game.state == State::Playing) && game.sec_state.state == SecState::Normal,
+                            .unwrap()))
+                && (game.sec_state.state == SecState::Normal
+                    || (game.sec_state.state == SecState::Penaltyshoot
+                        && game.state != State::Set)),
+            ready_or_playing: (game.state == State::Ready || game.state == State::Playing)
+                && game.sec_state.state == SecState::Normal,
         }
     }
 }
@@ -61,7 +64,7 @@ impl Index<RunCondition> for EvaluatedRunConditions {
 }
 
 /// This enumerates the possible behaviors of a timer when 0 is reached.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum BehaviorAtZero {
     /// When the timer reaches 0, it stops itself and potentially releases some actions to be
@@ -74,7 +77,7 @@ pub enum BehaviorAtZero {
 }
 
 /// This struct describes the state of a timer. A timer can be either started or stopped.
-#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Timer {
     /// The timer is active with some parameters. It may still be paused.
@@ -136,7 +139,6 @@ impl Timer {
                     None
                 }
             }
-
             _ => None,
         }
     }

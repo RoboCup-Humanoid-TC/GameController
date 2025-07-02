@@ -15,13 +15,13 @@ use std::{cmp::min, iter::once, time::Duration};
 
 use enum_map::enum_map;
 
-use crate::actions::*;
 use crate::action::{ActionContext, VAction};
+use crate::actions::*;
 use crate::log::{LogEntry, LoggedAction, Logger, TimestampedLogEntry};
 use crate::timer::{BehaviorAtZero, EvaluatedRunConditions, RunCondition, Timer};
 use crate::types::{
-    ActionSource, Game, Params, Penalty, Phase, Player, PlayerNumber, SetPlay, State, SecState,
-    SecondaryState, Team, Side, League,
+    ActionSource, Game, HlCard, Params, Penalty, Phase, Player, PlayerNumber, SecState,
+    SecondaryState, SetPlay, Side, State, Team,
 };
 
 /// This struct encapsulates a delayed game state.
@@ -85,10 +85,9 @@ impl GameController {
                                 Penalty::Substitute
                             },
                             penalty_timer: Timer::Stopped,
-                            warnings: 0,
-                            yellow: 0,
-                            red: 0,
-                            goalkeeper: 0,
+                            cards: enum_map! {
+                                _ => 0,
+                            },
                         })
                         // We have to collect into a Vec first because this thing cannot be directly
                         // collected into a fixed size array.
@@ -97,12 +96,6 @@ impl GameController {
                         .unwrap(),
                 },
             },
-            // TODO: Switch with args
-            league: match params.competition.league {
-                0 => League::Spl,
-                1 => League::Humanoid,
-                _ => League::Spl,
-            }
         };
         Self {
             params,
@@ -112,7 +105,6 @@ impl GameController {
             history: vec![],
             logger,
         }
-        
     }
 
     /// This function returns the dynamic state of the game. The caller can request if the game
@@ -123,10 +115,6 @@ impl GameController {
         } else {
             &self.game
         }
-    }
-
-    pub fn get_league(&self) -> League {
-        self.game.league
     }
 
     /// This function returns an action context for the game. Although there is nothing that
@@ -150,13 +138,12 @@ impl GameController {
 
     /// This function returns the last n actions that can be undone.
     pub fn get_undo_actions(&self, n: u32) -> Vec<VAction> {
-        return self
-            .history
+        self.history
             .iter()
             .rev()
             .take(n as usize)
             .map(|entry| entry.1.clone())
-            .collect();
+            .collect()
     }
 
     /// This function lets time progress. Timers are updated and expiration actions applied when
@@ -336,114 +323,190 @@ impl GameController {
         }
     }
 
-    pub fn automated_referee(&mut self, command_1: u8, command_2: u8, command_3: u8, command_4: u8, command_5: u8) {
-        println!("DEBUG CORE: {:?}, {:?}, {:?}, {:?}, {:?}", command_1, command_2, command_3, command_4, command_5);
+    pub fn automated_referee(
+        &mut self,
+        command_1: u8,
+        command_2: u8,
+        command_3: u8,
+        command_4: u8,
+        command_5: u8,
+    ) {
+        println!(
+            "DEBUG CORE: {:?}, {:?}, {:?}, {:?}, {:?}",
+            command_1, command_2, command_3, command_4, command_5
+        );
         // Phase commands
         let side = match command_5 {
             0 => Side::Home,
             1 => Side::Away,
-            _ => Side::Home
+            _ => Side::Home,
         };
         match command_1 {
-            1 => {self.apply(VAction::HlStateShifter(HlStateShifter{
+            1 => self.apply(
+                VAction::HlStateShifter(HlStateShifter {
                     state: State::Ready,
-                }), ActionSource::Referee)
-            },
-            2 => {self.apply(VAction::HlStateShifter(HlStateShifter{
-                        state: State::Set,
-                    }), ActionSource::Referee)
-            },
-            3 => {
-                self.apply(VAction::HlStateShifter(HlStateShifter{
+                }),
+                ActionSource::Referee,
+            ),
+            2 => self.apply(
+                VAction::HlStateShifter(HlStateShifter { state: State::Set }),
+                ActionSource::Referee,
+            ),
+            3 => self.apply(
+                VAction::HlStateShifter(HlStateShifter {
                     state: State::Playing,
-                }), ActionSource::Referee)
-            },
-            4 => {self.apply(VAction::HlStateShifter(HlStateShifter{
+                }),
+                ActionSource::Referee,
+            ),
+            4 => self.apply(
+                VAction::HlStateShifter(HlStateShifter {
                     state: State::Finished,
-                }), ActionSource::Referee)
-            },
-            5 => {self.apply(VAction::HlStateShifter(HlStateShifter{
+                }),
+                ActionSource::Referee,
+            ),
+            5 => self.apply(
+                VAction::HlStateShifter(HlStateShifter {
                     state: State::Initial,
-                }), ActionSource::Referee)
-            },
-            6 => {self.apply(VAction::HlStateShifter(HlStateShifter{
+                }),
+                ActionSource::Referee,
+            ),
+            6 => self.apply(
+                VAction::HlStateShifter(HlStateShifter {
                     state: State::Timeout,
-                }), ActionSource::Referee)
-            },
-            7 => {self.apply(VAction::AddExtraTime(AddExtraTime{}), ActionSource::Referee)},
+                }),
+                ActionSource::Referee,
+            ),
+            7 => self.apply(
+                VAction::AddExtraTime(AddExtraTime {}),
+                ActionSource::Referee,
+            ),
             _ => {}
         }
         match command_2 {
             // Home
-            1 => {self.apply(VAction::HlGoalKick(HlGoalKick{
-                side: side,
-                seconds: 45,
-            }), ActionSource::Referee)},
-            2 => {self.apply(VAction::HlThrowIn(HlThrowIn{
-                side: side,
-                seconds: 45,
-            }), ActionSource::Referee)},
-            3 => {self.apply(VAction::HlCornerKick(HlCornerKick{
-                side: side,
-                seconds: 45,
-            }), ActionSource::Referee)},
-            4 => {self.apply(VAction::HlPenaltyKick(HlPenaltyKick{
-                side: side,
-                seconds: 45,
-            }), ActionSource::Referee)},
-            5 => {self.apply(VAction::HlDirectFreeKick(HlDirectFreeKick{
-                side: side,
-                seconds: 45,
-            }), ActionSource::Referee)},
-            6 => {self.apply(VAction::HlIndirectFreeKick(HlIndirectFreeKick{
-                side: side,
-                seconds: 45,
-            }), ActionSource::Referee)},
-            7 => {self.apply(VAction::HlRetake(HlRetake{
-                side: side
-            }), ActionSource::Referee)},
-            8 => {self.apply(VAction::HlAbort(HlAbort{
-                side: side,
-            }), ActionSource::Referee)},
-            9 => {self.apply(VAction::Goal(Goal{
-                side: side,
-            }), ActionSource::Referee)},
+            1 => self.apply(
+                VAction::HlSetPlay(HlSetPlay {
+                    side: side,
+                    set_play: SecState::GoalKick,
+                    seconds: 45,
+                }),
+                ActionSource::Referee,
+            ),
+            2 => self.apply(
+                VAction::HlSetPlay(HlSetPlay {
+                    side: side,
+                    set_play: SecState::ThrowIn,
+                    seconds: 45,
+                }),
+                ActionSource::Referee,
+            ),
+            3 => self.apply(
+                VAction::HlSetPlay(HlSetPlay {
+                    side: side,
+                    set_play: SecState::CornerKick,
+                    seconds: 45,
+                }),
+                ActionSource::Referee,
+            ),
+            4 => self.apply(
+                VAction::HlSetPlay(HlSetPlay {
+                    side: side,
+                    set_play: SecState::Penaltykick,
+                    seconds: 45,
+                }),
+                ActionSource::Referee,
+            ),
+            5 => self.apply(
+                VAction::HlSetPlay(HlSetPlay {
+                    side: side,
+                    set_play: SecState::DirectFreekick,
+                    seconds: 45,
+                }),
+                ActionSource::Referee,
+            ),
+            6 => self.apply(
+                VAction::HlSetPlay(HlSetPlay {
+                    side: side,
+                    set_play: SecState::IndirectFreekick,
+                    seconds: 45,
+                }),
+                ActionSource::Referee,
+            ),
+            7 => self.apply(
+                VAction::HlRetake(HlRetake { side: side }),
+                ActionSource::Referee,
+            ),
+            8 => self.apply(
+                VAction::HlAbort(HlAbort { side: side }),
+                ActionSource::Referee,
+            ),
+            9 => self.apply(VAction::Goal(Goal { side: side }), ActionSource::Referee),
             _ => {}
         }
         match command_3 {
-            1 => {self.apply(VAction::HlSubstitute(HlSubstitute{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
-            2 => {self.apply(VAction::HlPushing(HlPushing{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
-            3 => {self.apply(VAction::HlPickUp(HlPickUp{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
-            4 => {self.apply(VAction::HlBallManipulation(HlBallManipulation{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
-            5 => {self.apply(VAction::HlUnpenalize(HlUnpenalize{
-                side: side,
-                player: PlayerNumber(command_4),
-                timer: true,
-            }), ActionSource::Referee)},
-            6 => {self.apply(VAction::IncrementPlayerRed(IncrementPlayerRed{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
-            7 => {self.apply(VAction::IncrementPlayerYellow(IncrementPlayerYellow{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
-            8 => {self.apply(VAction::IncrementPlayerWarning(IncrementPlayerWarning{
-                side: side,
-                player: PlayerNumber(command_4),
-            }), ActionSource::Referee)},
+            1 => self.apply(
+                VAction::HlSubstitute(HlSubstitute {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                }),
+                ActionSource::Referee,
+            ),
+            2 => self.apply(
+                VAction::HlPenalize(HlPenalize {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    penalty: Penalty::PlayerPushing,
+                }),
+                ActionSource::Referee,
+            ),
+            3 => self.apply(
+                VAction::HlPenalize(HlPenalize {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    penalty: Penalty::PickedUp,
+                }),
+                ActionSource::Referee,
+            ),
+            4 => self.apply(
+                VAction::HlPenalize(HlPenalize {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    penalty: Penalty::BallHolding,
+                }),
+                ActionSource::Referee,
+            ),
+            5 => self.apply(
+                VAction::HlUnpenalize(HlUnpenalize {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    timer: true,
+                }),
+                ActionSource::Referee,
+            ),
+            6 => self.apply(
+                VAction::HlAddCard(HlAddCard {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    card: HlCard::Red,
+                }),
+                ActionSource::Referee,
+            ),
+            7 => self.apply(
+                VAction::HlAddCard(HlAddCard {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    card: HlCard::Yellow,
+                }),
+                ActionSource::Referee,
+            ),
+            8 => self.apply(
+                VAction::HlAddCard(HlAddCard {
+                    side: side,
+                    player: PlayerNumber(command_4),
+                    card: HlCard::Warning,
+                }),
+                ActionSource::Referee,
+            ),
             _ => {}
         }
     }

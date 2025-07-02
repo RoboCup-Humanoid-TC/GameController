@@ -8,7 +8,7 @@ use crate::timer::{BehaviorAtZero, RunCondition, SignedDuration, Timer};
 use crate::types::{Penalty, PenaltyCall, Phase, PlayerNumber, SetPlay, Side, State};
 
 /// This struct defines an action to apply a penalty to players.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Penalize {
     /// The side whose player is penalized.
