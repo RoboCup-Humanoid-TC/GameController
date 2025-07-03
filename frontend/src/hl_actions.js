@@ -81,8 +81,8 @@ export const getActions = () => {
       { type: "hlSetPlay", args: { side: side, setPlay: "goalKick", seconds: 30 } },
       { type: "hlSetPlay", args: { side: side, setPlay: "throwIn", seconds: 30 } },
       { type: "hlSetPlay", args: { side: side, setPlay: "cornerKick", seconds: 30 } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "directFreekick", seconds: 30 } },
       { type: "hlSetPlay", args: { side: side, setPlay: "indirectFreekick", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "directFreekick", seconds: 30 } },
       { type: "hlSetPlay", args: { side: side, setPlay: "penaltykick", seconds: 30 } },
       { type: "hlAbort", args: { side: side } },
       { type: "hlRetake", args: { side: side } }
