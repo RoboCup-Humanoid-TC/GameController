@@ -51,6 +51,61 @@ const getActionName = (action) => {
     case "waitForPenaltyShot":
     case "waitForSetPlay":
       return "Set";
+    case "hlUnpenalize":
+      return "Unpenalize";
+    case "hlStateShifter":
+      switch (action.args.state) {
+        case "initial":
+          return "Second Half";
+        case "ready":
+          return "Ready"
+        case "set":
+          return "Set";
+        case "playing":
+          return "Playing";
+        case "finished":
+          return "Finish";
+      }
+    case "hlSetPlay":
+      // TODO: Cant access secondaryState.state and SecondaryState.phase
+      switch (action.args.setPlay) {
+        case "directFreekick":
+          return "Direct Free Kick";
+        case "indirectFreekick":
+          return "Indirect Free Kick";
+        case "penaltykick":
+          return "Penalty Kick";
+        case "cornerKick":
+          return "Corner Kick";
+        case "goalKick":
+          return "Goal Kick";
+        case "throwIn":
+          return "Throw-in";
+      }
+    case "hlAbort":
+      return "Abort";
+    case "hlRetake":
+      return "Retake";
+    case "hlSubstitute":
+      return "Substitute";
+    case "hlAddCard":
+      switch (action.args.card) {
+        case "warning":
+          return "Warning";
+        case "yellow":
+          return "Yellow Card";
+        case "red":
+          return "Red Card";
+      }
+    case "hlPenalize":
+      switch (action.args.penalty) {
+        case "ballHolding":
+          return "Ball Manipulation";
+        case "playerPushing":
+          return "Player Pushing";
+        case "pickedUp":
+          return "Picked Up";
+      }
   }
   return action.type;
 };
