@@ -479,7 +479,6 @@ impl GameController {
                 VAction::HlUnpenalize(HlUnpenalize {
                     side: side,
                     player: PlayerNumber(command_4),
-                    timer: true,
                 }),
                 ActionSource::Referee,
             ),

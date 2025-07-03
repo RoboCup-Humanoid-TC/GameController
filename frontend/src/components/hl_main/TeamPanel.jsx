@@ -272,17 +272,10 @@ const TeamPanel = ({
       });
       setSelectedPenaltyCall(null);
     } else {
-      if (player.penalty === "pickedUp") {
-        applyAction({
+      applyAction({
           type: "hlUnpenalize",
-          args: { side: side, player: player.number, timer: true },
+          args: { side: side, player: player.number},
         });
-      } else {
-        applyAction({
-          type: "hlUnpenalize",
-          args: { side: side, player: player.number, timer: false },
-        });
-      }
     }
   };
 

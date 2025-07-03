@@ -142,7 +142,7 @@ export const getActions = () => {
   for (const timer of [true, false]) {
     for (const side of ["home", "away"]) {
       for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-        actions.push({ type: "hlUnpenalize", args: { side: side, player: number, timer: timer } });
+        actions.push({ type: "hlUnpenalize", args: { side: side, player: number } });
       }
     }
   }
