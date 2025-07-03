@@ -49,7 +49,9 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
     player.penalty != "motionInSet" &&
     (player.penaltyTimer.started
       ? player.penaltyTimer.started.remaining[0] < 10
-      : player.penalty != "pickedUp");
+      : player.penalty != "pickedUp" &&
+        player.penalty != "playerPushing" &&
+        player.penalty != "ballHolding");
   return (
     <div className="flex items-center">
       <button
