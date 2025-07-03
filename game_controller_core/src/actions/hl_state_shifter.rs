@@ -135,15 +135,16 @@ impl Action for HlStateShifter {
             true
         } else if self.state == State::Set
             && (c.game.state == State::Ready
-                || c.game.state == State::Initial
-                || c.game.state == State::Playing)
+                || c.game.state == State::Initial)
         {
             true
         } else if self.state == State::Playing && c.game.state == State::Set {
             true
-        } else if self.state == State::Finished {
+        } else if self.state == State::Finished && (c.game.state == State::Playing) {
             true
-        } else if self.state == State::Timeout && c.game.state == State::Playing {
+        } else if self.state == State::Timeout && 
+        (c.game.state == State::Playing || c.game.state == State::Ready 
+            || c.game.state == State::Set) {
             true
         } else {
             false

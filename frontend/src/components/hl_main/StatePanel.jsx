@@ -14,7 +14,7 @@ const StatePanel = ({ game, legalGameActions }) => {
         <ActionButton
           action={{ type: "hlStateShifter", args: { state: "ready" } }}
           label="Ready"
-          legal={inHalfTimeBreak ? (game.phase === "secondHalf" ? true : false) : true}
+          legal={legalGameActions[actions.READY]}
         />
       </div>
     ) : (
@@ -29,7 +29,7 @@ const StatePanel = ({ game, legalGameActions }) => {
       <ActionButton
         action={{ type: "hlStateShifter", args: { state: "set" } }}
         label="Set"
-        legal={game.state === "ready" || game.secState.state == "penaltyshoot"}
+        legal={legalGameActions[actions.SET]}
       />
     ) : (
       <></>
@@ -43,7 +43,7 @@ const StatePanel = ({ game, legalGameActions }) => {
       <ActionButton
         action={{ type: "hlStateShifter", args: { state: "playing" } }}
         label="Playing"
-        legal={game.state === "set"}
+        legal={legalGameActions[actions.PLAYING]}
       />
     ) : (
       <></>
@@ -57,7 +57,7 @@ const StatePanel = ({ game, legalGameActions }) => {
       <ActionButton
         action={{ type: "hlStateShifter", args: { state: "finished" } }}
         label="Finish"
-        legal={true}
+        legal={legalGameActions[actions.FINISHED]}
       />
     ) : (
       <></>
@@ -110,7 +110,7 @@ const StatePanel = ({ game, legalGameActions }) => {
       <ActionButton
         action={{ type: "timeout", args: { side: null } }}
         label="Referee Timeout"
-        legal={true}
+        legal={legalGameActions[actions.HL_TIMEOUT]}
       />
     </div>
   );
