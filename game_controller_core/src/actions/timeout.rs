@@ -62,9 +62,10 @@ impl Action for Timeout {
             }
         } else {
             if self.side.is_some() {
-                if (c.game.state != State::Playing || c.game.state != State::Finished)
-                    && c.game.sec_state.state != SecState::Timeout
-                {
+                if c.game.teams[self.side.unwrap()].timeout_budget > 0 &&
+                    (c.game.state != State::Playing || c.game.state != State::Finished)
+                    && c.game.sec_state.state != SecState::Timeout {
+                    
                     c.game.secondary_timer = Timer::Started {
                         // In some cases, an existing timer is modified to avoid situations like "We are going
                         // to take a timeout once their timeout is over".
@@ -77,7 +78,10 @@ impl Action for Timeout {
                         )]),
                     };
                     c.game.sec_state.state = SecState::Timeout;
+                    c.game.sec_state.side = self.side.unwrap();
                     c.game.state = State::Initial;
+                    c.game.teams[self.side.unwrap()].timeout_budget -= 1;
+                    
                 } else if c.game.sec_state.state == SecState::Timeout {
                     c.game.secondary_timer.timer_to_zero();
                     c.game.sec_state.state = SecState::Normal;
@@ -106,6 +110,25 @@ impl Action for Timeout {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        true
+        if self.side.is_some(){
+            if c.game.sec_state.state == SecState::Normal &&
+            c.game.teams[self.side.unwrap()].timeout_budget > 0
+            {
+                true
+            } 
+            else if c.game.sec_state.state == SecState::Timeout &&
+            c.game.sec_state.side == self.side.unwrap()
+            {
+                true
+            } 
+            else 
+            {
+                false
+            }
+        } 
+        else 
+        {
+            true
+        }
     }
 }

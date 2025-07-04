@@ -110,7 +110,7 @@ const StatePanel = ({ game, legalGameActions }) => {
       <ActionButton
         action={{ type: "timeout", args: { side: null } }}
         label="Referee Timeout"
-        legal={legalGameActions[actions.HL_TIMEOUT]}
+        legal={legalGameActions[actions.REFEREE_TIMEOUT]}
       />
     </div>
   );

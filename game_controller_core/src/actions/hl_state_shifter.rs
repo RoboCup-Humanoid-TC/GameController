@@ -24,6 +24,7 @@ impl Action for HlStateShifter {
                 team.goalkeeper = None;
                 team.penalty_shot = 0;
                 team.penalty_shot_mask = 0;
+                team.timeout_budget = c.params.competition.timeouts_per_team;
                 team.players.iter_mut().for_each(|player| {
                     if player.penalty != Penalty::Substitute {
                         player.penalty = Penalty::NoPenalty;

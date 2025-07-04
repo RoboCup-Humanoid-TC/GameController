@@ -301,7 +301,7 @@ const TeamPanel = ({
             <ActionButton
               action={{ type: "timeout", args: { side: side } }}
               label={game.secState.state == "timeout" ? "!Timeout" : "Timeout"}
-              legal={true}
+              legal={legalTeamActions[actions.TIMEOUT]}
             />
           ) : (
             <ActionButton

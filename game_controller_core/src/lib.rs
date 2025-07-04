@@ -71,7 +71,7 @@ impl GameController {
                     goalkeeper: Some(PlayerNumber::new(1)),
                     score: 0,
                     penalty_counter: 0,
-                    timeout_budget: 2,
+                    timeout_budget: params.competition.timeouts_per_team,
                     message_budget: params.competition.messages_per_team,
                     illegal_communication: false,
                     penalty_shot: 0,

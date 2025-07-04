@@ -149,7 +149,7 @@ halfTimeBreakDuration:
 timeoutDuration:
   secs: 120
   nanos: 0
-timeoutsPerTeam: 0
+timeoutsPerTeam: 1
 refereeTimeoutDuration:
   secs: 600
   nanos: 0
