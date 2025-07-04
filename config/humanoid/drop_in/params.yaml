@@ -119,6 +119,27 @@ setPlays:
     readyDuration:
       secs: 30
       nanos: 0
+  throwIn:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0  
+  directFreeKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0
+  indirectFreeKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0
 halfDuration:
   secs: 10
   nanos: 0

@@ -194,11 +194,11 @@ pub enum SecState {
     /// Timeout
     Timeout,
     /// Direct Freekick
-    DirectFreekick,
+    DirectFreeKick,
     /// Indirect Freekick
-    IndirectFreekick,
+    IndirectFreeKick,
     /// Penaltykick
-    Penaltykick,
+    PenaltyKick,
     /// Cornerkick
     CornerKick,
     /// Goal Kick
@@ -225,7 +225,28 @@ pub enum SetPlay {
     PushingFreeKick,
     /// A penalty kick is in progress.
     PenaltyKick,
+    /// HL Throw in (equivalent to a kick-in in the SPL)
+    ThrowIn,
+    /// A direct free kick is in progress.
+    DirectFreeKick,
+    /// An indirect free kick is in progress.
+    IndirectFreeKick,
 }
+
+impl SecState {
+    pub fn sec_state_to_set_play(state: SecState) -> SetPlay {
+        match state {
+            SecState::DirectFreeKick => SetPlay::DirectFreeKick,
+            SecState::IndirectFreeKick => SetPlay::IndirectFreeKick,
+            SecState::PenaltyKick => SetPlay::PenaltyKick,
+            SecState::CornerKick => SetPlay::CornerKick,
+            SecState::GoalKick => SetPlay::GoalKick,
+            SecState::ThrowIn => SetPlay::ThrowIn,
+            _ => SetPlay::NoSetPlay, // All others map to no active set play
+        }
+    }
+}
+
 
 /// This enumerates the jersey colors. Values may be added to match actually submitted jersey designs.
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]

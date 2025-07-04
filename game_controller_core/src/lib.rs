@@ -411,7 +411,7 @@ impl GameController {
             4 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::Penaltykick,
+                    set_play: SecState::PenaltyKick,
                     seconds: 45,
                 }),
                 ActionSource::Referee,
@@ -419,7 +419,7 @@ impl GameController {
             5 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::DirectFreekick,
+                    set_play: SecState::DirectFreeKick,
                     seconds: 45,
                 }),
                 ActionSource::Referee,
@@ -427,7 +427,7 @@ impl GameController {
             6 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::IndirectFreekick,
+                    set_play: SecState::IndirectFreeKick,
                     seconds: 45,
                 }),
                 ActionSource::Referee,

@@ -123,12 +123,12 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}
       >
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "penaltykick", seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "penaltyKick", seconds: 30 } }}
           active={false}
           label={
             game.secState.state == "normal"
               ? "Penalty Kick"
-              : game.secState.state == "penaltykick" && game.secState.side == side
+              : game.secState.state == "penaltyKick" && game.secState.side == side
               ? game.secState.phase == 0
                 ? "Placement"
                 : game.secState.phase == 1
@@ -143,13 +143,13 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         <TeamPenaltyButton
           action={{
             type: "hlSetPlay",
-            args: { side: side, setPlay: "directFreekick", seconds: 30 },
+            args: { side: side, setPlay: "directFreeKick", seconds: 30 },
           }}
           active={false}
           label={
             game.secState.state == "normal"
               ? "Direct Free Kick"
-              : game.secState.state == "directFreekick" && game.secState.side == side
+              : game.secState.state == "directFreeKick" && game.secState.side == side
               ? game.secState.phase == 0
                 ? "Placement"
                 : game.secState.phase == 1
@@ -164,13 +164,13 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         <TeamPenaltyButton
           action={{
             type: "hlSetPlay",
-            args: { side: side, setPlay: "indirectFreekick", seconds: 30 },
+            args: { side: side, setPlay: "indirectFreeKick", seconds: 30 },
           }}
           active={false}
           label={
             game.secState.state == "normal"
               ? "Indirect Free Kick"
-              : game.secState.state == "indirectFreekick" && game.secState.side == side
+              : game.secState.state == "indirectFreeKick" && game.secState.side == side
               ? game.secState.phase == 0
                 ? "Placement"
                 : game.secState.phase == 1
