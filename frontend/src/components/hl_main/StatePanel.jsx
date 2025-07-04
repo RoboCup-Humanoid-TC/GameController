@@ -86,7 +86,7 @@ const StatePanel = ({ game, legalGameActions }) => {
           <ActionButton
             action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
             label="Penalty Shots (Left Goal)"
-            legal={true}
+            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
           />
         </div>
         <div className="col-span-1">
