@@ -388,7 +388,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::GoalKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -396,7 +395,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::ThrowIn,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -404,7 +402,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::CornerKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -412,7 +409,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::PenaltyKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -420,7 +416,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::DirectFreeKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -428,7 +423,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::IndirectFreeKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),

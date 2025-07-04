@@ -65,7 +65,7 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}
       >
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "goalKick", seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "goalKick" } }}
           active={false}
           label={
             game.secState.state == "normal"
@@ -83,7 +83,7 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
           legal={legalTeamActions[actions.GOAL_KICK]}
         />
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "throwIn", seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "throwIn" } }}
           active={false}
           label={
             game.secState.state == "normal"
@@ -101,7 +101,7 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
           legal={legalTeamActions[actions.THROW_IN]}
         />
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "cornerKick", seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "cornerKick" } }}
           active={false}
           label={
             game.secState.state == "normal"
@@ -123,7 +123,7 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         className={`flex items-center w-full h-1/3 ${sign > 0 ? "flex-row" : "flex-row-reverse"}`}
       >
         <TeamPenaltyButton
-          action={{ type: "hlSetPlay", args: { side: side, setPlay: "penaltyKick", seconds: 30 } }}
+          action={{ type: "hlSetPlay", args: { side: side, setPlay: "penaltyKick" } }}
           active={false}
           label={
             game.secState.state == "normal"
@@ -143,7 +143,7 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         <TeamPenaltyButton
           action={{
             type: "hlSetPlay",
-            args: { side: side, setPlay: "directFreeKick", seconds: 30 },
+            args: { side: side, setPlay: "directFreeKick" },
           }}
           active={false}
           label={
@@ -164,7 +164,7 @@ const FreeKickButtons = ({ game, legalTeamActions, side, sign }) => {
         <TeamPenaltyButton
           action={{
             type: "hlSetPlay",
-            args: { side: side, setPlay: "indirectFreeKick", seconds: 30 },
+            args: { side: side, setPlay: "indirectFreeKick" },
           }}
           active={false}
           label={

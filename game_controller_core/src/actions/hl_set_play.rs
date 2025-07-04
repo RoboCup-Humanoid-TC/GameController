@@ -10,7 +10,6 @@ pub use time::Duration;
 pub struct HlSetPlay {
     pub side: Side,
     pub set_play: SecState,
-    pub seconds: i64,
 }
 
 impl Action for HlSetPlay {

@@ -78,12 +78,12 @@ export const getActions = () => {
       { type: "timeout", args: { side: side } },
       { type: "globalGameStuck", args: { side: side } },
       { type: "goal", args: { side: side } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "goalKick", seconds: 30 } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "throwIn", seconds: 30 } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "cornerKick", seconds: 30 } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "indirectFreeKick", seconds: 30 } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "directFreeKick", seconds: 30 } },
-      { type: "hlSetPlay", args: { side: side, setPlay: "penaltyKick", seconds: 30 } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "goalKick" } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "throwIn" } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "cornerKick" } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "indirectFreeKick" } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "directFreeKick" } },
+      { type: "hlSetPlay", args: { side: side, setPlay: "penaltyKick" } },
       { type: "hlAbort", args: { side: side } },
       { type: "hlRetake", args: { side: side } }
     );
