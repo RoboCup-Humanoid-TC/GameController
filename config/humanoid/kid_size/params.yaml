@@ -96,14 +96,14 @@ setPlays:
       secs: 30
       nanos: 0
     readyDuration:
-      secs: 0
+      secs: 30
       nanos: 0
   cornerKick:
     duration:
       secs: 30
       nanos: 0
     readyDuration:
-      secs: 0
+      secs: 30
       nanos: 0
   pushingFreeKick:
     duration:
