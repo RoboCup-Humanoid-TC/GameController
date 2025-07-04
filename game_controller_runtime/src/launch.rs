@@ -220,7 +220,6 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
     } else {
         League::Humanoid
     };
-    println!("Using league: {:?}", league);
     let league_config_directory =
         config_directory.join(if league == League::Spl { "spl" } else { "humanoid" });
     let teams = get_teams(&league_config_directory).context("could not read teams")?;
