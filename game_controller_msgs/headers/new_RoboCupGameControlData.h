@@ -43,7 +43,6 @@
 #define STATE_SET                   2
 #define STATE_PLAYING               3
 #define STATE_FINISHED              4
-#define STATE_DANIEL                15
 
 #define STATE2_NORMAL               0
 #define STATE2_PENALTYSHOOT         1
