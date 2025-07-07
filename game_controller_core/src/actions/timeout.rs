@@ -111,19 +111,26 @@ impl Action for Timeout {
 
     fn is_legal(&self, c: &ActionContext) -> bool {
         if self.side.is_some(){
-            if c.game.sec_state.state == SecState::Normal &&
-            c.game.teams[self.side.unwrap()].timeout_budget > 0
-            {
-                true
-            } 
-            else if c.game.sec_state.state == SecState::Timeout &&
-            c.game.sec_state.side == self.side.unwrap()
-            {
-                true
-            } 
-            else 
+            if c.game.state == State::Playing
             {
                 false
+            }
+            else
+            {
+                if c.game.sec_state.state == SecState::Normal &&
+                c.game.teams[self.side.unwrap()].timeout_budget > 0
+                {
+                    true
+                } 
+                else if c.game.sec_state.state == SecState::Timeout &&
+                c.game.sec_state.side == self.side.unwrap()
+                {
+                    true
+                } 
+                else 
+                {
+                    false
+                }
             }
         } 
         else 

@@ -305,9 +305,9 @@ const TeamPanel = ({
             />
           ) : (
             <ActionButton
-              action={{ type: "globalGameStuck", args: { side: side } }}
-              label="Global GS"
-              legal={legalTeamActions[actions.GLOBAL_GAME_STUCK]}
+              action={{ type: "timeout", args: { side: side } }}
+              label={game.secState.state == "timeout" ? "!Timeout" : "Timeout"}
+              legal={legalTeamActions[actions.TIMEOUT]}
             />
           )}
         </div>
