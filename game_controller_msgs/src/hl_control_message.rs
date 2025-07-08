@@ -76,7 +76,7 @@ pub struct HlControlMessage {
     /// This field corresponds to `RoboCupGameControlData::state`.
     state: u8,
     /// This field corresponds to `RoboCupGameControlData::firstHalf`.
-    first_half: u8,
+    first_half: bool,
     /// This field corresponds to `RoboCupGameControlData::kickingTeam`.
     kicking_team: u8,
     /// secondary gamestate
@@ -104,7 +104,7 @@ impl From<HlControlMessage> for Bytes {
         bytes.put_u8(message.players_per_team);
         bytes.put_u8(message.competition_type);
         bytes.put_u8(message.state);
-        bytes.put_u8(message.first_half);
+        bytes.put_u8(if message.first_half { 1 } else { 0 });
         bytes.put_u8(message.kicking_team);
         bytes.put_u8(message.sec_game_state);
         bytes.put(&message.sec_game_state_info[..]);
@@ -191,7 +191,7 @@ impl HlControlMessage {
                 State::Playing => STATE_PLAYING,
                 State::Finished => STATE_FINISHED,
             },
-            first_half: if game.phase == Phase::FirstHalf { 0 } else { 1 },
+            first_half: game.phase == Phase::FirstHalf,
             kicking_team: game
                 .kicking_side
                 .map_or(DROPBALL, |side| params.game.teams[side].number),
