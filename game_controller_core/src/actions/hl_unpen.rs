@@ -17,15 +17,7 @@ pub struct HlUnpenalize {
 
 impl Action for HlUnpenalize {
     fn execute(&self, c: &mut ActionContext) {
-        if !c.game.teams[self.side][self.player]
-                .penalty_timer
-                .get_remaining()
-                .is_zero()
-        {
-            c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
-            c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;
-        }
-        else if c.game.teams[self.side][self.player].penalty 
+        if c.game.teams[self.side][self.player].penalty 
                 != Penalty::NoPenalty && 
                 c.game.teams[self.side][self.player].penalty 
                 != Penalty::Substitute
