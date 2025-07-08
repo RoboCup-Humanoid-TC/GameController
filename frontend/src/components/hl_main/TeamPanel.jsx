@@ -345,12 +345,9 @@ const TeamPanel = ({
               legal={
                 substitute ||
                 player.penalty !== "noPenalty" ||
-                actions.isPenaltyCallLegalForPlayer(
-                  legalPenaltyActions,
-                  side,
-                  player.number,
-                  selectedPenaltyCall
-                )
+                selectedPenaltyCall === "playerPushing" ||
+                selectedPenaltyCall === "pickedUp" ||
+                selectedPenaltyCall === "ballHolding"
               }
               sign={sign}
               onClick={() => handlePlayerClick(player)}
