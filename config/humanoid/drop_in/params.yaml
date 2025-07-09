@@ -1,5 +1,5 @@
 name: "Drop In"
-playersPerTeam: 3
+playersPerTeam: 5
 penalties:
   noPenalty:
     duration:

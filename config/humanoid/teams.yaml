@@ -108,12 +108,12 @@
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: Attackers
-  number: 98
+- name: Team A
+  number: 31
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: Defenders
-  number: 99
+- name: Team B
+  number: 32
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
