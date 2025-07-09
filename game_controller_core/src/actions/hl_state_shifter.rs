@@ -14,11 +14,18 @@ impl Action for HlStateShifter {
     fn execute(&self, c: &mut ActionContext) {
         if self.state == State::Initial {
             // half time switch
-            c.game.sides = -c.params.game.side_mapping;
-            c.game.phase = Phase::SecondHalf;
+            c.game.sides = -c.game.sides;
+            match c.game.phase 
+            {
+                Phase::FirstHalf => c.game.phase = Phase::SecondHalf,
+                Phase::SecondHalf => c.game.phase = Phase::FirstExtraHalf,
+                Phase::FirstExtraHalf => c.game.phase = Phase::SecondExtraHalf,
+                Phase::SecondExtraHalf => c.game.phase = Phase::PenaltyShootout,
+                _ => {}
+            }
             c.game.state = self.state;
             c.game.sec_state.state = SecState::Normal;
-            c.game.kicking_side = Some(-c.params.game.kick_off_side);
+            c.game.kicking_side = Some(-c.game.kicking_side.unwrap());
 
             c.game.teams.values_mut().for_each(|team| {
                 team.goalkeeper = None;
@@ -34,15 +41,34 @@ impl Action for HlStateShifter {
             });
 
             c.game.secondary_timer = Timer::Stopped;
-            c.game.primary_timer = Timer::Started {
-                remaining: c.params.competition.half_duration.try_into().unwrap(),
-                run_condition: RunCondition::Playing,
-                behavior_at_zero: BehaviorAtZero::Overflow,
-            };
+            if c.game.phase == Phase::FirstHalf || 
+            c.game.phase == Phase::SecondHalf
+            {
+                c.game.primary_timer = Timer::Started {
+                    remaining: c.params.competition.half_duration
+                    .try_into()
+                    .unwrap(),
+                    run_condition: RunCondition::Playing,
+                    behavior_at_zero: BehaviorAtZero::Overflow,
+                };
+            } 
+            else
+            {
+                c.game.primary_timer = Timer::Started {
+                    remaining: (c.params.competition.half_duration_overtime
+                    .try_into()
+                    .unwrap()),
+                    run_condition: RunCondition::Playing,
+                    behavior_at_zero: BehaviorAtZero::Overflow,
+                };
+            } 
         } else if self.state == State::Set && c.game.sec_state.state == SecState::Penaltyshoot {
             c.game.state = self.state;
             c.game.primary_timer = Timer::Started {
-                remaining: SignedDuration::new(60, 0),
+                remaining: c.params.competition
+                .penalty_shot_duration
+                .try_into()
+                .unwrap(),
                 run_condition: RunCondition::Playing,
                 behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
                     HlStateShifter { state: State::Set },
@@ -63,7 +89,10 @@ impl Action for HlStateShifter {
         {
             c.game.state = State::Ready;
             c.game.primary_timer = Timer::Started {
-                remaining: SignedDuration::new(60, 0),
+                remaining: c.params.competition
+                .penalty_shot_duration
+                .try_into()
+                .unwrap(),
                 run_condition: RunCondition::Playing,
                 behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
                     HlStateShifter { state: State::Set },
@@ -105,18 +134,28 @@ impl Action for HlStateShifter {
             c.game.state = self.state;
             c.game.sec_state.state = SecState::Normal;
             c.game.secondary_timer = Timer::Stopped;
-            c.game.primary_timer = Timer::Started {
-                remaining: SignedDuration::new(300, 0),
-                run_condition: RunCondition::Always,
-                behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
-                    HlStateShifter {
-                        state: State::Initial,
-                    },
-                )]),
-            };
+            if c.game.phase != Phase::SecondExtraHalf
+            {
+                c.game.primary_timer = Timer::Started {
+                    remaining: c.params.competition
+                    .half_time_break_duration
+                    .try_into()
+                    .unwrap(),
+                    run_condition: RunCondition::Always,
+                    behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
+                        HlStateShifter {
+                            state: State::Initial,
+                        },
+                    )]),
+                };
+            } 
+            else
+            {
+                c.game.primary_timer = Timer::Stopped;
+            }
             c.game.sec_state = SecondaryState {
                 state: SecState::Normal,
-                side: Side::Away,
+                side: Side::None,
                 phase: 0,
             };
         } else {
@@ -128,7 +167,6 @@ impl Action for HlStateShifter {
         if self.state == c.game.state {
             false
         } else if self.state == State::Initial
-            && c.game.phase == Phase::FirstHalf
             && c.game.state == State::Finished
         {
             true

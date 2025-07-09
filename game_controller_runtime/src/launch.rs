@@ -336,6 +336,11 @@ pub fn make_launch_data(config_directory: &Path, args: Args) -> Result<LaunchDat
                     field_player_color: default_team.field_player_colors[1],
                     goalkeeper_color: default_team.goalkeeper_colors[1],
                 }),
+                Side::None => TeamParams {
+                    number: 0,
+                    field_player_color: default_team.field_player_colors[0],
+                    goalkeeper_color: default_team.goalkeeper_colors[0],
+                },
             },
             long: args.play_off,
             kick_off_side: Side::Home,

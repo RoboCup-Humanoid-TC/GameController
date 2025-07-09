@@ -71,6 +71,8 @@ pub struct CompetitionParams {
     pub set_plays: EnumMap<SetPlay, SetPlayParams>,
     /// The duration of each half.
     pub half_duration: Duration,
+    /// The duration of the extra time after the regular playing time.
+    pub half_duration_overtime: Duration,
     /// The duration of the half-time break.
     pub half_time_break_duration: Duration,
     /// The duration of a timeout taken by a team.
@@ -176,6 +178,10 @@ pub enum Phase {
     FirstHalf,
     /// The second half of the regular playing time.
     SecondHalf,
+    /// The first half of the extra time.
+    FirstExtraHalf,
+    /// The second half of the extra time.
+    SecondExtraHalf,
     /// A penalty shoot-out to decide the outcome of a game.
     PenaltyShootout,
 }
@@ -345,6 +351,8 @@ pub enum Side {
     Home,
     /// The team listed second on the schedule.
     Away,
+    /// The Referee.
+    None,
 }
 
 impl Neg for Side {
@@ -354,6 +362,7 @@ impl Neg for Side {
         match self {
             Self::Home => Self::Away,
             Self::Away => Self::Home,
+            Self::None => Self::None,
         }
     }
 }

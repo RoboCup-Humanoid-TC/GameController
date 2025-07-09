@@ -143,8 +143,11 @@ setPlays:
 halfDuration:
   secs: 10
   nanos: 0
+halfDurationOvertime:
+  secs: 300
+  nanos: 0
 halfTimeBreakDuration:
-  secs: 600
+  secs: 300
   nanos: 0
 timeoutDuration:
   secs: 120
@@ -159,7 +162,7 @@ mercyRuleScoreDifference: 1
 penaltyShots: 3
 suddenDeathPenaltyShots: 3
 penaltyShotDuration:
-  secs: 600
+  secs: 60
   nanos: 0
 delayAfterGoal:
   secs: 15

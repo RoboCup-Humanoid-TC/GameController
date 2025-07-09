@@ -15,7 +15,7 @@ pub struct Timeout {
 
 impl Action for Timeout {
     fn execute(&self, c: &mut ActionContext) {
-        let duration = if self.side.is_some() {
+        let duration = if self.side.unwrap() != Side::None {
             c.params.competition.timeout_duration
         } else {
             c.params.competition.referee_timeout_duration
@@ -61,7 +61,7 @@ impl Action for Timeout {
                 c.game.teams[side].timeout_budget -= 1;
             }
         } else {
-            if self.side.is_some() {
+            if self.side.unwrap() != Side::None {
                 if c.game.teams[self.side.unwrap()].timeout_budget > 0 &&
                     (c.game.state != State::Playing || c.game.state != State::Finished)
                     && c.game.sec_state.state != SecState::Timeout {
@@ -71,11 +71,7 @@ impl Action for Timeout {
                         // to take a timeout once their timeout is over".
                         remaining: duration.try_into().unwrap(),
                         run_condition: RunCondition::Always,
-                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
-                            HlStateShifter {
-                                state: c.game.state,
-                            },
-                        )]),
+                        behavior_at_zero: BehaviorAtZero::Overflow,
                     };
                     c.game.sec_state.state = SecState::Timeout;
                     c.game.sec_state.side = self.side.unwrap();
@@ -83,7 +79,7 @@ impl Action for Timeout {
                     c.game.teams[self.side.unwrap()].timeout_budget -= 1;
                     
                 } else if c.game.sec_state.state == SecState::Timeout {
-                    c.game.secondary_timer.timer_to_zero();
+                    c.game.secondary_timer = Timer::Stopped;
                     c.game.sec_state.state = SecState::Normal;
                 }
             } else {
@@ -93,16 +89,14 @@ impl Action for Timeout {
                         // to take a timeout once their timeout is over".
                         remaining: duration.try_into().unwrap(),
                         run_condition: RunCondition::Always,
-                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
-                            HlStateShifter {
-                                state: State::Ready,
-                            },
-                        )]),
+                        behavior_at_zero: BehaviorAtZero::Overflow,
                     };
                     c.game.sec_state.state = SecState::Timeout;
+                    c.game.sec_state.side = Side::None;
+                    c.game.sec_state.phase = 0;
                     c.game.state = State::Initial;
                 } else {
-                    c.game.secondary_timer.timer_to_zero();
+                    c.game.secondary_timer = Timer::Stopped;
                     c.game.sec_state.state = SecState::Normal;
                 }
             }
@@ -110,7 +104,8 @@ impl Action for Timeout {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if self.side.is_some(){
+        if self.side.unwrap() != Side::None
+        {
             if c.game.state == State::Playing
             {
                 false
@@ -135,7 +130,16 @@ impl Action for Timeout {
         } 
         else 
         {
-            true
+            if c.game.state != State::Finished &&
+            c.game.sec_state.state == SecState::Normal ||
+            c.game.sec_state.side == Side::None
+            {
+                true
+            }
+            else
+            {
+                false
+            }
         }
     }
 }

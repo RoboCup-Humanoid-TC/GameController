@@ -331,10 +331,6 @@ impl GameController {
         command_4: u8,
         command_5: u8,
     ) {
-        println!(
-            "DEBUG CORE: {:?}, {:?}, {:?}, {:?}, {:?}",
-            command_1, command_2, command_3, command_4, command_5
-        );
         // Phase commands
         let side = match command_5 {
             0 => Side::Home,

@@ -13,7 +13,7 @@ pub struct HlAbort {
 impl Action for HlAbort {
     fn execute(&self, c: &mut ActionContext) {
         c.game.sec_state.state = SecState::Normal;
-        c.game.sec_state.side = Side::Away;
+        c.game.sec_state.side = Side::None;
         c.game.sec_state.phase = 0;
         c.game.secondary_timer = Timer::Stopped;
     }

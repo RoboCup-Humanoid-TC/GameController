@@ -143,6 +143,9 @@ setPlays:
 halfDuration:
   secs: 600
   nanos: 0
+halfDurationOvertime:
+  secs: 300
+  nanos: 0
 halfTimeBreakDuration:
   secs: 600
   nanos: 0

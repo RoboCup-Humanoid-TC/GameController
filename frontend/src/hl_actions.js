@@ -101,7 +101,7 @@ export const getActions = () => {
   actions.push({ type: "startSetPlay", args: { side: "home", setPlay: "kickOff" } });
   actions.push({ type: "startSetPlay", args: { side: "away", setPlay: "kickOff" } });
   actions.push({ type: "addExtraTime", args: null });
-  actions.push({ type: "timeout", args: { side: null } });
+  actions.push({ type: "timeout", args: { side: "none" } });
   actions.push({ type: "hlStateShifter", args: { state: "initial" } });
   actions.push({ type: "hlStateShifter", args: { state: "ready" } });
   actions.push({ type: "hlStateShifter", args: { state: "set" } });

@@ -4,12 +4,15 @@ import * as actions from "../../hl_actions.js";
 const StatePanel = ({ game, legalGameActions }) => {
   const inHalfTimeBreak =
     (game.phase === "firstHalf" && game.state === "finished") ||
-    (game.phase === "secondHalf" && game.state === "initial");
+    (game.phase === "secondHalf" && game.state === "initial") ||
+    (game.phase === "firstExtraHalf" && game.state === "finished") ||
+    (game.phase === "secondExtraHalf" && game.state === "initial");
   let readyButton =
     game.secState.state != "penaltyshoot" &&
     (game.state === "initial" ||
       game.state === "timeout" ||
-      (game.phase === "firstHalf" && game.state === "finished")) ? (
+      ((game.phase === "firstHalf" || game.phase === "firstExtraHalf") && 
+        game.state === "finished")) ? (
       <div className={inHalfTimeBreak ? "col-span-2" : "col-span-3"}>
         <ActionButton
           action={{ type: "hlStateShifter", args: { state: "ready" } }}
@@ -84,35 +87,68 @@ const StatePanel = ({ game, legalGameActions }) => {
       <>
         <div className="col-span-1">
           <ActionButton
-            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
+            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
             label="Penalty Shots (Left Goal)"
-            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
+            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_LEFT]}
           />
         </div>
         <div className="col-span-1">
           <ActionButton
-            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
+            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
             label="Penalty Shots (Right Goal)"
-            legal={false}
+            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
           />
         </div>
       </>
     ) : (
-      <></>
+      game.phase === "secondExtraHalf" && game.state === "finished" ? (
+        <>
+          <div className="col-span-2">
+            <ActionButton
+              action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
+              label="Penalty Shots (Left Goal)"
+              legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_LEFT]}
+            />
+          </div>
+          <div className="col-span-2">
+            <ActionButton
+              action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
+              label="Penalty Shots (Right Goal)"
+              legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
+            />
+          </div>
+        </>
+      ) : (
+        <></>
+      )
     );
 
-  let refereeTimeoutButton = (
+  let refereeTimeoutButton = 
+  game.phase === "secondHalf" &&
+  game.state === "finished" ? (
     <div
-      className={
-        game.phase === "secondHalf" && game.state === "finished" ? "col-span-2" : "col-span-1"
-      }
-    >
+      className="col-span-2">
       <ActionButton
-        action={{ type: "timeout", args: { side: null } }}
-        label="Referee Timeout"
-        legal={legalGameActions[actions.REFEREE_TIMEOUT]}
+        action={{ type: "hlStateShifter", args: { state: "initial" } }}
+        label="Overtime"
+        legal={legalGameActions[actions.INITIAL]}
       />
     </div>
+  ) : (
+    !(game.phase === "secondExtraHalf" && game.state === "finished") ? (
+      <div
+        className={
+          game.phase === "secondHalf" && game.state === "finished" ? "col-span-2" : "col-span-1"
+        }
+      >
+        <ActionButton
+          action={{ type: "timeout", args: { side: "none" } }}
+          label="Referee Timeout"
+          legal={legalGameActions[actions.REFEREE_TIMEOUT]}
+        />
+      </div>) : (
+      <></>
+      )
   );
 
   return (

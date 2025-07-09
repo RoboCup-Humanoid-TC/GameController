@@ -191,12 +191,16 @@ impl HlControlMessage {
                 State::Playing => STATE_PLAYING,
                 State::Finished => STATE_FINISHED,
             },
-            first_half: game.phase == Phase::FirstHalf,
+            first_half: game.phase == Phase::FirstHalf || game.phase == Phase::FirstExtraHalf,
             kicking_team: game
                 .kicking_side
                 .map_or(DROPBALL, |side| params.game.teams[side].number),
             sec_game_state: match game.sec_state.state {
-                SecState::Normal => STATE2_NORMAL,
+                SecState::Normal => match game.phase {
+                    Phase::FirstHalf | Phase::SecondHalf => STATE2_NORMAL,
+                    Phase::FirstExtraHalf | Phase::SecondExtraHalf => STATE2_OVERTIME,
+                    Phase::PenaltyShootout => STATE2_PENALTYSHOOT,
+                },
                 SecState::Penaltyshoot => STATE2_PENALTYSHOOT,
                 SecState::Overtime => STATE2_OVERTIME,
                 SecState::Timeout => STATE2_TIMEOUT,
@@ -209,9 +213,15 @@ impl HlControlMessage {
             },
             // TODO: ????
             sec_game_state_info: [
-                match game.sec_state.side {
-                    Side::Home => params.game.teams[Side::Home].number,
-                    Side::Away => params.game.teams[Side::Away].number,
+                if game.sec_state.state != SecState::Normal
+                {
+                    match game.sec_state.side {
+                        Side::Home => params.game.teams[Side::Home].number,
+                        Side::Away => params.game.teams[Side::Away].number,
+                        Side::None => 0, // Referee does not have a team number.
+                    }
+                } else {
+                    0
                 },
                 game.sec_state.phase,
                 0,

@@ -37,7 +37,7 @@ impl Action for SwitchHalf {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        c.game.phase == Phase::FirstHalf
+        (c.game.phase == Phase::FirstHalf || c.game.phase == Phase::FirstExtraHalf)
             && c.game.state == State::Finished
             && c.params.competition.challenge_mode.is_none()
     }
