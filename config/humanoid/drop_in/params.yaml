@@ -96,14 +96,14 @@ setPlays:
       secs: 30
       nanos: 0
     readyDuration:
-      secs: 0
+      secs: 30
       nanos: 0
   cornerKick:
     duration:
       secs: 30
       nanos: 0
     readyDuration:
-      secs: 0
+      secs: 30
       nanos: 0
   pushingFreeKick:
     duration:
@@ -119,6 +119,27 @@ setPlays:
     readyDuration:
       secs: 30
       nanos: 0
+  throwIn:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0  
+  directFreeKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0
+  indirectFreeKick:
+    duration:
+      secs: 30
+      nanos: 0
+    readyDuration:
+      secs: 30
+      nanos: 0
 halfDuration:
   secs: 10
   nanos: 0
@@ -128,7 +149,7 @@ halfTimeBreakDuration:
 timeoutDuration:
   secs: 120
   nanos: 0
-timeoutsPerTeam: 0
+timeoutsPerTeam: 1
 refereeTimeoutDuration:
   secs: 600
   nanos: 0

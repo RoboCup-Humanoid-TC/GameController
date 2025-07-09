@@ -4,15 +4,6 @@ import { isPenaltyCallLegal } from "../../hl_actions";
 const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => {
   return (
     <div className="grow grid gap-2">
-      {/* {PENALTIES.map((penalty, index) => (
-        <PenaltyButton
-          key={penalty[1]}
-          label={penalty[0]}
-          legal={isPenaltyCallLegal(legalPenaltyActions, index)}
-          onClick={() => setSelectedPenaltyCall(selectedPenaltyCall === index ? null : index)}
-          selected={selectedPenaltyCall === index}
-        />
-      ))} */}
       <PenaltyButtonWA
         action={function () {
           if (selectedPenaltyCall !== "playerPushing") {
@@ -34,7 +25,7 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
             setSelectedPenaltyCall(null);
           }
         }}
-        label={selectedPenaltyCall === "pickedUp" ? "Pick Up activated" : "Pick Up"}
+        label={selectedPenaltyCall === "pickedUp" ? "Pick Up activated" : "Pick Up / Incapable"}
         legal={
           selectedPenaltyCall === "playerPushing" || selectedPenaltyCall === "ballHolding"
             ? false
@@ -60,12 +51,6 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
             : true
         }
       />
-      {/* <PenaltyButtonWA
-      action={null}
-      label={""}
-      legal={false}
-      disabled={true}
-    /> */}
     </div>
   );
 };

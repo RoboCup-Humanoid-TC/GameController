@@ -195,6 +195,10 @@ impl ControlMessage {
                 SetPlay::CornerKick => SET_PLAY_CORNER_KICK,
                 SetPlay::PushingFreeKick => SET_PLAY_PUSHING_FREE_KICK,
                 SetPlay::PenaltyKick => SET_PLAY_PENALTY_KICK,
+                SetPlay::ThrowIn => SET_PLAY_NONE, // not used in spl
+                SetPlay::DirectFreeKick => SET_PLAY_NONE, // not used in spl
+                SetPlay::IndirectFreeKick => SET_PLAY_NONE, // not used in spl
+
             },
             first_half: game.phase == Phase::FirstHalf,
             kicking_team: params.game.teams[game.kicking_side].number,

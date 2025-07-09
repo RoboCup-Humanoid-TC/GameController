@@ -71,7 +71,7 @@ impl GameController {
                     goalkeeper: Some(PlayerNumber::new(1)),
                     score: 0,
                     penalty_counter: 0,
-                    timeout_budget: 2,
+                    timeout_budget: params.competition.timeouts_per_team,
                     message_budget: params.competition.messages_per_team,
                     illegal_communication: false,
                     penalty_shot: 0,
@@ -388,7 +388,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::GoalKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -396,7 +395,6 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::ThrowIn,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
@@ -404,31 +402,27 @@ impl GameController {
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
                     set_play: SecState::CornerKick,
-                    seconds: 45,
                 }),
                 ActionSource::Referee,
             ),
             4 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::Penaltykick,
-                    seconds: 45,
+                    set_play: SecState::PenaltyKick,
                 }),
                 ActionSource::Referee,
             ),
             5 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::DirectFreekick,
-                    seconds: 45,
+                    set_play: SecState::DirectFreeKick,
                 }),
                 ActionSource::Referee,
             ),
             6 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::IndirectFreekick,
-                    seconds: 45,
+                    set_play: SecState::IndirectFreeKick,
                 }),
                 ActionSource::Referee,
             ),
@@ -479,7 +473,6 @@ impl GameController {
                 VAction::HlUnpenalize(HlUnpenalize {
                     side: side,
                     player: PlayerNumber(command_4),
-                    timer: true,
                 }),
                 ActionSource::Referee,
             ),

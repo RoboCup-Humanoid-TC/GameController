@@ -24,6 +24,7 @@ impl Action for HlStateShifter {
                 team.goalkeeper = None;
                 team.penalty_shot = 0;
                 team.penalty_shot_mask = 0;
+                team.timeout_budget = c.params.competition.timeouts_per_team;
                 team.players.iter_mut().for_each(|player| {
                     if player.penalty != Penalty::Substitute {
                         player.penalty = Penalty::NoPenalty;
@@ -135,15 +136,16 @@ impl Action for HlStateShifter {
             true
         } else if self.state == State::Set
             && (c.game.state == State::Ready
-                || c.game.state == State::Initial
-                || c.game.state == State::Playing)
+                || c.game.state == State::Initial)
         {
             true
         } else if self.state == State::Playing && c.game.state == State::Set {
             true
-        } else if self.state == State::Finished {
+        } else if self.state == State::Finished && (c.game.state == State::Playing) {
             true
-        } else if self.state == State::Timeout && c.game.state == State::Playing {
+        } else if self.state == State::Timeout && 
+        (c.game.state == State::Playing || c.game.state == State::Ready 
+            || c.game.state == State::Set) {
             true
         } else {
             false

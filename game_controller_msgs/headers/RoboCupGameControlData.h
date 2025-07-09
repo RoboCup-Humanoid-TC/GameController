@@ -39,7 +39,6 @@
 #define STATE_SET      2
 #define STATE_PLAYING  3
 #define STATE_FINISHED 4
-#define STATE_DANIEL   15
 
 #define SET_PLAY_NONE              0
 #define SET_PLAY_GOAL_KICK         1

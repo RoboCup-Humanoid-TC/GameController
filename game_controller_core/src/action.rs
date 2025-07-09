@@ -57,6 +57,7 @@ trait_enum! {
         HlStateShifter,
         HlSubstitute,
         HlUnpenalize,
+        HlNormalize,
     }
 }
 

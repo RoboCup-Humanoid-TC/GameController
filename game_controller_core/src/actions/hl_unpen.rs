@@ -1,5 +1,6 @@
 use crate::action::{Action, ActionContext, VAction};
-use crate::timer::{BehaviorAtZero, RunCondition, Timer};
+use crate::actions::HlNormalize;
+use crate::timer::{BehaviorAtZero, RunCondition, Timer, EvaluatedRunConditions};
 use crate::types::{Penalty, PlayerNumber, Side};
 use serde::{Deserialize, Serialize};
 pub use time::Duration;
@@ -12,41 +13,33 @@ pub struct HlUnpenalize {
     pub side: Side,
     /// The player who will be substituted.
     pub player: PlayerNumber,
-    /// defines if a timer should be started or the player is unpenalized after click
-    pub timer: bool,
 }
 
 impl Action for HlUnpenalize {
     fn execute(&self, c: &mut ActionContext) {
-        if self.timer
-            && c.game.teams[self.side][self.player]
-                .penalty_timer
-                .get_remaining()
-                != Duration::new(0, 0)
-        {
-            c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
-            c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;
-        } else if self.timer
-            && c.game.teams[self.side][self.player]
-                .penalty_timer
-                .get_remaining()
-                == Duration::new(0, 0)
+        if c.game.teams[self.side][self.player].penalty 
+                != Penalty::NoPenalty && 
+                c.game.teams[self.side][self.player].penalty 
+                != Penalty::Substitute
         {
             c.game.teams[self.side][self.player].penalty_timer = Timer::Started {
-                remaining: c.params.competition.penalties[Penalty::PickedUp]
-                    .duration
-                    .try_into()
-                    .unwrap(),
-                run_condition: RunCondition::Playing,
-                behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlUnpenalize(
-                    HlUnpenalize {
-                        side: self.side,
-                        player: self.player,
-                        timer: false,
-                    },
-                )]),
-            };
-        } else if c.game.teams[self.side][self.player].penalty == Penalty::Substitute {
+                        remaining: c.params.competition.penalties[
+                            c.game.teams[self.side][self.player].penalty
+                            ]
+                            .duration
+                            .try_into()
+                            .unwrap(),
+                        run_condition: RunCondition::Playing,
+                        behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlNormalize(
+                            HlNormalize {
+                                side: self.side,
+                                player: self.player,
+                            },
+                        )]),
+                    };
+        } 
+        else if c.game.teams[self.side][self.player].penalty == Penalty::Substitute 
+        {
             let unsubs = c.game.teams[self.side]
                 .players
                 .iter()
@@ -55,13 +48,31 @@ impl Action for HlUnpenalize {
             if unsubs < c.params.competition.players_per_team.into() {
                 c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
             }
-        } else {
-            c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
-            c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;
+        } 
+        else 
+        {
         }
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty
+        let mut counter = 0;
+        for player in c.game.teams[self.side].players.iter() {
+            if player.penalty != Penalty::Substitute {
+                counter += 1;
+            }
+        }
+        if counter < c.params.competition.players_per_team.into() 
+        {
+            true
+        } 
+        else if counter == c.params.competition.players_per_team.into() && c.game.teams[self.side][self.player].penalty == Penalty::Substitute
+        {
+            false
+        } 
+        else 
+        {
+            c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty
+        }
+        
     }
 }
