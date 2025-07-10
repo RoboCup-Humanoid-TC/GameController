@@ -3,15 +3,6 @@ import TeamSettings from "./TeamSettings";
 const GameSettings = ({ teams, game, setGame }) => {
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="flex flex-row items-center gap-2">
-        <label htmlFor="play-off">Play-off</label>
-        <input
-          type="checkbox"
-          checked={game.long}
-          id="play-off"
-          onChange={(e) => setGame({ ...game, long: e.target.checked })}
-        />
-      </div>
       <div
         className={`flex ${
           game.sideMapping === "homeDefendsRightGoal" ? "flex-row-reverse" : "flex-row"

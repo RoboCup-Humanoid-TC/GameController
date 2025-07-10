@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import CompetitionSettings from "./hl_launcher/CompetitionSettings";
 import GameSettings from "./hl_launcher/GameSettings";
-import NetworkSettings from "./launcher/NetworkSettings";
-import WindowSettings from "./launcher/WindowSettings";
+import NetworkSettings from "./hl_launcher/NetworkSettings";
+import WindowSettings from "./hl_launcher/WindowSettings";
 import { getLaunchData, launch } from "../hl_api";
 
 const HL_Launcher = ({ setLaunched }) => {
