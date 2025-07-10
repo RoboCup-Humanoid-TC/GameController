@@ -94,7 +94,26 @@ const HL_Launcher = ({ setLaunched }) => {
         <button
           className="px-8 py-2 rounded-md border border-black disabled:bg-slate-400"
           disabled={!launchSettingsAreLegal}
-          onClick={() => launch(launchSettings).then(() => setLaunched(true))}
+          onClick={() => {
+            const noneTeam = {
+              number: 0,
+              fieldPlayerColor: "black", // or any neutral/default
+              goalkeeperColor: "black",
+            };
+          
+            const patchedSettings = {
+              ...launchSettings,
+              game: {
+                ...launchSettings.game,
+                teams: {
+                  ...launchSettings.game.teams,
+                  none: noneTeam,
+                },
+              },
+            };
+          
+            launch(patchedSettings).then(() => setLaunched(true));
+          }}
         >
           Start
         </button>
