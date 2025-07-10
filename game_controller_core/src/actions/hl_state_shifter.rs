@@ -106,6 +106,9 @@ impl Action for HlStateShifter {
                 });
             });
             c.game.sides = -c.game.sides;
+            c.game.teams[c.game.kicking_side.unwrap()]
+                .penalty_shot += 1;
+            c.game.kicking_side = Some(-c.game.kicking_side.unwrap());
             c.game.state = State::Set;
         } else if self.state == State::Ready {
             c.game.state = self.state;

@@ -1,7 +1,7 @@
 use crate::action::{Action, ActionContext, VAction};
 use crate::actions::HlNormalize;
 use crate::timer::{BehaviorAtZero, RunCondition, Timer, EvaluatedRunConditions};
-use crate::types::{Penalty, PlayerNumber, Side};
+use crate::types::{Penalty, PlayerNumber, Side, SecState, State};
 use serde::{Deserialize, Serialize};
 pub use time::Duration;
 
@@ -40,14 +40,29 @@ impl Action for HlUnpenalize {
         } 
         else if c.game.teams[self.side][self.player].penalty == Penalty::Substitute 
         {
-            let unsubs = c.game.teams[self.side]
-                .players
-                .iter()
-                .filter(|player| player.penalty != Penalty::Substitute)
-                .count();
-            if unsubs < c.params.competition.players_per_team.into() {
-                c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
+            if c.game.sec_state.state != SecState::Penaltyshoot 
+            {
+                let unsubs = c.game.teams[self.side]
+                    .players
+                    .iter()
+                    .filter(|player| player.penalty != Penalty::Substitute)
+                    .count();
+                if unsubs < c.params.competition.players_per_team.into() {
+                    c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
+                }
             }
+            else
+            {
+                let unsubs = c.game.teams[self.side]
+                    .players
+                    .iter()
+                    .filter(|player| player.penalty != Penalty::Substitute)
+                    .count();
+                if unsubs < 1 {
+                    c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
+                }
+            }
+
         } 
         else 
         {
@@ -61,14 +76,24 @@ impl Action for HlUnpenalize {
                 counter += 1;
             }
         }
-        if counter < c.params.competition.players_per_team.into() 
+        if c.game.teams[self.side][self.player].penalty == Penalty::Substitute
         {
-            true
-        } 
-        else if counter == c.params.competition.players_per_team.into() && c.game.teams[self.side][self.player].penalty == Penalty::Substitute
-        {
-            false
-        } 
+            if counter < c.params.competition.players_per_team.into() &&
+                c.game.sec_state.state != SecState::Penaltyshoot 
+            {
+                true
+            } 
+            else if counter < 1 && 
+                c.game.sec_state.state == SecState::Penaltyshoot &&
+                c.game.state != State::Initial
+            {
+                true
+            } 
+            else 
+            {
+                false
+            }
+        }
         else 
         {
             c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty
