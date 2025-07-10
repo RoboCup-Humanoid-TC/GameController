@@ -3,6 +3,7 @@ import { isPenaltyCallLegal } from "../../hl_actions";
 
 const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => {
   return (
+    // TODO: REFACTOR: after RoboCup
     <div className="grow grid gap-2">
       <PenaltyButtonWA
         action={function () {
@@ -14,7 +15,12 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
         }}
         label={selectedPenaltyCall === "playerPushing" ? "Pushing activated" : "Pushing"}
         legal={
-          selectedPenaltyCall === "pickedUp" || selectedPenaltyCall === "ballHolding" ? false : true
+          game.state === "playing" || game.state === "set" || game.state === "ready"
+          ?
+          selectedPenaltyCall === "pickedUp" || selectedPenaltyCall === "ballHolding" 
+            ? false 
+            : true
+          : false
         }
       />
       <PenaltyButtonWA
@@ -46,9 +52,12 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
             : "Ball Manipulation"
         }
         legal={
+          game.state === "playing" || game.state === "ready"
+          ?
           selectedPenaltyCall === "playerPushing" || selectedPenaltyCall === "pickedUp"
             ? false
             : true
+          : false
         }
       />
     </div>

@@ -1,7 +1,7 @@
 use crate::action::{Action, ActionContext, VAction};
 use crate::actions::HlUnpenalize;
 use crate::timer::{BehaviorAtZero, RunCondition, Timer};
-use crate::types::{Penalty, PlayerNumber, Side};
+use crate::types::{Penalty, PlayerNumber, Side, State};
 use serde::{Deserialize, Serialize};
 
 /// This struct defines an action to substitute players.
@@ -24,6 +24,25 @@ impl Action for HlPenalize {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
+        if self.penalty == Penalty::PickedUp 
+        {
+            c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
+        } 
+        else if self.penalty == Penalty::BallHolding 
+        {
+            (c.game.state == State::Playing || c.game.state == State::Ready)
+                && c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
+        } 
+        else if self.penalty == Penalty::PlayerPushing 
+        {
+            (c.game.state == State::Playing 
+                || c.game.state == State::Ready 
+                || c.game.state == State::Set)
+                && c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
+        } 
+        else 
+        {
+            false
+        }        
     }
 }
