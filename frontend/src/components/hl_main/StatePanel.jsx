@@ -27,15 +27,20 @@ const StatePanel = ({ game, legalGameActions }) => {
   let setButton =
     game.secState.state === "penaltyshoot" ||
     game.state === "ready" ||
-    game.state === "set" ||
-    game.state === "playing" ? (
+    game.state === "set"  ? (
       <ActionButton
         action={{ type: "hlStateShifter", args: { state: "set" } }}
         label="Set"
         legal={legalGameActions[actions.SET]}
       />
+    ) :  game.state === "playing" ? (
+      <ActionButton
+        action={{ type: "globalGameStuck", args: null }}
+        label="Drop Ball"
+        legal={true}
+      />
     ) : (
-      <></>
+     <></>
     );
 
   let playingButton =

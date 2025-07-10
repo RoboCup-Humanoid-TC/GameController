@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext};
 use crate::actions::StartSetPlay;
-use crate::types::{Phase, SetPlay, State};
+use crate::types::{Phase, SetPlay, State, Side};
 
 /// This struct defines an action which corresponds to the referee call "Global Game Stuck".
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -11,7 +11,7 @@ pub struct GlobalGameStuck;
 impl Action for GlobalGameStuck {
     fn execute(&self, c: &mut ActionContext) {
         StartSetPlay {
-            side: None,
+            side: Some(Side::None),
             set_play: SetPlay::KickOff,
         }
         .execute(c);
