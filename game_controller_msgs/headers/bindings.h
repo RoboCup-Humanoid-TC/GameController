@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-// #include "RoboCupGameControlData.h"
-// #include "HL_RoboCupGameControlData.h"
 #include "new_RoboCupGameControlData.h"
 
 static const size_t GAMECONTROLLER_STRUCT_SIZE = sizeof(struct RoboCupGameControlData);
