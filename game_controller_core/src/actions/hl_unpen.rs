@@ -1,7 +1,7 @@
 use crate::action::{Action, ActionContext, VAction};
 use crate::actions::HlNormalize;
 use crate::timer::{BehaviorAtZero, RunCondition, Timer, EvaluatedRunConditions};
-use crate::types::{Penalty, PlayerNumber, Side, SecState, State};
+use crate::types::{Penalty, PlayerNumber, Side, SecState, State, HlCard};
 use serde::{Deserialize, Serialize};
 pub use time::Duration;
 
@@ -85,7 +85,8 @@ impl Action for HlUnpenalize {
             } 
             else if counter < 1 && 
                 c.game.sec_state.state == SecState::Penaltyshoot &&
-                c.game.state != State::Initial
+                c.game.state != State::Initial &&
+                c.game.teams[self.side][self.player].cards[HlCard::Red] < 1 
             {
                 true
             } 
