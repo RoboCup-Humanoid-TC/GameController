@@ -353,6 +353,8 @@ const TeamPanel = ({
               onClick={() => handlePlayerClick(player)}
               player={player}
               side={side}
+              // TODO: refactor
+              goaly={game.teams[side].goalkeeper === player.number}
             />
           ))}
       </div>

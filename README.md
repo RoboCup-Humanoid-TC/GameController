@@ -141,6 +141,10 @@ The undo history is actually not limited to the last five actions, i.e. previous
 Actions that were applied automatically (e.g. because a timer elapsed) do not appear in the undo history.
 This is because they would be applied again immediately if they were undone.
 
+### Goalkeeper
+
+The green field for everyplayer represents the goalkeeper state. If there is a 1 the player is a goalkeeper, 0 means its a normal player. There is inly one goalkeeper per team.
+
 ## Logs
 
 The GameController writes log files to the directory `logs`.

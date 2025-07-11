@@ -58,6 +58,7 @@ trait_enum! {
         HlSubstitute,
         HlUnpenalize,
         HlNormalize,
+        HlSetGoalkeeper,
     }
 }
 

@@ -30,7 +30,7 @@ const penaltyDescriptions = {
   leavingTheField: "Leaving the Field",
 };
 
-const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
+const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly }) => {
   const addCard = (color) => {
     applyAction({
       type: "hlAddCard",
@@ -38,6 +38,16 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
         side: side,
         player: player.number,
         card: color,
+      },
+    });
+  };
+
+  const setGoalkeeper = () => {
+    applyAction({
+      type: "hlSetGoalkeeper",
+      args: {
+        side: side,
+        player: player.number,
       },
     });
   };
@@ -107,6 +117,15 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side }) => {
             <></>
           )}
         </div>
+      </button>
+      {/* TODO: better implementation*/}
+      <button
+        className={"grow rounded-md border border-green-500 bg-green-500"}
+        disabled={false}
+        onClick={() => setGoalkeeper()}
+        style={{ width: "10%", height: "100%" }}
+      >
+        {goaly ? "1" : "0"}
       </button>
       <button
         className={"grow rounded-md border border-red-500 bg-red-500"}
