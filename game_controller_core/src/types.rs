@@ -531,6 +531,8 @@ pub struct Player {
     pub penalty_timer: Timer,
     /// The cards that this player has been shown.
     pub cards: EnumMap<HlCard, u8>,
+    /// Points for the humanoid league drop in games
+    pub points: i8,
 }
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]

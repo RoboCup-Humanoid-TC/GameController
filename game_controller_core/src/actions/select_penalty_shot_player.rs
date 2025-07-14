@@ -33,6 +33,7 @@ impl Action for SelectPenaltyShotPlayer {
                         penalty: Penalty::Substitute,
                         penalty_timer: Timer::Stopped,
                         cards: enum_map! { _ => 0 },
+                        points: 0,
                     },
                 )
             })
@@ -41,6 +42,7 @@ impl Action for SelectPenaltyShotPlayer {
                 penalty: Penalty::NoPenalty,
                 penalty_timer: Timer::Stopped,
                 cards: enum_map! { _ => 0 },
+                points: 0,
             });
 
         c.game.teams[self.side].goalkeeper = if self.goalkeeper {

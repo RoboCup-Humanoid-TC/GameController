@@ -57,7 +57,6 @@ impl Action for Goal {
             }
         } else if c.params.competition.league == League::Humanoid {
             c.game.teams[self.side].score += 1;
-            // TODO: Kickoff
             c.game.kicking_side = Some(-self.side);
             if c.game.sec_state.state != SecState::Penaltyshoot {
                 c.game.secondary_timer = Timer::Started {
@@ -68,6 +67,25 @@ impl Action for Goal {
                     )]),
                 };
                 c.game.state = State::Ready;
+                if c.params.competition.name == "Drop In"
+                {
+                    c.game.teams[self.side].players.iter_mut().for_each(|player| {
+                        if player.penalty == Penalty::NoPenalty 
+                        {
+                            player.points += 1;
+                        }
+                    });
+                    c.game.teams[-self.side].players.iter_mut().for_each(|player| {
+                        if player.penalty == Penalty::NoPenalty 
+                        {
+                            player.points -= 1;
+                        }
+                        else if player.penalty != Penalty::Substitute
+                        {
+                            player.points -= 2;
+                        }
+                    });
+                }
             } else {
                 c.game.state = State::Ready;
                 c.game.primary_timer = Timer::Started {

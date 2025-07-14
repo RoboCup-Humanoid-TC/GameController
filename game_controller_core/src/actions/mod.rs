@@ -31,6 +31,7 @@ mod hl_substitute;
 mod hl_unpen;
 mod hl_norm;
 mod hl_set_goalkeeper;
+mod hl_change_player_points;
 
 pub use add_extra_time::AddExtraTime;
 pub use finish_half::FinishHalf;
@@ -63,3 +64,4 @@ pub use hl_substitute::HlSubstitute;
 pub use hl_unpen::HlUnpenalize;
 pub use hl_norm::HlNormalize;
 pub use hl_set_goalkeeper::HlSetGoalkeeper;
+pub use hl_change_player_points::HlChangePlayerPoints;

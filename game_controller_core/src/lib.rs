@@ -88,6 +88,7 @@ impl GameController {
                             cards: enum_map! {
                                 _ => 0,
                             },
+                            points: 0,
                         })
                         // We have to collect into a Vec first because this thing cannot be directly
                         // collected into a fixed size array.

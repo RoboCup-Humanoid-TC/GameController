@@ -355,6 +355,7 @@ const TeamPanel = ({
               side={side}
               // TODO: refactor
               goaly={game.teams[side].goalkeeper === player.number}
+              dropin={params.competition.name === "Drop In"}
             />
           ))}
       </div>

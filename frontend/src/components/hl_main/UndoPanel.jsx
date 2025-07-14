@@ -97,6 +97,12 @@ const getActionName = (action) => {
         case "red":
           return "Red Card";
       }
+    case "hlChangePlayerPoints":
+      if (action.args.increase) {
+        return "Increase Points";
+      } else {
+        return "Decrease Points";
+      }
     case "hlPenalize":
       switch (action.args.penalty) {
         case "ballHolding":

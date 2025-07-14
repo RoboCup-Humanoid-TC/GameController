@@ -30,7 +30,7 @@ const penaltyDescriptions = {
   leavingTheField: "Leaving the Field",
 };
 
-const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly }) => {
+const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly, dropin }) => {
   const addCard = (color) => {
     applyAction({
       type: "hlAddCard",
@@ -51,6 +51,46 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly }) => {
       },
     });
   };
+
+  let goalyButton = dropin ? (
+        <button
+        className={"grow rounded-md border border-gray-600 bg-white-500"}
+        disabled={false}
+        onClick={() => {
+            applyAction({
+              type: "hlChangePlayerPoints",
+              args: {
+                side: side,
+                player: player.number,
+                increase: true,
+              },
+            });
+          }
+        }
+        onContextMenu={() => {
+                      applyAction({
+              type: "hlChangePlayerPoints",
+              args: {
+                side: side,
+                player: player.number,
+                increase: false,
+              },
+            });
+        }}
+        style={{ width: "10%", height: "100%" }}
+        >
+          {player.points}
+        </button>
+      ) : (
+      <button
+        className={"grow rounded-md border border-gray-600 bg-green-500"}
+        disabled={false}
+        onClick={() => setGoalkeeper()}
+        style={{ width: "10%", height: "100%" }}
+      >
+        {goaly ? "1" : "0"}
+      </button>
+      );
 
   const shouldFlash =
     player &&
@@ -119,16 +159,9 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly }) => {
         </div>
       </button>
       {/* TODO: better implementation*/}
+      {goalyButton}
       <button
-        className={"grow rounded-md border border-green-500 bg-green-500"}
-        disabled={false}
-        onClick={() => setGoalkeeper()}
-        style={{ width: "10%", height: "100%" }}
-      >
-        {goaly ? "1" : "0"}
-      </button>
-      <button
-        className={"grow rounded-md border border-red-500 bg-red-500"}
+        className={"grow rounded-md border border-gray-600 bg-red-500"}
         disabled={false}
         onClick={() => addCard("red")}
         style={{ width: "10%", height: "100%" }}
@@ -136,7 +169,7 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly }) => {
         {player.cards["red"]}
       </button>
       <button
-        className={"grow rounded-md border border-yellow-300 bg-yellow-300"}
+        className={"grow rounded-md border border-gray-600 bg-yellow-300"}
         disabled={false}
         onClick={() => addCard("yellow")}
         style={{ width: "10%", height: "100%", margin: 0, alignContent: "center" }}
@@ -144,7 +177,7 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly }) => {
         {player.cards["yellow"]}
       </button>
       <button
-        className={"grow rounded-md border border-blue-400 bg-blue-400"}
+        className={"grow rounded-md border border-gray-600 bg-blue-400"}
         disabled={false}
         onClick={() => addCard("warning")}
         style={{ width: "10%", height: "100%" }}

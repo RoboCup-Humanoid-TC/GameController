@@ -59,6 +59,7 @@ trait_enum! {
         HlUnpenalize,
         HlNormalize,
         HlSetGoalkeeper,
+        HlChangePlayerPoints,
     }
 }
 
