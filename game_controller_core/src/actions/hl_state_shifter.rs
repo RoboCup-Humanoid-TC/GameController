@@ -177,7 +177,8 @@ impl Action for HlStateShifter {
             && c.game.state == State::Finished
         {
             true
-        } else if self.state == State::Ready && c.game.state == State::Initial {
+        } else if self.state == State::Ready && 
+        (c.game.state == State::Initial || c.game.state == State::Playing) {
             true
         } else if self.state == State::Set
             && (c.game.state == State::Ready

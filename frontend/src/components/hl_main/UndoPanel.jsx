@@ -14,7 +14,7 @@ const getActionName = (action) => {
     case "freeSetPlay":
       return "Playing";
     case "globalGameStuck":
-      return "Global Game Stuck";
+      return "Drop Ball";
     case "goal":
       return "Goal";
     case "penalize": {
