@@ -145,6 +145,12 @@ This is because they would be applied again immediately if they were undone.
 
 The green field for everyplayer represents the goalkeeper state. If there is a 1 the player is a goalkeeper, 0 means its a normal player. There is inly one goalkeeper per team.
 
+### Drop In Games
+
+In **“Drop In”** Games, each player’s card will now include an additional **white box** representing their individual score. Operators can:
+- Increase points by clicking the box with the left mouse button 
+- Decrease points by clicking the box with the right mouse button
+
 ## Logs
 
 The GameController writes log files to the directory `logs`.
@@ -165,12 +171,6 @@ For the communication with the GameController the programmer needs 5 bytes:
 | Global | Team | Player | Playernumber | Side |
 
 ## Current methods
-
-### Drop In Games
-
-In **“Drop In”** Games, each player’s card will now include an additional **white box** representing their individual score. Operators can:
-- Increase points by clicking the box with the left mouse button 
-- Decrease points by clicking the box with the right mouse button
 
 ### Global
 
