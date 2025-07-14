@@ -166,6 +166,12 @@ For the communication with the GameController the programmer needs 5 bytes:
 
 ## Current methods
 
+### Drop In Games
+
+In **“Drop In”** Games, each player’s card will now include an additional **white box** representing their individual score. Operators can:
+- Increase points by clicking the box with the left mouse button 
+- Decrease points by clicking the box with the right mouse button
+
 ### Global
 
 1 State initial to Ready
