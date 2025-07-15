@@ -60,6 +60,7 @@ trait_enum! {
         HlNormalize,
         HlSetGoalkeeper,
         HlChangePlayerPoints,
+        HlSetKickingSide,
     }
 }
 

@@ -18,7 +18,7 @@ const textClasses = {
   gray: "text-gray-600",
 };
 
-const TeamHeader = ({ color, isKicking, name }) => {
+const TeamHeader = ({ color, isKicking, name, onClickBehavior }) => {
   return (
     <div className="flex items-center justify-center gap-2">
       <svg
@@ -29,7 +29,8 @@ const TeamHeader = ({ color, isKicking, name }) => {
       >
         <circle cx="7" cy="7" r="7" />
       </svg>
-      <h1 className={`text-center text-2xl font-semibold ${textClasses[color]}`}>{name}</h1>
+      <h1 className={`text-center text-2xl font-semibold ${textClasses[color]}`}
+          onClick={onClickBehavior}>{name}</h1>
     </div>
   );
 };
@@ -285,6 +286,12 @@ const TeamPanel = ({
         color={teamParams.fieldPlayerColor}
         isKicking={game.kickingSide === side}
         name={teamNames[side]}
+        onClickBehavior={() => {
+          applyAction({
+            type: "hlSetKickingSide",
+            args: { side: side },
+          });
+        }}
       />
       <div className={`flex ${sign > 0 ? "flex-row" : "flex-row-reverse"} gap-2`}>
         <div className="flex-1 flex flex-col gap-2">

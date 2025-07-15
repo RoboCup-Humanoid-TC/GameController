@@ -113,6 +113,8 @@ const getActionName = (action) => {
         case "pickedUp":
           return "Picked Up";
       }
+    case "hlSetKickingSide":
+      return "Switched Kickoff Side"
   }
   return action.type;
 };

@@ -129,7 +129,7 @@ To substitue a player click on the substitution button for the respective team. 
 
 #### Penalty Shoot-out
 
-A penalty shoot-out can only be started after two halves or overtime have been played and the score is equal.
+A penalty shoot-out can only be started after two halves or overtime have been played and the score is equal. While in initial (before starting the first shot) it is possible to change the kicking side by clicking on the other teams name (the team without kicking side marker)
 
 #### Undo
 
