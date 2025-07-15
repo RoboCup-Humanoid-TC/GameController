@@ -134,7 +134,7 @@ A penalty shoot-out can only be started after two halves or overtime have been p
 #### Undo
 
 At the bottom of the window, a timeline of the last five actions applied by the user is filled from right to left.
-Clicking on one of the actions there restores the entire game to the state immediately before that action was applied.
+Clicking on one of the actions there *while pressing the Shift button* restores the entire game to the state immediately before that action was applied.
 It is not possible to undo individual actions that have been followed by other actions.
 The undo history is actually not limited to the last five actions, i.e. previous actions appear once some actions are undone.
 
