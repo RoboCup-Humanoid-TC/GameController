@@ -162,7 +162,7 @@ mercyRuleScoreDifference: 1
 penaltyShots: 3
 suddenDeathPenaltyShots: 3
 penaltyShotDuration:
-  secs: 120
+  secs: 60
   nanos: 0
 delayAfterGoal:
   secs: 0
