@@ -1039,7 +1039,7 @@ dependencies = [
 
 [[package]]
 name = "game_controller_app"
-version = "1.0.0-rc.2"
+version = "2025.1.1"
 dependencies = [
  "anyhow",
  "clap",
@@ -1052,7 +1052,7 @@ dependencies = [
 
 [[package]]
 name = "game_controller_core"
-version = "1.0.0-rc.2"
+version = "2025.1.1"
 dependencies = [
  "enum-map",
  "serde",
@@ -1063,7 +1063,7 @@ dependencies = [
 
 [[package]]
 name = "game_controller_logs"
-version = "1.0.0-rc.2"
+version = "2025.1.1"
 dependencies = [
  "anyhow",
  "bytes",
@@ -1076,7 +1076,7 @@ dependencies = [
 
 [[package]]
 name = "game_controller_msgs"
-version = "1.0.0-rc.2"
+version = "2025.1.1"
 dependencies = [
  "anyhow",
  "bindgen",
@@ -1086,7 +1086,7 @@ dependencies = [
 
 [[package]]
 name = "game_controller_net"
-version = "1.0.0-rc.2"
+version = "2025.1.1"
 dependencies = [
  "anyhow",
  "bytes",
@@ -1098,7 +1098,7 @@ dependencies = [
 
 [[package]]
 name = "game_controller_runtime"
-version = "1.0.0-rc.2"
+version = "2025.1.1"
 dependencies = [
  "anyhow",
  "clap",
