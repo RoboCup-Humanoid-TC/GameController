@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ActionButton from "./ActionButton";
 import * as actions from "../../actions.js";
 
@@ -117,13 +118,34 @@ const getActionName = (action) => {
 };
 
 const UndoPanel = ({ undoActions, legalUndoActions }) => {
+  const [undoLegal, setUndoLegal] = useState(false);
+
+  useEffect(() => {
+    const onKeydown = (e) => {
+      if (e.key === "Shift") {
+        setUndoLegal(true);
+      }
+    };
+    const onKeyup = (e) => {
+      if (e.key === "Shift") {
+        setUndoLegal(false);
+      }
+    };
+    document.addEventListener("keydown", onKeydown);
+    document.addEventListener("keyup", onKeyup);
+    return () => {
+      document.removeEventListener("keydown", onKeydown);
+      document.removeEventListener("keyup", onKeyup);
+    };
+  });
+
   return (
     <div className="flex flex-row-reverse gap-2 h-10">
       {legalUndoActions.map((legal, index) => (
         <ActionButton
           action={{ type: "undo", args: { states: index + 1 } }}
           label={index < undoActions.length ? getActionName(undoActions[index]) : "Undo"}
-          legal={legal}
+          legal={legal && undoLegal}
           key={index}
         />
       ))}
