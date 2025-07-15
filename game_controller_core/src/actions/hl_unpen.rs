@@ -20,7 +20,9 @@ impl Action for HlUnpenalize {
         if c.game.teams[self.side][self.player].penalty 
                 != Penalty::NoPenalty && 
                 c.game.teams[self.side][self.player].penalty 
-                != Penalty::Substitute
+                != Penalty::Substitute &&
+                c.game.teams[self.side][self.player].penalty_timer ==
+                Timer::Stopped
         {
             c.game.teams[self.side][self.player].penalty_timer = Timer::Started {
                         remaining: c.params.competition.penalties[
@@ -38,6 +40,15 @@ impl Action for HlUnpenalize {
                         )]),
                     };
         } 
+        else if c.game.teams[self.side][self.player].penalty 
+                != Penalty::NoPenalty && 
+                c.game.teams[self.side][self.player].penalty 
+                != Penalty::Substitute &&
+                c.game.teams[self.side][self.player].penalty_timer !=
+                Timer::Stopped
+        {
+            c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;
+        }
         else if c.game.teams[self.side][self.player].penalty == Penalty::Substitute 
         {
             if c.game.sec_state.state != SecState::Penaltyshoot 
