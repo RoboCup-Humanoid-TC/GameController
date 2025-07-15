@@ -63,38 +63,28 @@
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: Eepis Robot Soccer
+- name: Blenders FC
   number: 13
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: MRL-HSL
+- name: Boosted HTWK
   number: 14
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: ZJUDancer
+- name: PMec Humanoid
   number: 15
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
-
-- name: Blenders FC
+  
+- name: PUMAS
   number: 16
   fieldPlayerColors: [red, blue]
-  goalkeeperColors: [black, white]
-
-- name: Boosted HTWK
+  goalkeeperColors: [black, white]  
+  
+- name: ZJUDancer
   number: 17
-  fieldPlayerColors: [red, blue]
-  goalkeeperColors: [black, white]
-
-- name: PMec Humanoid
-  number: 18
-  fieldPlayerColors: [red, blue]
-  goalkeeperColors: [black, white]
-
-- name: PUMAS
-  number: 19
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
@@ -117,28 +107,33 @@
   number: 28
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
-
-- name: Tsinghua Hephaestus
+  
+- name: CAU Mountain&Sea
   number: 29
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
-
-- name: CAU Mountain&Sea
+  
+- name: TH-MOS
   number: 30
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
-- name: UT Austin Villa
+- name: Tsinghua Hephaestus
   number: 31
+  fieldPlayerColors: [red, blue]
+  goalkeeperColors: [black, white]
+  
+- name: UT Austin Villa
+  number: 32
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
 - name: Team A
-  number: 91
+  number: 98
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
 
 - name: Team B
-  number: 92
+  number: 99
   fieldPlayerColors: [red, blue]
   goalkeeperColors: [black, white]
