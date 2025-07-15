@@ -15,7 +15,6 @@ impl Action for HlSetKickingSide {
     fn execute(&self, c: &mut ActionContext) {
         c.game.kicking_side = Some(self.side);
         c.game.sides = -c.game.sides;
-        println!("DEBUG: Kicking side set to: {:?}", self.side);
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
