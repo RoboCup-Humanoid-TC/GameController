@@ -92,16 +92,16 @@ const StatePanel = ({ game, legalGameActions }) => {
       <>
         <div className="col-span-1">
           <ActionButton
-            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
+            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
             label="Penalty Shots (Left Goal)"
-            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_LEFT]}
+            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
           />
         </div>
         <div className="col-span-1">
           <ActionButton
-            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
+            action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
             label="Penalty Shots (Right Goal)"
-            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
+            legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_LEFT]}
           />
         </div>
       </>
@@ -110,16 +110,16 @@ const StatePanel = ({ game, legalGameActions }) => {
         <>
           <div className="col-span-2">
             <ActionButton
-              action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
+              action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
               label="Penalty Shots (Left Goal)"
-              legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_LEFT]}
+              legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
             />
           </div>
           <div className="col-span-2">
             <ActionButton
-              action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsRightGoal" } }}
+              action={{ type: "startPenaltyShootout", args: { sides: "homeDefendsLeftGoal" } }}
               label="Penalty Shots (Right Goal)"
-              legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_RIGHT]}
+              legal={legalGameActions[actions.START_PENALTY_SHOOTOUT_LEFT]}
             />
           </div>
         </>
