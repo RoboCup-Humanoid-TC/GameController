@@ -24,7 +24,7 @@ use tokio_util::sync::CancellationToken;
 
 use game_controller_core::{
     action::VAction,
-    actions::TeamMessage,
+    actions::{TeamMessage, HlSetGoalkeeper},
     log::{
         LogEntry, LoggedMetadata, LoggedMonitorRequest, LoggedStatusMessage, LoggedTeamMessage,
         TimestampedLogEntry,
@@ -301,6 +301,13 @@ async fn event_loop(
                                         (side, PlayerNumber::new(status_message.player_number)),
                                         now,
                                     );
+                                    if status_message.message == 3 
+                                    {
+                                        game_controller.apply(VAction::HlSetGoalkeeper(HlSetGoalkeeper {
+                                            side,
+                                            player: PlayerNumber::new(status_message.player_number),
+                                        }), ActionSource::Network);
+                                    }
                                 }
                             }
                         }
