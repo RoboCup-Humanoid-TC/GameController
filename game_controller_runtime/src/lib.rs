@@ -110,20 +110,22 @@ async fn start_network(
 
     let mut join_set = JoinSet::new();
 
+    if params.competition.league == League::Spl {
+        for team in teams {
+            let team_message_receiver =
+                TeamMessageReceiver::new(local_address, multicast, team, event_sender.clone())
+                    .await
+                    .context("could not create team message receiver")?;
+            join_set.spawn(async move { team_message_receiver.run().await.unwrap() });
+        }
+    }
+
     let control_message_sender =
         ControlMessageSender::new(broadcast_address, params, control_receiver, false)
             .await
             .context("could not create control message sender")?;
 
     join_set.spawn(async move { control_message_sender.run().await });
-
-    for team in teams {
-        let team_message_receiver =
-            TeamMessageReceiver::new(local_address, multicast, team, event_sender.clone())
-                .await
-                .context("could not create team message receiver")?;
-        join_set.spawn(async move { team_message_receiver.run().await.unwrap() });
-    }
 
     let status_message_receiver = StatusMessageReceiver::new(local_address, event_sender.clone())
         .await
