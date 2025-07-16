@@ -310,8 +310,6 @@ pub enum Side {
     Home,
     /// The team listed second on the schedule.
     Away,
-    /// The Referee.
-    None,
 }
 
 impl Neg for Side {
@@ -321,7 +319,6 @@ impl Neg for Side {
         match self {
             Self::Home => Self::Away,
             Self::Away => Self::Home,
-            Self::None => Self::None,
         }
     }
 }

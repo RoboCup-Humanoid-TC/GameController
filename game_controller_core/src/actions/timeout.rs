@@ -15,7 +15,7 @@ pub struct Timeout {
 
 impl Action for Timeout {
     fn execute(&self, c: &mut ActionContext) {
-        let duration = if self.side.unwrap() != Side::None {
+        let duration = if self.side.is_some() {
             c.params.competition.timeout_duration
         } else {
             c.params.competition.referee_timeout_duration
@@ -61,8 +61,8 @@ impl Action for Timeout {
                 c.game.teams[side].timeout_budget -= 1;
             }
         } else {
-            if self.side.unwrap() != Side::None {
-                if c.game.teams[self.side.unwrap()].timeout_budget > 0
+            if let Some(side) = self.side {
+                if c.game.teams[side].timeout_budget > 0
                     && c.game.state != State::Timeout
                 {
                     c.game.secondary_timer = Timer::Started {
@@ -100,9 +100,9 @@ impl Action for Timeout {
             || c.game.state == State::Timeout)
             && c.game.state != State::Playing
             && c.game.state != State::Finished
-            && (self.side.unwrap() == Side::None
-                || (c.game.state != State::Timeout &&
-                    c.game.teams[self.side.unwrap()].timeout_budget > 0
-                ))
+            && self.side.is_none_or(|side|
+                c.game.state != State::Timeout &&
+                    c.game.teams[side].timeout_budget > 0
+                )
     }
 }

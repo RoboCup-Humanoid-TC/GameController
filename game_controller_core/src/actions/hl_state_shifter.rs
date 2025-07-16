@@ -116,7 +116,7 @@ impl Action for HlStateShifter {
             c.game.state = State::Set;
         } else if self.state == State::Ready {
             c.game.state = self.state;
-            c.game.set_play = SetPlay::KickOff;
+            c.game.set_play = SetPlay::NoSetPlay;
             c.game.secondary_timer = Timer::Started {
                 remaining: SignedDuration::new(45, 0),
                 run_condition: RunCondition::Always,
@@ -126,7 +126,7 @@ impl Action for HlStateShifter {
             };
         } else if self.state == State::Set {
             c.game.state = self.state;
-            c.game.set_play = SetPlay::KickOff;
+            c.game.set_play = SetPlay::NoSetPlay;
             c.game.secondary_timer = Timer::Stopped;
         } else if self.state == State::Playing {
             c.game.state = self.state;

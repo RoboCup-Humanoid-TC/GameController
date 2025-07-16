@@ -12,12 +12,12 @@ impl Action for GlobalGameStuck {
     fn execute(&self, c: &mut ActionContext) {
         if c.params.competition.league == League::Spl {
             StartSetPlay {
-                side: Some(Side::None),
+                side: None,
                 set_play: SetPlay::KickOff,
             }
             .execute(c);
         } else {
-            c.game.kicking_side = Some(Side::None);
+            c.game.kicking_side = None;
             HlStateShifter {
                 state: State::Ready,
             }
