@@ -6,8 +6,12 @@ const getPhaseDescription = (game) => {
   switch (game.phase) {
     case "firstHalf":
       return game.state === "finished" ? "Half-Time Break" : "First Half";
+    case "firstExtraHalf":
+      return game.state === "finished" ? "Half-Time Break (Extra Time)" : "First Half (Extra Time)";
     case "secondHalf":
-      return game.state === "initial" ? "Half-Team Break" : "Second Half";
+      return game.state === "initial" ? "Half-Time Break" : "Second Half";
+    case "secondExtraHalf":
+      return game.state === "initial" ? "Half-Time Break (Extra Time)" : "Second Half (Extra Time)";
     case "penaltyShootout":
       return "Penalty Shoot-out";
   }
