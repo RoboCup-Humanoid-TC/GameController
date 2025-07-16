@@ -31,6 +31,9 @@ const getStateDescription = (game) => {
     cornerKick: "Corner Kick",
     pushingFreeKick: "Pushing Free Kick",
     penaltyKick: "Penalty Kick",
+    throwIn: "Throw-in",
+    directFreeKick: "Direct Free Kick",
+    indirectFreeKick: "Indirect Free Kick",
   }[game.setPlay];
   let state = "";
   if (game.state === "ready") {
