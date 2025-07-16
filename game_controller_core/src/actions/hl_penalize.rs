@@ -24,25 +24,18 @@ impl Action for HlPenalize {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if self.penalty == Penalty::PickedUp 
-        {
+        if self.penalty == Penalty::PickedUp {
             c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
-        } 
-        else if self.penalty == Penalty::BallHolding 
-        {
+        } else if self.penalty == Penalty::BallHolding {
             (c.game.state == State::Playing || c.game.state == State::Ready)
                 && c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
-        } 
-        else if self.penalty == Penalty::PlayerPushing 
-        {
-            (c.game.state == State::Playing 
-                || c.game.state == State::Ready 
+        } else if self.penalty == Penalty::PlayerPushing {
+            (c.game.state == State::Playing
+                || c.game.state == State::Ready
                 || c.game.state == State::Set)
                 && c.game.teams[self.side][self.player].penalty == Penalty::NoPenalty
-        } 
-        else 
-        {
+        } else {
             false
-        }        
+        }
     }
 }

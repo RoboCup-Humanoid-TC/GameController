@@ -3,7 +3,7 @@ use bytes::{BufMut, Bytes, BytesMut};
 use game_controller_core::{
     timer::SignedDuration,
     types::{
-        ChallengeMode, Color, Game, HlCard, Params, Penalty, Phase, PlayerNumber, SecState, Side,
+        ChallengeMode, Color, Game, HlCard, Params, Penalty, Phase, PlayerNumber, SetPlay, Side,
         SideMapping, State,
     },
 };
@@ -195,35 +195,34 @@ impl HlControlMessage {
             kicking_team: game
                 .kicking_side
                 .map_or(DROPBALL, |side| params.game.teams[side].number),
-            sec_game_state: match game.sec_state.state {
-                SecState::Normal => match game.phase {
-                    Phase::FirstHalf | Phase::SecondHalf => STATE2_NORMAL,
-                    Phase::FirstExtraHalf | Phase::SecondExtraHalf => STATE2_OVERTIME,
-                    Phase::PenaltyShootout => STATE2_PENALTYSHOOT,
-                },
-                SecState::Penaltyshoot => STATE2_PENALTYSHOOT,
-                SecState::Overtime => STATE2_OVERTIME,
-                SecState::Timeout => STATE2_TIMEOUT,
-                SecState::DirectFreeKick => STATE2_DIRECT_FREEKICK,
-                SecState::IndirectFreeKick => STATE2_INDIRECT_FREEKICK,
-                SecState::PenaltyKick => STATE2_PENALTYKICK,
-                SecState::CornerKick => STATE2_CORNER_KICK,
-                SecState::GoalKick => STATE2_GOAL_KICK,
-                SecState::ThrowIn => STATE2_THROW_IN,
+            sec_game_state: match game.set_play {
+                SetPlay::DirectFreeKick => STATE2_DIRECT_FREEKICK,
+                SetPlay::IndirectFreeKick => STATE2_INDIRECT_FREEKICK,
+                SetPlay::PenaltyKick => STATE2_PENALTYKICK,
+                SetPlay::CornerKick => STATE2_CORNER_KICK,
+                SetPlay::GoalKick => STATE2_GOAL_KICK,
+                SetPlay::ThrowIn => STATE2_THROW_IN,
+                _ => {
+                    if game.state == State::Timeout {
+                        STATE2_TIMEOUT
+                    } else {
+                        match game.phase {
+                            Phase::FirstHalf | Phase::SecondHalf => STATE2_NORMAL,
+                            Phase::FirstExtraHalf | Phase::SecondExtraHalf => STATE2_OVERTIME,
+                            Phase::PenaltyShootout => STATE2_PENALTYSHOOT,
+                        }
+                    }
+                }
             },
             // TODO: ????
             sec_game_state_info: [
-                if game.sec_state.state != SecState::Normal
-                {
-                    match game.sec_state.side {
-                        Side::Home => params.game.teams[Side::Home].number,
-                        Side::Away => params.game.teams[Side::Away].number,
-                        Side::None => 0, // Referee does not have a team number.
-                    }
+                if game.set_play != SetPlay::NoSetPlay {
+                    game.kicking_side
+                        .map_or(DROPBALL, |side| params.game.teams[side].number)
                 } else {
                     0
                 },
-                game.sec_state.phase,
+                game.sec_state_phase,
                 0,
                 0,
             ],

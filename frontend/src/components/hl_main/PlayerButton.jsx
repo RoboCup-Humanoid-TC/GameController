@@ -53,44 +53,43 @@ const PlayerButton = ({ color, legal, sign, onClick, player, side, goaly, dropin
   };
 
   let goalyButton = dropin ? (
-        <button
-        className={"grow rounded-md border border-gray-600 bg-white-500"}
-        disabled={false}
-        onClick={() => {
-            applyAction({
-              type: "hlChangePlayerPoints",
-              args: {
-                side: side,
-                player: player.number,
-                increase: true,
-              },
-            });
-          }
-        }
-        onContextMenu={() => {
-                      applyAction({
-              type: "hlChangePlayerPoints",
-              args: {
-                side: side,
-                player: player.number,
-                increase: false,
-              },
-            });
-        }}
-        style={{ width: "10%", height: "100%" }}
-        >
-          {player.points}
-        </button>
-      ) : (
-      <button
-        className={"grow rounded-md border border-gray-600 bg-green-500"}
-        disabled={false}
-        onClick={() => setGoalkeeper()}
-        style={{ width: "10%", height: "100%" }}
-      >
-        {goaly ? "1" : "0"}
-      </button>
-      );
+    <button
+      className={"grow rounded-md border border-gray-600 bg-white-500"}
+      disabled={false}
+      onClick={() => {
+        applyAction({
+          type: "hlChangePlayerPoints",
+          args: {
+            side: side,
+            player: player.number,
+            increase: true,
+          },
+        });
+      }}
+      onContextMenu={() => {
+        applyAction({
+          type: "hlChangePlayerPoints",
+          args: {
+            side: side,
+            player: player.number,
+            increase: false,
+          },
+        });
+      }}
+      style={{ width: "10%", height: "100%" }}
+    >
+      {player.points}
+    </button>
+  ) : (
+    <button
+      className={"grow rounded-md border border-gray-600 bg-green-500"}
+      disabled={false}
+      onClick={() => setGoalkeeper()}
+      style={{ width: "10%", height: "100%" }}
+    >
+      {goaly ? "1" : "0"}
+    </button>
+  );
 
   const shouldFlash =
     player &&

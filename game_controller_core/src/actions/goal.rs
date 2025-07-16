@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::action::{Action, ActionContext, VAction};
 use crate::actions::{HlStateShifter, StartSetPlay};
 use crate::timer::{BehaviorAtZero, RunCondition, SignedDuration, Timer};
-use crate::types::{League, Penalty, Phase, SecState, SetPlay, Side, State};
+use crate::types::{League, Penalty, Phase, SetPlay, Side, State};
 
 /// This struct defines an action for when a goal has been scored.
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -58,7 +58,7 @@ impl Action for Goal {
         } else if c.params.competition.league == League::Humanoid {
             c.game.teams[self.side].score += 1;
             c.game.kicking_side = Some(-self.side);
-            if c.game.sec_state.state != SecState::Penaltyshoot {
+            if c.game.phase != Phase::PenaltyShootout {
                 c.game.secondary_timer = Timer::Started {
                     remaining: SignedDuration::new(45, 0),
                     run_condition: RunCondition::Always,
@@ -67,24 +67,25 @@ impl Action for Goal {
                     )]),
                 };
                 c.game.state = State::Ready;
-                if c.params.competition.name == "Drop In"
-                {
-                    c.game.teams[self.side].players.iter_mut().for_each(|player| {
-                        if player.penalty == Penalty::NoPenalty 
-                        {
-                            player.points += 1;
-                        }
-                    });
-                    c.game.teams[-self.side].players.iter_mut().for_each(|player| {
-                        if player.penalty == Penalty::NoPenalty 
-                        {
-                            player.points -= 1;
-                        }
-                        else if player.penalty != Penalty::Substitute
-                        {
-                            player.points -= 2;
-                        }
-                    });
+                if c.params.competition.name == "Drop In" {
+                    c.game.teams[self.side]
+                        .players
+                        .iter_mut()
+                        .for_each(|player| {
+                            if player.penalty == Penalty::NoPenalty {
+                                player.points += 1;
+                            }
+                        });
+                    c.game.teams[-self.side]
+                        .players
+                        .iter_mut()
+                        .for_each(|player| {
+                            if player.penalty == Penalty::NoPenalty {
+                                player.points -= 1;
+                            } else if player.penalty != Penalty::Substitute {
+                                player.points -= 2;
+                            }
+                        });
                 }
             } else {
                 c.game.state = State::Ready;

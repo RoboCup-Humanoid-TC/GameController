@@ -23,16 +23,16 @@ mod wait_for_set_play;
 
 mod hl_abort;
 mod hl_add_card;
+mod hl_change_player_points;
+mod hl_norm;
 mod hl_penalize;
 mod hl_retake;
+mod hl_set_goalkeeper;
+mod hl_set_kicking_side;
 mod hl_set_play;
 mod hl_state_shifter;
 mod hl_substitute;
 mod hl_unpen;
-mod hl_norm;
-mod hl_set_goalkeeper;
-mod hl_change_player_points;
-mod hl_set_kicking_side;
 
 pub use add_extra_time::AddExtraTime;
 pub use finish_half::FinishHalf;
@@ -57,13 +57,13 @@ pub use wait_for_set_play::WaitForSetPlay;
 
 pub use hl_abort::HlAbort;
 pub use hl_add_card::HlAddCard;
+pub use hl_change_player_points::HlChangePlayerPoints;
+pub use hl_norm::HlNormalize;
 pub use hl_penalize::HlPenalize;
 pub use hl_retake::HlRetake;
+pub use hl_set_goalkeeper::HlSetGoalkeeper;
+pub use hl_set_kicking_side::HlSetKickingSide;
 pub use hl_set_play::HlSetPlay;
 pub use hl_state_shifter::HlStateShifter;
 pub use hl_substitute::HlSubstitute;
 pub use hl_unpen::HlUnpenalize;
-pub use hl_norm::HlNormalize;
-pub use hl_set_goalkeeper::HlSetGoalkeeper;
-pub use hl_change_player_points::HlChangePlayerPoints;
-pub use hl_set_kicking_side::HlSetKickingSide;

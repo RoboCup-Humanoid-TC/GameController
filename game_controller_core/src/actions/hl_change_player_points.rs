@@ -23,20 +23,15 @@ impl Action for HlChangePlayerPoints {
     fn execute(&self, c: &mut ActionContext) {
         if self.increase {
             c.game.teams[self.side][self.player].points += 1;
-        } 
-        else 
-        {
+        } else {
             c.game.teams[self.side][self.player].points -= 1;
         }
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if c.params.competition.name == "Drop In"
-        {
+        if c.params.competition.name == "Drop In" {
             true
-        }
-        else
-        {
+        } else {
             false
         }
     }

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::action::{Action, ActionContext, VAction};
 use crate::actions::HlStateShifter;
 use crate::timer::{BehaviorAtZero, RunCondition, Timer};
-use crate::types::{League, Phase, SecState, SetPlay, Side, State};
+use crate::types::{League, Phase, SetPlay, Side, State};
 
 /// This struct defines an action for when a team or the referee takes a timeout.
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -62,10 +62,9 @@ impl Action for Timeout {
             }
         } else {
             if self.side.unwrap() != Side::None {
-                if c.game.teams[self.side.unwrap()].timeout_budget > 0 &&
-                    (c.game.state != State::Playing || c.game.state != State::Finished)
-                    && c.game.sec_state.state != SecState::Timeout {
-                    
+                if c.game.teams[self.side.unwrap()].timeout_budget > 0
+                    && c.game.state != State::Timeout
+                {
                     c.game.secondary_timer = Timer::Started {
                         // In some cases, an existing timer is modified to avoid situations like "We are going
                         // to take a timeout once their timeout is over".
@@ -73,17 +72,13 @@ impl Action for Timeout {
                         run_condition: RunCondition::Always,
                         behavior_at_zero: BehaviorAtZero::Overflow,
                     };
-                    c.game.sec_state.state = SecState::Timeout;
-                    c.game.sec_state.side = self.side.unwrap();
-                    c.game.state = State::Initial;
+                    c.game.state = State::Timeout;
+                    c.game.set_play = SetPlay::NoSetPlay;
+                    c.game.sec_state_phase = 0;
                     c.game.teams[self.side.unwrap()].timeout_budget -= 1;
-                    
-                } else if c.game.sec_state.state == SecState::Timeout {
-                    c.game.secondary_timer = Timer::Stopped;
-                    c.game.sec_state.state = SecState::Normal;
                 }
             } else {
-                if c.game.sec_state.state != SecState::Timeout {
+                if c.game.state != State::Timeout {
                     c.game.secondary_timer = Timer::Started {
                         // In some cases, an existing timer is modified to avoid situations like "We are going
                         // to take a timeout once their timeout is over".
@@ -91,60 +86,23 @@ impl Action for Timeout {
                         run_condition: RunCondition::Always,
                         behavior_at_zero: BehaviorAtZero::Overflow,
                     };
-                    c.game.sec_state.state = SecState::Timeout;
-                    c.game.sec_state.side = Side::None;
-                    c.game.sec_state.phase = 0;
-                    c.game.state = State::Initial;
-                } else {
-                    c.game.secondary_timer = Timer::Stopped;
-                    c.game.sec_state.state = SecState::Normal;
+                    c.game.state = State::Timeout;
+                    c.game.set_play = SetPlay::NoSetPlay;
+                    c.game.sec_state_phase = 0;
                 }
             }
         }
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if self.side.unwrap() != Side::None
-        {
-            if c.game.state == State::Playing || 
-            c.game.state == State::Finished
-            {
-                false
-            }
-            else
-            {
-                if c.game.sec_state.state == SecState::Normal &&
-                c.game.teams[self.side.unwrap()].timeout_budget > 0
-                {
-                    true
-                } 
-                else if c.game.sec_state.state == SecState::Timeout &&
-                c.game.sec_state.side == self.side.unwrap()
-                {
-                    true
-                } 
-                else 
-                {
-                    false
-                }
-            }
-        } 
-        else 
-        {
-            if c.game.state == State::Finished
-            {
-                false
-            }
-            else if c.game.state != State::Finished &&
-            c.game.sec_state.state == SecState::Normal ||
-            c.game.sec_state.side == Side::None
-            {
-                true
-            }
-            else
-            {
-                false
-            }
-        }
+        (c.game.phase != Phase::PenaltyShootout
+            || c.game.state == State::Initial
+            || c.game.state == State::Timeout)
+            && c.game.state != State::Playing
+            && c.game.state != State::Finished
+            && (self.side.unwrap() == Side::None
+                || (c.game.state != State::Timeout &&
+                    c.game.teams[self.side.unwrap()].timeout_budget > 0
+                ))
     }
 }

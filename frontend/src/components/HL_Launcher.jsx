@@ -100,7 +100,7 @@ const HL_Launcher = ({ setLaunched }) => {
               fieldPlayerColor: "black", // or any neutral/default
               goalkeeperColor: "black",
             };
-          
+
             const patchedSettings = {
               ...launchSettings,
               game: {
@@ -111,7 +111,7 @@ const HL_Launcher = ({ setLaunched }) => {
                 },
               },
             };
-          
+
             launch(patchedSettings).then(() => setLaunched(true));
           }}
         >

@@ -204,32 +204,6 @@ pub enum State {
     Timeout,
 }
 
-/// This enumerates the second state that the can have (HL)
-#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum SecState {
-    /// normal
-    Normal,
-    /// Penaltyshoot
-    Penaltyshoot,
-    /// Overtime
-    Overtime,
-    /// Timeout
-    Timeout,
-    /// Direct Freekick
-    DirectFreeKick,
-    /// Indirect Freekick
-    IndirectFreeKick,
-    /// Penaltykick
-    PenaltyKick,
-    /// Cornerkick
-    CornerKick,
-    /// Goal Kick
-    GoalKick,
-    /// Throw in
-    ThrowIn,
-}
-
 /// This enumerates the set plays which can be active.
 #[derive(Clone, Copy, Debug, Deserialize, Enum, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -255,21 +229,6 @@ pub enum SetPlay {
     /// An indirect free kick is in progress.
     IndirectFreeKick,
 }
-
-impl SecState {
-    pub fn sec_state_to_set_play(state: SecState) -> SetPlay {
-        match state {
-            SecState::DirectFreeKick => SetPlay::DirectFreeKick,
-            SecState::IndirectFreeKick => SetPlay::IndirectFreeKick,
-            SecState::PenaltyKick => SetPlay::PenaltyKick,
-            SecState::CornerKick => SetPlay::CornerKick,
-            SecState::GoalKick => SetPlay::GoalKick,
-            SecState::ThrowIn => SetPlay::ThrowIn,
-            _ => SetPlay::NoSetPlay, // All others map to no active set play
-        }
-    }
-}
-
 
 /// This enumerates the jersey colors. Values may be added to match actually submitted jersey designs.
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
@@ -423,8 +382,8 @@ pub struct Game {
     pub phase: Phase,
     /// The current state of the game.
     pub state: State,
-    /// Second state for the HL
-    pub sec_state: SecondaryState,
+    /// Secondary state for set plays in the HL. Should be unified with state.
+    pub sec_state_phase: u8,
     /// The current set play.
     pub set_play: SetPlay,
     /// The side which may play the ball during the current set play or penalty shot.
@@ -533,17 +492,6 @@ pub struct Player {
     pub cards: EnumMap<HlCard, u8>,
     /// Points for the humanoid league drop in games
     pub points: i8,
-}
-
-#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct SecondaryState {
-    /// Kind of the secondary State
-    pub state: SecState,
-    /// Side who benefits from that
-    pub side: Side,
-    /// phase of the secondary state
-    pub phase: u8,
 }
 
 /// This enumerates the possible sources that can trigger actions.

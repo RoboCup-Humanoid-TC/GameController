@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::action::{Action, ActionContext};
-use crate::types::{Penalty, PlayerNumber, Side, HlCard};
+use crate::types::{HlCard, Penalty, PlayerNumber, Side};
 
 /// This struct defines an action to substitute players.
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
@@ -30,12 +30,9 @@ impl Action for HlSubstitute {
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if c.game.teams[self.side][self.player].cards[HlCard::Red] >= 1
-        {
+        if c.game.teams[self.side][self.player].cards[HlCard::Red] >= 1 {
             false
-        }
-        else
-        {
+        } else {
             true
         }
     }

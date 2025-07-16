@@ -1,7 +1,7 @@
 use crate::action::{Action, ActionContext, VAction};
 use crate::actions::HlNormalize;
 use crate::timer::{BehaviorAtZero, EvaluatedRunConditions, RunCondition, Timer};
-use crate::types::{HlCard, Penalty, PlayerNumber, SecState, Side, State};
+use crate::types::{HlCard, Penalty, Phase, PlayerNumber, Side, State};
 use serde::{Deserialize, Serialize};
 pub use time::Duration;
 
@@ -39,7 +39,7 @@ impl Action for HlUnpenalize {
         {
             c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;
         } else if c.game.teams[self.side][self.player].penalty == Penalty::Substitute {
-            if c.game.sec_state.state != SecState::Penaltyshoot {
+            if c.game.phase != Phase::PenaltyShootout {
                 let unsubs = c.game.teams[self.side]
                     .players
                     .iter()
@@ -69,7 +69,7 @@ impl Action for HlUnpenalize {
                 .iter()
                 .filter(|player| player.penalty != Penalty::Substitute)
                 .count();
-            if c.game.sec_state.state == SecState::Penaltyshoot {
+            if c.game.phase == Phase::PenaltyShootout {
                 c.game.state != State::Initial
                     && c.game.teams[self.side][self.player].cards[HlCard::Red] < 1
                     && unsubs < 1
@@ -79,7 +79,7 @@ impl Action for HlUnpenalize {
         } else {
             c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty &&
                 // It isn't possible to unpenalize the goalkeeper in a penalty shoot-out.
-                !(c.game.sec_state.state == SecState::Penaltyshoot && c.game.state == State::Playing && c.game.kicking_side.is_none_or(|side| side != self.side))
+                !(c.game.phase == Phase::PenaltyShootout && c.game.state == State::Playing && c.game.kicking_side.is_none_or(|side| side != self.side))
         }
     }
 }

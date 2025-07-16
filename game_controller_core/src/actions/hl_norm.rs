@@ -1,5 +1,5 @@
 use crate::action::{Action, ActionContext, VAction};
-use crate::timer::{BehaviorAtZero, RunCondition, Timer, EvaluatedRunConditions};
+use crate::timer::{BehaviorAtZero, EvaluatedRunConditions, RunCondition, Timer};
 use crate::types::{Penalty, PlayerNumber, Side};
 use serde::{Deserialize, Serialize};
 pub use time::Duration;
@@ -16,21 +16,17 @@ pub struct HlNormalize {
 
 impl Action for HlNormalize {
     fn execute(&self, c: &mut ActionContext) {
-        if c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty
-        {
+        if c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty {
             c.game.teams[self.side][self.player].penalty = Penalty::NoPenalty;
-            c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;        
+            c.game.teams[self.side][self.player].penalty_timer = Timer::Stopped;
         }
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
-        if c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty 
-        {
+        if c.game.teams[self.side][self.player].penalty != Penalty::NoPenalty {
             true
-        }       
-        else 
-        {
+        } else {
             false
-        } 
+        }
     }
 }

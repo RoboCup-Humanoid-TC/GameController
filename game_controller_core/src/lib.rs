@@ -20,8 +20,8 @@ use crate::actions::*;
 use crate::log::{LogEntry, LoggedAction, Logger, TimestampedLogEntry};
 use crate::timer::{BehaviorAtZero, EvaluatedRunConditions, RunCondition, Timer};
 use crate::types::{
-    ActionSource, Game, HlCard, Params, Penalty, Phase, Player, PlayerNumber, SecState,
-    SecondaryState, SetPlay, Side, State, Team,
+    ActionSource, Game, HlCard, Params, Penalty, Phase, Player, PlayerNumber, SetPlay, Side, State,
+    Team,
 };
 
 /// This struct encapsulates a delayed game state.
@@ -50,11 +50,7 @@ impl GameController {
             phase: Phase::FirstHalf,
             state: State::Initial,
             // HL
-            sec_state: SecondaryState {
-                state: SecState::Normal,
-                side: Side::Away,
-                phase: 0,
-            },
+            sec_state_phase: 0,
             // !HL
             set_play: SetPlay::NoSetPlay,
             kicking_side: Some(params.game.kick_off_side),
@@ -384,42 +380,42 @@ impl GameController {
             1 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::GoalKick,
+                    set_play: SetPlay::GoalKick,
                 }),
                 ActionSource::Referee,
             ),
             2 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::ThrowIn,
+                    set_play: SetPlay::ThrowIn,
                 }),
                 ActionSource::Referee,
             ),
             3 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::CornerKick,
+                    set_play: SetPlay::CornerKick,
                 }),
                 ActionSource::Referee,
             ),
             4 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::PenaltyKick,
+                    set_play: SetPlay::PenaltyKick,
                 }),
                 ActionSource::Referee,
             ),
             5 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::DirectFreeKick,
+                    set_play: SetPlay::DirectFreeKick,
                 }),
                 ActionSource::Referee,
             ),
             6 => self.apply(
                 VAction::HlSetPlay(HlSetPlay {
                     side: side,
-                    set_play: SecState::IndirectFreeKick,
+                    set_play: SetPlay::IndirectFreeKick,
                 }),
                 ActionSource::Referee,
             ),

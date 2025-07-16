@@ -59,7 +59,7 @@ const getActionName = (action) => {
         case "initial":
           return "Second Half";
         case "ready":
-          return "Ready"
+          return "Ready";
         case "set":
           return "Set";
         case "playing":
@@ -114,7 +114,7 @@ const getActionName = (action) => {
           return "Picked Up";
       }
     case "hlSetKickingSide":
-      return "Switched Kickoff Side"
+      return "Switched Kickoff Side";
   }
   return action.type;
 };

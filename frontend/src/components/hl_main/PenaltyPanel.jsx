@@ -16,11 +16,10 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
         label={selectedPenaltyCall === "playerPushing" ? "Pushing activated" : "Pushing"}
         legal={
           game.state === "playing" || game.state === "set" || game.state === "ready"
-          ?
-          selectedPenaltyCall === "pickedUp" || selectedPenaltyCall === "ballHolding" 
-            ? false 
-            : true
-          : false
+            ? selectedPenaltyCall === "pickedUp" || selectedPenaltyCall === "ballHolding"
+              ? false
+              : true
+            : false
         }
       />
       <PenaltyButtonWA
@@ -53,11 +52,10 @@ const PenaltyPanel = ({ game, selectedPenaltyCall, setSelectedPenaltyCall }) => 
         }
         legal={
           game.state === "playing" || game.state === "ready"
-          ?
-          selectedPenaltyCall === "playerPushing" || selectedPenaltyCall === "pickedUp"
-            ? false
-            : true
-          : false
+            ? selectedPenaltyCall === "playerPushing" || selectedPenaltyCall === "pickedUp"
+              ? false
+              : true
+            : false
         }
       />
     </div>
