@@ -45,7 +45,6 @@ impl Action for HlStateShifter {
                 });
             });
 
-            c.game.secondary_timer = Timer::Stopped;
             if c.game.phase == Phase::FirstHalf || c.game.phase == Phase::SecondHalf {
                 c.game.primary_timer = Timer::Started {
                     remaining: c.params.competition.half_duration.try_into().unwrap(),
@@ -140,9 +139,8 @@ impl Action for HlStateShifter {
         } else if self.state == State::Finished {
             c.game.state = self.state;
             c.game.set_play = SetPlay::NoSetPlay;
-            c.game.secondary_timer = Timer::Stopped;
             if c.game.phase != Phase::SecondExtraHalf {
-                c.game.primary_timer = Timer::Started {
+                c.game.secondary_timer = Timer::Started {
                     remaining: c
                         .params
                         .competition
