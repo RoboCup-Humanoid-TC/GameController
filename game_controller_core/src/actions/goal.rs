@@ -101,6 +101,8 @@ impl Action for Goal {
                 && (c.params.competition.challenge_mode.is_none() || self.side == Side::Home)
         } else if c.params.competition.league == League::Humanoid {
             c.game.state == State::Playing
+                && (c.game.phase != Phase::PenaltyShootout
+                    || c.game.kicking_side.is_none_or(|side| side == self.side))
         } else {
             false
         }

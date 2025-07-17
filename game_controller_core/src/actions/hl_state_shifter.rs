@@ -155,7 +155,16 @@ impl Action for HlStateShifter {
     fn is_legal(&self, c: &ActionContext) -> bool {
         if c.game.phase == Phase::PenaltyShootout {
             match self.state {
-                State::Playing => c.game.state == State::Set,
+                State::Playing => {
+                    c.game.state == State::Set
+                        && c.game.teams.values().all(|team| {
+                            team.players
+                                .iter()
+                                .filter(|player| player.penalty != Penalty::Substitute)
+                                .count()
+                                == 1
+                        })
+                }
                 State::Set => {
                     c.game.state == State::Initial
                         || c.game.state == State::Timeout
