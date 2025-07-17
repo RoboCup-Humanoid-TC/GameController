@@ -16,10 +16,6 @@ pub struct HlSetGoalkeeper {
 impl Action for HlSetGoalkeeper {
     fn execute(&self, c: &mut ActionContext) {
         c.game.teams[self.side].goalkeeper = Some(self.player);
-        println!(
-            "DEBUG: Goalkeeper: {:?}, Playernumber: {:?}\nSide: {:?}",
-            c.game.teams[self.side].goalkeeper, self.player, self.side
-        );
     }
 
     fn is_legal(&self, c: &ActionContext) -> bool {
