@@ -57,8 +57,8 @@ impl Action for Goal {
             }
         } else if c.params.competition.league == League::Humanoid {
             c.game.teams[self.side].score += 1;
-            c.game.kicking_side = Some(-self.side);
             if c.game.phase != Phase::PenaltyShootout {
+                c.game.kicking_side = Some(-self.side);
                 c.game.secondary_timer = Timer::Started {
                     remaining: SignedDuration::new(45, 0),
                     run_condition: RunCondition::Always,
@@ -88,23 +88,7 @@ impl Action for Goal {
                         });
                 }
             } else {
-                c.game.state = State::Ready;
-                c.game.primary_timer = Timer::Started {
-                    remaining: SignedDuration::new(60, 0),
-                    run_condition: RunCondition::Playing,
-                    behavior_at_zero: BehaviorAtZero::Expire(vec![VAction::HlStateShifter(
-                        HlStateShifter { state: State::Set },
-                    )]),
-                };
-                c.game.teams.values_mut().for_each(|team| {
-                    team.goalkeeper = None;
-                    team.players.iter_mut().for_each(|player| {
-                        player.penalty = Penalty::Substitute;
-                        player.penalty_timer = Timer::Stopped;
-                    });
-                });
-                c.game.sides = -c.game.sides;
-                c.game.state = State::Set;
+                c.game.state = State::Finished;
             }
         }
     }
