@@ -272,7 +272,7 @@ const TeamPanel = ({
         args: {
           side: side,
           player: player.number,
-          penalty: selectedPenaltyCall,
+          penalty: actions.PENALTIES[selectedPenaltyCall][1],
         },
       });
       setSelectedPenaltyCall(null);
@@ -347,10 +347,12 @@ const TeamPanel = ({
               }
               legal={
                 substitute ||
-                player.penalty !== "noPenalty" ||
-                selectedPenaltyCall === "playerPushing" ||
-                selectedPenaltyCall === "pickedUp" ||
-                selectedPenaltyCall === "ballHolding"
+                actions.isPenaltyCallLegalForPlayer(
+                  legalPenaltyActions,
+                  side,
+                  player.number,
+                  selectedPenaltyCall
+                )
               }
               sign={sign}
               onClick={() => handlePlayerClick(player)}

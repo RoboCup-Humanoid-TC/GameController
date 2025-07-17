@@ -1,16 +1,7 @@
 export const PENALTIES = [
-  ["Pushing", "pushing"],
-  ["Placeholder", "foul"],
-  ["Placeholder", "fallenInactive"],
-  ["Placeholder", "leavingTheField"],
-  ["Placeholder", "motionInSet"],
-  ["Placeholder", "illegalPosition"],
-  ["Ball Holding", "ballHolding"],
-  ["Penalty Kick", "penaltyKick"],
-  ["Placeholder", "localGameStuck"],
-  ["Pick-Up", "requestForPickUp"],
-  ["Placeholder", "playerStance"],
-  ["Placeholder", "playingWithArmsHands"],
+  ["Pushing", "playerPushing"],
+  ["Pick-Up / Incapable", "pickedUp"],
+  ["Ball Manipulation", "ballHolding"],
 ];
 const NUM_OF_PLAYERS = 20;
 const NUM_OF_TEAMS = 2;
@@ -59,7 +50,7 @@ const NUM_OF_GAME_ACTIONS = 20;
 
 const PENALTY_ACTION_BASE = GAME_ACTION_BASE + NUM_OF_GAME_ACTIONS;
 
-const NUM_OF_PENALTY_ACTIONS = NUM_OF_TEAMS * NUM_OF_PLAYERS * (6 + 3); // The + 1 is the unpenalize action.
+const NUM_OF_PENALTY_ACTIONS = NUM_OF_TEAMS * NUM_OF_PLAYERS * (3 + 1); // The + 1 is the unpenalize action.
 
 const UNDO_ACTION_BASE = PENALTY_ACTION_BASE + NUM_OF_PENALTY_ACTIONS;
 
@@ -117,6 +108,29 @@ export const getActions = () => {
     }
   }
   */
+  for (const penalty of PENALTIES) {
+    for (const side of ["home", "away"]) {
+      for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
+        actions.push({
+          type: "hlPenalize",
+          args: { side: side, player: number, penalty: penalty[1] },
+        });
+      }
+    }
+  }
+  /*
+  for (const side of ["home", "away"]) {
+    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
+      actions.push({ type: "unpenalize", args: { side: side, player: number } });
+    }
+  }
+  */
+  for (const side of ["home", "away"]) {
+    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
+      actions.push({ type: "hlUnpenalize", args: { side: side, player: number } });
+    }
+  }
+  /*
   for (const card of ["warning", "yellow", "red"]) {
     for (const side of ["home", "away"]) {
       for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
@@ -124,28 +138,7 @@ export const getActions = () => {
       }
     }
   }
-  for (const penalty of ["ballHolding", "playerPushing", "pickedUp"]) {
-    for (const side of ["home", "away"]) {
-      for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-        actions.push({
-          type: "hlPenalize",
-          args: { side: side, player: number, penalty: penalty },
-        });
-      }
-    }
-  }
-  for (const side of ["home", "away"]) {
-    for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-      actions.push({ type: "unpenalize", args: { side: side, player: number } });
-    }
-  }
-  for (const timer of [true, false]) {
-    for (const side of ["home", "away"]) {
-      for (let number = 1; number <= NUM_OF_PLAYERS; ++number) {
-        actions.push({ type: "hlUnpenalize", args: { side: side, player: number } });
-      }
-    }
-  }
+  */
   for (let states = 1; states <= NUM_OF_UNDO_ACTIONS; ++states) {
     actions.push({ type: "undo", args: { states: states } });
   }

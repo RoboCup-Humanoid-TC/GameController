@@ -28,7 +28,7 @@ const HL_Main = () => {
       selectedPenaltyCall != null &&
       !isPenaltyCallLegal(extractPenaltyActions(legalActions), selectedPenaltyCall)
     ) {
-      // setSelectedPenaltyCall(null);
+      setSelectedPenaltyCall(null);
     }
   }, [legalActions]);
 
