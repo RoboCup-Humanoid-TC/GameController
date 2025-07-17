@@ -156,6 +156,7 @@ impl Action for HlStateShifter {
                 };
             } else {
                 c.game.primary_timer = Timer::Stopped;
+                c.game.secondary_timer = Timer::Stopped;
             }
             c.game.sec_state_phase = 0;
         } else {
@@ -169,7 +170,9 @@ impl Action for HlStateShifter {
         } else if self.state == State::Initial && c.game.state == State::Finished {
             true
         } else if self.state == State::Ready
-            && (c.game.state == State::Initial || c.game.state == State::Timeout || c.game.state == State::Playing)
+            && (c.game.state == State::Initial
+                || c.game.state == State::Timeout
+                || c.game.state == State::Playing)
         {
             true
         } else if self.state == State::Set

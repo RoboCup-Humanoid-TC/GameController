@@ -38,10 +38,17 @@ impl EvaluatedRunConditions {
         Self {
             playing: (game.state == State::Playing
                 || ((game.state == State::Ready || game.state == State::Set)
-                    && game.phase != Phase::PenaltyShootout
-                    && game.primary_timer.get_remaining()
-                        != TryInto::<SignedDuration>::try_into(params.competition.half_duration)
-                            .unwrap()))
+                    && (match game.phase {
+                        Phase::FirstHalf | Phase::SecondHalf => Some(params.competition.half_duration),
+                        Phase::FirstExtraHalf | Phase::SecondExtraHalf => {
+                            Some(params.competition.half_duration_overtime)
+                        }
+                        _ => None,
+                    })
+                    .is_none_or(|duration| {
+                        game.primary_timer.get_remaining()
+                            != TryInto::<SignedDuration>::try_into(duration).unwrap()
+                    })))
                 && (game.phase != Phase::PenaltyShootout
                     || (game.phase == Phase::PenaltyShootout && game.state != State::Set)),
             ready_or_playing: (game.state == State::Ready || game.state == State::Playing)
