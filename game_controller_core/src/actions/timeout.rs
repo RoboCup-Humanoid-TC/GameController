@@ -106,7 +106,8 @@ impl Action for Timeout {
     fn is_legal(&self, c: &ActionContext) -> bool {
         if self.side.unwrap() != Side::None
         {
-            if c.game.state == State::Playing
+            if c.game.state == State::Playing || 
+            c.game.state == State::Finished
             {
                 false
             }
@@ -130,7 +131,11 @@ impl Action for Timeout {
         } 
         else 
         {
-            if c.game.state != State::Finished &&
+            if c.game.state == State::Finished
+            {
+                false
+            }
+            else if c.game.state != State::Finished &&
             c.game.sec_state.state == SecState::Normal ||
             c.game.sec_state.side == Side::None
             {
